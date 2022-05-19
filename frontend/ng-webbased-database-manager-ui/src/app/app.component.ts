@@ -8,5 +8,3 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'ng-webbased-database-manager-ui';
 }
-
-//test
