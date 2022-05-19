@@ -17,3 +17,4 @@
 - [ ] Tests (Unit Test, End-to-End) 
 - [ ] Dokumentation (UML Diagramme, Lasten- & Pflichtenheft) 
 - [ ] Präsi erstellen
+- [ ] Anleitung erstellen
