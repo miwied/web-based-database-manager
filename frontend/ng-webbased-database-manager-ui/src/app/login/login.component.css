@@ -1,0 +1,12 @@
+.login {
+    float: left;
+    width: 50%;
+}
+.picture {
+    float: right;
+    width: 50%;
+}
+.content {
+    margin-top: 370px;
+    margin-left: 157px;
+}
