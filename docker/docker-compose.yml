@@ -13,15 +13,14 @@ services:
     volumes: 
       - code:/var/www/html
       - ./webserver/php-ini-overrides.ini:/usr/local/etc/php/conf.d/php-ini-overrides.ini
-  database:
-    image: mariadb:latest
+  mysql:
+    image: mariadb:10.3
     container_name: mariadb
-    ports: 
-      - 3306:3306
-    environment: 
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
-      - MYSQL_ROOT_PASSWORD=root
-    volumes: 
+    volumes:
       - dbdata:/var/lib/mysql
-      - 2021sportverein.sql
+      - ./2021sportverein.sql:/docker-entrypoint-initdb.d/2021sportverein.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: root
+    ports:
+      - "3306:3306"
