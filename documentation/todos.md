@@ -12,7 +12,6 @@
 - [ ] Mat Table: filtern, sortieren, suchen + Mock-Daten einfügen (28.06.2022)
 - [ ] Route Guards
 - [ ] Routing
-- [ ] In der Sucheingabe keine Sonderzeichen zulassen (gegen SQL-Injection)
 - [ ] Components (Table, Dialog für Add/Edit, Login)
 - [ ] Validierung (Fehlerhandling z.B. Falscheingabe im Login)
 - [ ] Service (Backend Anbindung, Sessionspeicherung)
