@@ -1,22 +1,23 @@
 <?php
-class basicFee
+class BasicFee
 {
     // Variables
-    private $id;
+    private $basicFeeId;
     private $group;
     private $basicFee;
 
-    function __construct($_id, $_group, $_basicFee)
+    // Constructor
+    function __construct($_basicFeeId, $_group, $_basicFee)
     {
-        $this->id = $_id;
+        $this->basicFeeId = $_basicFeeId;
         $this->group = $_group;
         $this->basicFee = $_basicFee;
     }
 
     // Methods
-    function getId()
+    function getBasicFeeId()
     {
-        return $this->id;
+        return $this->basicFeeId;
     }
     function getGroup()
     {
