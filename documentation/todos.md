@@ -1,5 +1,6 @@
 ## Backend:
- - [ ] REST API
+ - [ ] REST API (28.06.2022)
+ - [ ] Backend Anbindung (28.06.2022)
  - [ ] Datenbank Connection
  - [ ] Login mit Authentifizierung und Session Tokens
  - [ ] Salt & Pepper (Verschlüsselung der Userdaten)
