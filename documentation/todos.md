@@ -1,11 +1,14 @@
 ## Backend:
- - [ ] REST API
+ - [ ] REST API (28.06.2022)
+ - [ ] HTTP Client (28.06.2022)
  - [ ] Datenbank Connection
  - [ ] Login mit Authentifizierung und Session Tokens
  - [ ] Salt & Pepper (Verschlüsselung der Userdaten)
 
 
 ## Frontend:
+- [ ] Backend Anbindung (28.06.2022)
+- [ ] Mat Table: filtern, sortieren, suchen + Mock-Daten einfügen (28.06.2022)
 - [ ] Route Guards
 - [ ] Routing
 - [ ] Components (Table, Dialog für Add/Edit, Login)
