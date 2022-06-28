@@ -1,10 +1,10 @@
 basicFee:
-    id: number,
+    basicFeeId: number,
     group: string,
     basicFee: number
 
 member:
-    id: number,
+    memberId: number,
     firstName: string,
     lastName: string,
     zipCode: number,
@@ -18,12 +18,12 @@ member:
     trainerTeamIds: number[],
 
 sport:
-    id: number,
+    sportId: number,
     name: string,
     fee: number,
     leaderId: number
 
 team:
-    id: number,
+    teamId: number,
     sportsId: number,
     name: string
