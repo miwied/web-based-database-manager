@@ -3,3 +3,4 @@ Mitglied: member
 Sportart: sport
 Manschaft: team
 Trainer: trainer
+Sportverein: sportsClub
