@@ -3,14 +3,28 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './Components/login/login.component';
+import { SportsclubtableComponent } from './Components/sportsclubtable/sportsclubtable.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTableModule } from '@angular/material/table';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    SportsclubtableComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatFormFieldModule,
+    MatPaginatorModule,
+    MatTableModule,
+    BrowserAnimationsModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
