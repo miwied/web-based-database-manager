@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+require __DIR__ . "/bootstrap.php";
 
-<head>
-    <title>Test</title>
-</head>
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri = explode('/', $uri);
 
-<body>
-    <h1>Test</h1>
-</body>
+if ((isset($uri[5]) && $uri[5] != 'basicFee') || !isset($uri[6])) {
+    header("HTTP/1.1 404 Not Found");
+    exit();
+}
 
-</html>
+require PROJECT_ROOT_PATH . "/Controllers/basicFeeController.php";
+
+$objFeedController = new BasicFeeController();
+$strMethodName = $uri[3] . 'Action';
+$objFeedController->{$strMethodName}();

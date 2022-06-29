@@ -2,11 +2,6 @@
 class Database
 {
     // Variables
-    private $dbHost = "localhost";
-    private $dbUser = "root";
-    private $dbPass = "";
-    private $db = "2021sportverein";
-    private $dbPort = 3306;
     protected $connection = null;
 
     // Constructor
