@@ -3,16 +3,20 @@
 
         <h1>SPORTVEREIN</h1>
         <div class="line"></div>
-        <form class="form" action="">
-            Benutzername
+       <form [formGroup]="angForm" (ngSubmit)="postdata(angForm)" autocomplete="off" >
+
+  
             <br>
-            <input class="input" type="text">
+     <input class="input" type="email" name="email" formControlName="email" autocomplete="off"  placeholder="Nutzername">
+
             <br>
-            Passwort
+
             <br>
-            <input class="input" type="password">
+     <input class="input" type="password" name="Password" formControlName="password" autocomplete="off"  placeholder="Password">
+
             <br>
-            <button class="submit" type="button">LOGIN</button>
+    <button type="submit" class="submitLogin" >Login</button>
+
         </form>
     </div>
 </div>
