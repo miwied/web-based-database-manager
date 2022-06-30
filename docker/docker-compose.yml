@@ -1,18 +1,17 @@
 version: "3.9"
 
-volumes: 
+volumes:
   dbdata:
-  code:
 
-services: 
+
+services:
   webserver:
     container_name: webserver
     build: webserver
-    ports: 
+    ports:
       - 80:80
-    volumes: 
-      - code:/var/www/html
-      - ./webserver/php-ini-overrides.ini:/usr/local/etc/php/conf.d/php-ini-overrides.ini
+    volumes:
+      - ../backend/src:/var/www/html/
   mysql:
     image: mariadb:10.3
     container_name: mariadb
