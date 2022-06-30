@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { Router } from '@angular/router';
 
 export interface UserData {
   id: string;
@@ -52,13 +53,13 @@ selector: 'app-sportsclubtable',
   styleUrls: ['./sportsclubtable.component.css']
 })
 export class SportsclubtableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
+  displayedColumns: string[] = ['id', 'first_name', 'last_name'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
+  constructor(private router: Router) {
     // Create 100 users
     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
 
@@ -79,6 +80,12 @@ export class SportsclubtableComponent implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  Logout()
+  {
+    this.router.navigate([`login`]);
+  }
+
 }
 
 /** Builds and returns a new User. */

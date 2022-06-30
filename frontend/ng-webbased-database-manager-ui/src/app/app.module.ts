@@ -15,6 +15,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { MemberEditDialogComponent } from './Components/member-edit-dialog/member-edit-dialog.component';
 
  import { MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+import { APP_ROUTES } from './app-routing.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +27,7 @@ import { MemberEditDialogComponent } from './Components/member-edit-dialog/membe
     
   ],
   imports: [
+    RouterModule.forRoot(APP_ROUTES),
     BrowserModule,
     AppRoutingModule,
     MatFormFieldModule,

@@ -17,8 +17,8 @@ class BasicFeeController extends BaseController
                 if (isset($arrQueryStringParams['limit']) && $arrQueryStringParams['limit']) {
                     $intLimit = $arrQueryStringParams['limit'];
                 }
+                $arrFees = $basicFee->getBasicFees();
 
-                $arrFees = $basicFee->getBasicFees($intLimit);
                 $responseData = json_encode($arrFees);
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
