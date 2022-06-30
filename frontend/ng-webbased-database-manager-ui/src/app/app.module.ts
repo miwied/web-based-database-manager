@@ -11,6 +11,9 @@ import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSortModule } from '@angular/material/sort';
 
+import { RouterModule } from '@angular/router';
+import { APP_ROUTES } from './app-routing.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,6 +21,7 @@ import { MatSortModule } from '@angular/material/sort';
     SportsclubtableComponent
   ],
   imports: [
+    RouterModule.forRoot(APP_ROUTES),
     BrowserModule,
     AppRoutingModule,
     MatFormFieldModule,
