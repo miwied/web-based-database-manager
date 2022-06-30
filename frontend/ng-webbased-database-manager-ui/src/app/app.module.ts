@@ -13,8 +13,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MemberEditDialogComponent } from './Components/member-edit-dialog/member-edit-dialog.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
 
- import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app-routing.module';
 
@@ -39,6 +41,8 @@ import { APP_ROUTES } from './app-routing.module';
     HttpClientModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatIconModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent],

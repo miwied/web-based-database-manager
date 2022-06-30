@@ -8,14 +8,20 @@
     </div>
 </div>
 
-<div>
-    
+<div class="title-block">
+    <span class="title">Mitgliederverwaltung</span>
+    <div class="line"></div>
 </div>
 
+<mat-form-field class="filter" appearance="fill">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input type="text" [(ngModel)]="value">
+    <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+      <mat-icon>close</mat-icon>
+    </button>
+</mat-form-field>
+
 <div class="Table">
-    
-    <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input>
-  
     <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" matSort>
     
@@ -46,7 +52,7 @@
         </tr>
         </table>
     
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
     </div>
 </div>
 

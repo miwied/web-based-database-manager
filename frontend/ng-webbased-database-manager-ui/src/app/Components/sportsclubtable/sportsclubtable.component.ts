@@ -56,6 +56,8 @@ export class SportsclubtableComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'first_name', 'last_name'];
   dataSource: MatTableDataSource<UserData>;
 
+  value = '';
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 

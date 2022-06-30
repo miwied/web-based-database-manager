@@ -20,6 +20,23 @@
   font-size: large;
 }
 
+.title-block {
+  margin-top: 75px;
+  margin-left: 10%;
+}
+
+.title {
+  font-size: 1cm;
+}
+
+.line {
+  width: 175px;
+  height: 1px;
+  border-top: 2px solid #CC6969;
+  position: absolute;
+}
+
+
 button{
   background-color: transparent;
   border-color: transparent;
@@ -47,6 +64,7 @@ table {
 }
 
 .Table {
+  margin-top: 80px;
   margin-left: 10%;
   margin-right: 10%;
   width: 80%;
@@ -54,7 +72,9 @@ table {
   
 .mat-form-field {
   font-size: 14px;
-  width: 100%;
+  width: 300px;
+  float: right;
+  margin-right: 10%;
 }
   
 td, th {
