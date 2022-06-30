@@ -26,16 +26,28 @@ h1 {
     padding-top: 20px;
 }
 .input {
+    
     width: 381px;
     height: 39px;  
     background: #FFFFFF;
     border: 1px solid #000000;
     border-radius: 5px;
+    
 }
+::placeholder {
+
+    font-size: 1.2em;
+    padding-left: 10px;
+}
+.label{
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
 br {
     margin-bottom: 20px;
 }
-.submit {
+.submitLogin {
     width: 387px;
     height: 39px;
     left: 157px;
@@ -44,6 +56,8 @@ br {
     font-size: medium;
     color: #FFFFFF;
     border-radius: 5px;
+    margin-top: 12px;
+    cursor: pointer;
 }
 .image {
     width: 100%;

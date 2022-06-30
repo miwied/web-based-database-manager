@@ -10,23 +10,37 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSortModule } from '@angular/material/sort';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { MemberEditDialogComponent } from './Components/member-edit-dialog/member-edit-dialog.component';
+
+ import { MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+import { APP_ROUTES } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SportsclubtableComponent
+    SportsclubtableComponent,
+    MemberEditDialogComponent,
+    
   ],
   imports: [
+    RouterModule.forRoot(APP_ROUTES),
     BrowserModule,
     AppRoutingModule,
     MatFormFieldModule,
     MatPaginatorModule,
     MatTableModule,
     BrowserAnimationsModule,
-    MatSortModule
+    MatSortModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatDialogModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
