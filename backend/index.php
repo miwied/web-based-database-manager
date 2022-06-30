@@ -2,7 +2,7 @@
 
 use Firebase\JWT\JWT;
 
-require_once('../vendor/autoload.php');
+require_once('./vendor/autoload.php');
 require __DIR__ . "/bootstrap.php";
 
 $headers = getallheaders();
