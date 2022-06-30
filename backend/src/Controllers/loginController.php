@@ -19,14 +19,15 @@ class LoginController extends BaseController
             echo json_encode($key);
             echo json_encode($value);
         }
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
         var_dump($hashed_password);
 
+        $db = new Database();
 
         if (strtoupper($requestMethod) == 'POST') {
             try {
-                $db = new Database();
-                $db->select("SELECT * FROM grundbeitrag");
+                $responseData = $db->select("SELECT * FROM loginLOL");
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
