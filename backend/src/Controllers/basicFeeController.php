@@ -8,15 +8,10 @@ class BasicFeeController extends BaseController
     {
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        $arrQueryStringParams = $this->getQueryStringParams();
+        
         if (strtoupper($requestMethod) == 'GET') {
             try {
-                $basicFee = new BasicFee(null, null, null);
-
-                $intLimit = 10;
-                if (isset($arrQueryStringParams['limit']) && $arrQueryStringParams['limit']) {
-                    $intLimit = $arrQueryStringParams['limit'];
-                }
+                $basicFee = new BasicFee();
                 $arrFees = $basicFee->getBasicFees();
 
                 $responseData = json_encode($arrFees);
