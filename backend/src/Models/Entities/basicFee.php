@@ -1,7 +1,7 @@
 <?php
 require_once PROJECT_ROOT_PATH . "/Models/database.php";
 
-class BasicFee extends Database
+class BasicFee
 {
     // Variables
     private $basicFeeId;
@@ -32,6 +32,7 @@ class BasicFee extends Database
 
     public function getBasicFees()
     {
-        return $this->select("SELECT * FROM grundbeitrag");
+        $db = new Database();
+        return $db->select("SELECT * FROM grundbeitrag");
     }
 }

@@ -11,6 +11,5 @@ if ((isset($uri[5]) && $uri[5] != 'basicFee') || !isset($uri[6])) {
 
 require PROJECT_ROOT_PATH . "/Controllers/basicFeeController.php";
 
-$objFeedController = new BasicFeeController();
-$strMethodName = $uri[3] . 'Action';
-$objFeedController->{$strMethodName}();
+$basicFeeController = new BasicFeeController();
+$basicFeeController->listAction();

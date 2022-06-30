@@ -44,6 +44,7 @@ class Database
     {
         try {
             $stmt = $this->connection->prepare($query);
+            $this->connection->set_charset('utf8');
 
             if (
                 $stmt === false
