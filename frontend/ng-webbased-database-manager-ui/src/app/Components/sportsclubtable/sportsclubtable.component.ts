@@ -3,6 +3,10 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MemberEditDialogComponent } from '../member-edit-dialog/member-edit-dialog.component';
+import { MemberDeleteDialogComponent } from '../member-delete-dialog/member-delete-dialog.component';
+import { MemberAddDialogComponent } from '../member-add-dialog/member-add-dialog.component';
 
 export interface UserData {
   id: string;
@@ -48,20 +52,20 @@ const NAMES: string[] = [
  * @title Data table with sorting, pagination, and filtering.
  */
 @Component({
-selector: 'app-sportsclubtable',
+  selector: 'app-sportsclubtable',
   templateUrl: './sportsclubtable.component.html',
-  styleUrls: ['./sportsclubtable.component.css']
+  styleUrls: ['./sportsclubtable.component.css'],
 })
 export class SportsclubtableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'first_name', 'last_name'];
+  displayedColumns: string[] = ['id', 'first_name', 'last_name', 'action_btn'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private router: Router) {
+  constructor(public dialog: MatDialog, private router: Router) {
     // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
+    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
@@ -81,12 +85,33 @@ export class SportsclubtableComponent implements AfterViewInit {
     }
   }
 
-  Logout()
-  {
+  Logout() {
     this.router.navigate([`login`]);
   }
 
+  openEditDialog() {
+    const dialogRef = this.dialog.open(MemberEditDialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openDeleteDialog() {
+    const dialogRef = this.dialog.open(MemberDeleteDialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openAddDialog() {
+    const dialogRef = this.dialog.open(MemberAddDialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }
+
+
 
 /** Builds and returns a new User. */
 function createNewUser(id: number): UserData {

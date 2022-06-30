@@ -8,15 +8,16 @@ import { ITeam } from '../models/team';
 import { IBasicFee } from '../models/basicFees';
 import { map } from 'rxjs/operators';
 import { Users } from '../models/users';
+import { IAccessToken } from '../models/auth/accessToken';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SportsClubApiService {
-  redirectUrl: string;
-  private baseUrl: string;
   @Output() getLoggedInName: EventEmitter<any> = new EventEmitter();
 
+  redirectUrl: string;
+  private baseUrl: string;
   private httpOptions = {
     headers: {},
     params: {},
@@ -104,10 +105,12 @@ export class SportsClubApiService {
     this.httpClient.delete(url, this.httpOptions);
   }
 
+
+
   //userlogin
   public userlogin(username: string, password: string) {
     alert(username);
-    alert (password)
+    alert(password);
     return this.httpClient
       .post<any>(this.baseUrl + '/login.php', { username, password })
       .pipe(

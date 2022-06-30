@@ -17,6 +17,9 @@ import { MemberEditDialogComponent } from './Components/member-edit-dialog/membe
  import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app-routing.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MemberDeleteDialogComponent } from './Components/member-delete-dialog/member-delete-dialog.component';
+import { MemberAddDialogComponent } from './Components/member-add-dialog/member-add-dialog.component'; 
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { APP_ROUTES } from './app-routing.module';
     LoginComponent,
     SportsclubtableComponent,
     MemberEditDialogComponent,
-    
+    MemberDeleteDialogComponent,
+    MemberAddDialogComponent,
   ],
   imports: [
     RouterModule.forRoot(APP_ROUTES),
@@ -39,6 +43,7 @@ import { APP_ROUTES } from './app-routing.module';
     HttpClientModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
