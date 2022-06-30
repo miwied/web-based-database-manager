@@ -20,14 +20,14 @@ class LoginController extends BaseController
             echo json_encode($value);
         }
 
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        $hashed_password = password_hash($password, PASSWORD_ARGON2I);
         var_dump($hashed_password);
 
         $db = new Database();
 
         if (strtoupper($requestMethod) == 'POST') {
             try {
-                $responseData = $db->select("SELECT * FROM loginLOL");
+                $responseData = $db->select("SELECT * FROM login_data");
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';

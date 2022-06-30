@@ -17,7 +17,7 @@ services:
     container_name: mariadb
     volumes:
       - dbdata:/var/lib/mysql
-      - ./2021sportverein.sql:/docker-entrypoint-initdb.d/2021sportverein.sql
+      - ./init:/docker-entrypoint-initdb.d/:ro
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: root

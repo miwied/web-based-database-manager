@@ -28,7 +28,7 @@ USE `2021sportverein`;
 -- Tabellenstruktur für Tabelle `login`
 --
 
-CREATE TABLE `login` (
+CREATE TABLE `login_data` (
   `id` int(11) NOT NULL,
   `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(50) COLLATE utf8_unicode_ci NOT NULL
@@ -38,7 +38,7 @@ CREATE TABLE `login` (
 -- Daten für Tabelle `login`
 --
 
-INSERT INTO `login` (`id`, `username`, `password`) VALUES
+INSERT INTO `login_data` (`id`, `username`, `password`) VALUES
 (1, 'admin', 'masterpassword');
 
 
