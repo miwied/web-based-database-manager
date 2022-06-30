@@ -8,26 +8,29 @@ class LoginController extends BaseController
      */
     public function listAction()
     {
-        $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        $arrQueryStringParams = $this->getQueryStringParams();
-        $password = '';
-        foreach ($arrQueryStringParams as $key => $value) {
-            if ($key == "password") {
-                $password = $value;
-            }
-            echo json_encode($key);
-            echo json_encode($value);
-        }
-
-        $hashed_password = password_hash($password, PASSWORD_ARGON2I);
-        var_dump($hashed_password);
-
-        $db = new Database();
 
         if (strtoupper($requestMethod) == 'POST') {
+            $db = new Database();
+            $strErrorDesc = '';
+            $arrQueryStringParams = $this->getQueryStringParams();
+            $password = '';
+            foreach ($arrQueryStringParams as $key => $value) {
+                if ($key == "password") {
+                    $password = $value;
+                }
+                echo json_encode($key);
+                echo json_encode($value);
+            }
+            $existingHashFromDb = $db->select("SELECT * FROM login_data"); //TODO!!!!!
+            $hashToStoreInDb = password_hash($password, PASSWORD_BCRYPT);
+
+
+            $isPasswordCorrect = password_verify($password, $existingHashFromDb);
+
+
             try {
-                $responseData = $db->select("SELECT * FROM login_data");
+                $responseData = $db->select("SELECT * FROM login_data"); //TODO!!!!
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
