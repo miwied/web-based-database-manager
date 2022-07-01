@@ -32,12 +32,11 @@ h1 {
     background: #FFFFFF;
     border: 1px solid #000000;
     border-radius: 5px;
+    padding-left: 10px;
     
 }
 ::placeholder {
-
     font-size: 1.2em;
-    padding-left: 10px;
 }
 .label{
     padding-top: 6px;
@@ -48,10 +47,9 @@ br {
     margin-bottom: 20px;
 }
 .submitLogin {
-    width: 387px;
+    width: 395px;
     height: 39px;
-    left: 157px;
-    top: 616px;
+
     background: #CC6969;
     font-size: medium;
     color: #FFFFFF;

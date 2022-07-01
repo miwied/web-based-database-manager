@@ -1,29 +1,27 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry, throwIfEmpty } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { IMember } from '../models/member';
 import { ISport } from '../models/sport';
 import { ITeam } from '../models/team';
 import { IBasicFee } from '../models/basicFees';
 import { map } from 'rxjs/operators';
-import { Users } from '../models/users';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SportsClubApiService {
-  redirectUrl: string;
-  private baseUrl: string;
   @Output() getLoggedInName: EventEmitter<any> = new EventEmitter();
 
+  redirectUrl: string;
+  private baseUrl: string;
   private httpOptions = {
     headers: {},
     params: {},
   };
 
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = 'HiernochURLeinfügen';
+    this.baseUrl = 'http://localhost/index.php';
   }
 
   getAuth() {}
@@ -32,7 +30,7 @@ export class SportsClubApiService {
 
   //CRUD
   getMembers(): Observable<IMember[]> {
-    let url = `${this.baseUrl}/member`;
+    let url = `${this.baseUrl}/member/list`;
     return this.httpClient.get<IMember[]>(url, this.httpOptions);
   }
   getMember(memberId: number): Observable<IMember> {
@@ -107,7 +105,7 @@ export class SportsClubApiService {
   //userlogin
   public userlogin(username: string, password: string) {
     alert(username);
-    alert (password)
+    alert(password);
     return this.httpClient
       .post<any>(this.baseUrl + '/login.php', { username, password })
       .pipe(
