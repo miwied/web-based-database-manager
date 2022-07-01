@@ -1,8 +1,5 @@
-// bekommt Array mit Sportarten, die ausgeführt werden
-// bekommt Info (boolean + ma_id) in welcher Mannschaft er spielt
-// bekommt Info (boolean + ma_id) ob er ein Trainer ist und von welcher
-
 <?php
+require_once PROJECT_ROOT_PATH . "/Models/Database.php";
 class Member
 {
     // Variables
@@ -21,31 +18,32 @@ class Member
 
     // Constructor
     function __construct(
-        $_memberId,
-        $_firstName,
-        $_lastName,
-        $_zipCode,
-        $_city,
-        $_gender,
-        $_feeId,
-        $_sportIds,
-        $_playsInTeam,
-        $_memberTeamIds,
-        $_isTrainer,
-        $_trainerTeamIds
-    ) {
-        $this->memberId = $_memberId;
-        $this->firstName = $_firstName;
-        $this->lastName = $_lastName;
-        $this->zipCode = $_zipCode;
-        $this->city = $_city;
-        $this->gender = $_gender;
-        $this->feeId = $_feeId;
-        $this->sportIds = $_sportIds;
-        $this->playsInTeam = $_playsInTeam;
-        $this->memberTeamIds = $_memberTeamIds;
-        $this->isTrainer = $_isTrainer;
-        $this->trainerTeamIds = $_trainerTeamIds;
+        // $_memberId,
+        // $_firstName,
+        // $_lastName,
+        // $_zipCode,
+        // $_city,
+        // $_gender,
+        // $_feeId,
+        // $_sportIds,
+        // $_playsInTeam,
+        // $_memberTeamIds,
+        // $_isTrainer,
+        // $_trainerTeamIds
+    )
+    {
+        // $this->memberId = $_memberId;
+        // $this->firstName = $_firstName;
+        // $this->lastName = $_lastName;
+        // $this->zipCode = $_zipCode;
+        // $this->city = $_city;
+        // $this->gender = $_gender;
+        // $this->feeId = $_feeId;
+        // $this->sportIds = $_sportIds;
+        // $this->playsInTeam = $_playsInTeam;
+        // $this->memberTeamIds = $_memberTeamIds;
+        // $this->isTrainer = $_isTrainer;
+        // $this->trainerTeamIds = $_trainerTeamIds;
     }
 
     // Methods
@@ -96,5 +94,10 @@ class Member
     function getTrainerTeamIds()
     {
         return $this->trainerTeamIds;
+    }
+    public function getMembers()
+    {
+        $db = new Database();
+        return $db->select("SELECT * FROM mitglied");
     }
 }

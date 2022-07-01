@@ -7,23 +7,24 @@ services:
   php-apache-environment:
     container_name: php-apache
     image: php:8.0-apache
+    build: ../backend
     volumes:
       - ../backend:/var/www/html/
     ports:
       - "80:80"
-  
-  angular-service:
-    container_name: angular-app
-    build: ../frontend/ng-webbased-database-manager-ui
-    volumes:
-      - ../frontend/ng-webbased-database-manager-ui:/usr/src/app
-      - ../frontend/ng-webbased-database-manager-ui/node_modules:/usr/src/app/node_modules
-    ports: 
-      - '4200:4200'
+
+  # angular-service:
+  #   container_name: angular-app
+  #   build: ../frontend/ng-webbased-database-manager-ui
+  #   volumes:
+  #     - ../frontend/ng-webbased-database-manager-ui:/usr/src/app
+  #     - ../frontend/ng-webbased-database-manager-ui/node_modules:/usr/src/app/node_modules
+  #   ports:
+  #     - '4200:4200'
 
   mysql:
-    image: mariadb:10.3
     container_name: mariadb
+    image: mariadb:10.3
     volumes:
       - dbdata:/var/lib/mysql
       - ./init:/docker-entrypoint-initdb.d/:ro
