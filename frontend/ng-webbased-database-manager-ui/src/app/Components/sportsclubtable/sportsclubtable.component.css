@@ -22,24 +22,42 @@
   float: right;
   height: 50px;
   margin-right: 70px;
-  padding-top: 15px;
   font-size: large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .title-block {
   margin-top: 75px;
   margin-left: 10%;
+  width: 30vw;
+  display: grid;
+  grid-template-columns: 30vw;
+  grid-template-rows: 5vh;
+  grid-template-areas: 
+    "top"
+    "middle"
+    "bottom";
 }
 
 .title {
+  grid-area: top;
   font-size: 1cm;
 }
 
 .line {
+  grid-area: middle;
   width: 175px;
   height: 1px;
   border-top: 2px solid #CC6969;
+  margin-top: 13px;
   position: absolute;
+}
+
+.addNewUser {
+  grid-area: bottom;
+  width: fit-content;
 }
 
 
@@ -109,6 +127,7 @@ tr .header {
 
 .imgLogout {
   cursor: pointer;
+  padding-left: 10px;
 }
 
 .example-button-container {

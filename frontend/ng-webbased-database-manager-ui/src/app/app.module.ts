@@ -15,12 +15,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { MemberEditDialogComponent } from './Components/member-edit-dialog/member-edit-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app-routing.module';
 import { MemberDeleteDialogComponent } from './Components/member-delete-dialog/member-delete-dialog.component';
-import { MemberAddDialogComponent } from './Components/member-add-dialog/member-add-dialog.component'; 
+import { MemberAddDialogComponent } from './Components/member-add-dialog/member-add-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MemberAddDialogComponent } from './Components/member-add-dialog/member-
     MatDialogModule,
     MatIconModule,
     MatInputModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

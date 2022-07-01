@@ -11,10 +11,19 @@
 </div>
 
 <div class="title-block">
-  <span class="title">Mitgliederverwaltung</span>
-  <div class="line"></div>
+  <div class="title">
+    Mitgliederverwaltung
+    <div class="line"></div>
+  </div>
+  <button
+    class="addNewUser"
+    mat-flat-button
+    color="accent"
+    (click)="openAddDialog()"
+  >
+    Neuen Nutzer anlegen
+  </button>
 </div>
-<button (click)="openAddDialog()">Neuen Nutzer anlegen</button>
 
 <mat-form-field class="filter" appearance="fill">
   <mat-label>Filter</mat-label>
@@ -38,8 +47,6 @@
 </mat-form-field>
 
 <div class="Table">
-  <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input />
-
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- ID Column -->
@@ -64,13 +71,21 @@
         <th mat-header-cell *matHeaderCellDef>Aktionen</th>
         <td mat-cell *matCellDef="let row">
           <div class="class_action_btn">
-            <button mat-fab color="primary" aria-label="Nutzer löschen">
-              <mat-icon (click)="openDeleteDialog()" style="color: red"
-                >delete</mat-icon
-              >
+            <button
+              mat-button
+              color="warn"
+              aria-label="Nutzer löschen"
+              (click)="openDeleteDialog()"
+            >
+              <mat-icon>delete</mat-icon>
             </button>
-            <button mat-fab color="primary" aria-label="Nutzer bearbeiten">
-              <mat-icon (click)="openEditDialog()">edit</mat-icon>
+            <button
+              mat-button
+              color="primary"
+              aria-label="Nutzer bearbeiten"
+              (click)="openEditDialog()"
+            >
+              <mat-icon>edit</mat-icon>
             </button>
           </div>
         </td></ng-container
