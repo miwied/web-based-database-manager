@@ -1,13 +1,14 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MemberEditDialogComponent } from '../member-edit-dialog/member-edit-dialog.component';
 import { MemberDeleteDialogComponent } from '../member-delete-dialog/member-delete-dialog.component';
 import { MemberAddDialogComponent } from '../member-add-dialog/member-add-dialog.component';
-
+import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
+import { IMemberTest } from 'src/app/models/member';
 export interface UserData {
   id: string;
   name: string;
@@ -57,23 +58,29 @@ const NAMES: string[] = [
   styleUrls: ['./sportsclubtable.component.css'],
 })
 export class SportsclubtableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'first_name', 'last_name', 'action_btn'];
-  dataSource: MatTableDataSource<UserData>;
+  displayedColumns: string[] = ['mi_id', 'vorname', 'nachname', 'action_btn'];
+  dataSource: MatTableDataSource<IMemberTest> = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public dialog: MatDialog, private router: Router) {
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    private sportClubService: SportsClubApiService
+  ) {
     // Create 100 users
-    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
-
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.sportClubService.getMembers().subscribe({
+      next: (data) => {
+        this.dataSource.data = data;
+      },
+    });
   }
 
   applyFilter(event: Event) {
@@ -110,8 +117,6 @@ export class SportsclubtableComponent implements AfterViewInit {
     });
   }
 }
-
-
 
 /** Builds and returns a new User. */
 function createNewUser(id: number): UserData {

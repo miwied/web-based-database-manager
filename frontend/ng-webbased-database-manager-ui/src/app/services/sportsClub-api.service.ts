@@ -2,7 +2,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, throwIfEmpty } from 'rxjs/operators';
-import { IMember } from '../models/member';
+import { IMember, IMemberTest } from '../models/member';
 import { ISport } from '../models/sport';
 import { ITeam } from '../models/team';
 import { IBasicFee } from '../models/basicFees';
@@ -24,7 +24,7 @@ export class SportsClubApiService {
   };
 
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = 'HiernochURLeinfügen';
+    this.baseUrl = 'http://localhost/index.php';
   }
 
   getAuth() {}
@@ -32,9 +32,9 @@ export class SportsClubApiService {
   async setHttpOptions() {}
 
   //CRUD
-  getMembers(): Observable<IMember[]> {
-    let url = `${this.baseUrl}/member`;
-    return this.httpClient.get<IMember[]>(url, this.httpOptions);
+  getMembers(): Observable<IMemberTest[]> {
+    let url = `${this.baseUrl}/member/list`;
+    return this.httpClient.get<IMemberTest[]>(url, this.httpOptions);
   }
   getMember(memberId: number): Observable<IMember> {
     let url = `${this.baseUrl}/member/${memberId}`;
@@ -104,8 +104,6 @@ export class SportsClubApiService {
     let url = `${this.baseUrl}/basicfee/${basicfeeId}`;
     this.httpClient.delete(url, this.httpOptions);
   }
-
-
 
   //userlogin
   public userlogin(username: string, password: string) {
