@@ -3,21 +3,30 @@ version: "3.9"
 volumes:
   dbdata:
 
-
 services:
-  webserver:
-    container_name: webserver
-    build: webserver
-    ports:
-      - 80:80
+  php-apache-environment:
+    container_name: php-apache
+    image: php:8.0-apache
     volumes:
-      - ../backend/src:/var/www/html/
+      - ../backend:/var/www/html/
+    ports:
+      - "80:80"
+  
+  angular-service:
+    container_name: angular-app
+    build: ../frontend/ng-webbased-database-manager-ui
+    volumes:
+      - ../frontend/ng-webbased-database-manager-ui:/usr/src/app
+      - ../frontend/ng-webbased-database-manager-ui/node_modules:/usr/src/app/node_modules
+    ports: 
+      - '4200:4200'
+
   mysql:
     image: mariadb:10.3
     container_name: mariadb
     volumes:
       - dbdata:/var/lib/mysql
-      - ./2021sportverein.sql:/docker-entrypoint-initdb.d/2021sportverein.sql
+      - ./init:/docker-entrypoint-initdb.d/:ro
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: root

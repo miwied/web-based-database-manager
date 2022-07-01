@@ -1,32 +1,20 @@
 <?php
-require_once PROJECT_ROOT_PATH . "/Models/database.php";
-
-class LoginController extends BaseController
+class BasicFeeController extends BaseController
 {
     /**
-     * "/login?username=INPUT&password=INPUT" Endpoint - Get list of 
+     * "/basicFee/list" Endpoint - Get list of basicFees
      */
     public function listAction()
     {
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        $arrQueryStringParams = $this->getQueryStringParams();
-        $password = '';
-        foreach ($arrQueryStringParams as $key => $value) {
-            if ($key == "password") {
-                $password = $value;
-            }
-            echo json_encode($key);
-            echo json_encode($value);
-        }
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        var_dump($hashed_password);
-
-
-        if (strtoupper($requestMethod) == 'POST') {
+        
+        if (strtoupper($requestMethod) == 'GET') {
             try {
-                $db = new Database();
-                $db->select("SELECT * FROM grundbeitrag");
+                $basicFee = new BasicFee();
+                $arrFees = $basicFee->getBasicFees();
+
+                $responseData = json_encode($arrFees);
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
