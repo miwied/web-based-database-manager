@@ -2,18 +2,15 @@
   <div class="left">Mitgliederverwaltungsprogramm</div>
   <div class="right">
     Max Mustermann
-   
-      <img class="imgLogout" (click)="Logout()"
-        src="../../../assets/Images/rsz_free-exit-logout-icon-2857-thumb.png"
-      />
 
+    <img
+      class="imgLogout"
+      (click)="Logout()"
+      src="../../../assets/Images/rsz_free-exit-logout-icon-2857-thumb.png"
+    />
   </div>
 </div>
-    <button (click)="openAddDialog()">Neuen Nutzer anlegen</button>
-
-
-
-
+<button (click)="openAddDialog()">Neuen Nutzer anlegen</button>
 
 <div class="Table">
   <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input />
@@ -21,38 +18,38 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- ID Column -->
-      <ng-container matColumnDef="mi_id">
+      <ng-container matColumnDef="memberId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-        <td mat-cell *matCellDef="let row">{{ row.mi_id }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.memberId }}</td>
       </ng-container>
 
       <!-- Progress Column -->
-      <ng-container matColumnDef="vorname">
+      <ng-container matColumnDef="firstName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
-        <td mat-cell *matCellDef="let row">{{ row.vorname }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.firstName }}</td>
       </ng-container>
 
       <!-- Name Column -->
-      <ng-container matColumnDef="nachname">
+      <ng-container matColumnDef="lastName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
-        <td mat-cell *matCellDef="let row">{{ row.nachname }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.lastName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="action_btn">
         <th mat-header-cell *matHeaderCellDef>Aktionen</th>
-        <td mat-cell *matCellDef="let row">  
-
-         <div class="class_action_btn">
-        <button mat-fab color="primary" aria-label="Nutzer löschen">
-          <mat-icon  (click)="openDeleteDialog()" style="color: red;">delete</mat-icon>
-        </button>
-    <button mat-fab color="primary" aria-label="Nutzer bearbeiten">
-          <mat-icon  (click)="openEditDialog()">edit</mat-icon>
-        </button>
-   </div>
-  
-      
-      </ng-container>
+        <td mat-cell *matCellDef="let row">
+          <div class="class_action_btn">
+            <button mat-fab color="primary" aria-label="Nutzer löschen">
+              <mat-icon (click)="openDeleteDialog()" style="color: red"
+                >delete</mat-icon
+              >
+            </button>
+            <button mat-fab color="primary" aria-label="Nutzer bearbeiten">
+              <mat-icon (click)="openEditDialog()">edit</mat-icon>
+            </button>
+          </div>
+        </td></ng-container
+      >
 
       <tr
         class="header"

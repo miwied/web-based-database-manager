@@ -1,14 +1,11 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry, throwIfEmpty } from 'rxjs/operators';
-import { IMember, IMemberTest } from '../models/member';
+import { Observable } from 'rxjs';
+import { IMember } from '../models/member';
 import { ISport } from '../models/sport';
 import { ITeam } from '../models/team';
 import { IBasicFee } from '../models/basicFees';
 import { map } from 'rxjs/operators';
-import { Users } from '../models/users';
-import { IAccessToken } from '../models/auth/accessToken';
 
 @Injectable({
   providedIn: 'root',
@@ -32,9 +29,9 @@ export class SportsClubApiService {
   async setHttpOptions() {}
 
   //CRUD
-  getMembers(): Observable<IMemberTest[]> {
+  getMembers(): Observable<IMember[]> {
     let url = `${this.baseUrl}/member/list`;
-    return this.httpClient.get<IMemberTest[]>(url, this.httpOptions);
+    return this.httpClient.get<IMember[]>(url, this.httpOptions);
   }
   getMember(memberId: number): Observable<IMember> {
     let url = `${this.baseUrl}/member/${memberId}`;

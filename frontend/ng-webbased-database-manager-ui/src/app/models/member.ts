@@ -1,25 +1,14 @@
 export interface IMember {
-  id: number;
+  memberId: number;
   firstName: string;
   lastName: string;
   zipCode: number;
   city: string;
   gender: string;
   feeId: number;
-  sportIds: number[];
+  sportIds: any;
   playsInTeam: boolean;
-  memberTeamIds: number[];
+  playerTeamId: number;
   isTrainer: boolean;
-  trainerTeamIds: number[];
-}
-
-export interface IMemberTest {
-  mi_id: number;
-  vorname: string;
-  nachname: string;
-  plz: string;
-  ort: string;
-  geschlecht: string;
-  or_id: number;
-  gb_id: number;
+  trainerTeamId: number;
 }
