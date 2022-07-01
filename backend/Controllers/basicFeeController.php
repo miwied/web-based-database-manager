@@ -1,6 +1,13 @@
 <?php
 class BasicFeeController extends BaseController
 {
+    protected $repo;
+
+    public function __construct()
+    {
+        $this->repo = new DBRepository();
+    }
+
     /**
      * "/basicFee/list" Endpoint - Get list of basicFees
      */
@@ -8,12 +15,10 @@ class BasicFeeController extends BaseController
     {
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        
+
         if (strtoupper($requestMethod) == 'GET') {
             try {
-                $basicFee = new BasicFee();
-                $arrFees = $basicFee->getBasicFees();
-
+                $arrFees = $this->repo->getBasicFees();
                 $responseData = json_encode($arrFees);
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
