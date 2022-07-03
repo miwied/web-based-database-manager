@@ -26,7 +26,9 @@ export class SportsClubApiService {
 
   getAuth() {}
 
-  async setHttpOptions() {}
+  async setHttpOptions() { }
+  
+//addMember noch hinzufügen
 
   //CRUD
   getMembers(): Observable<IMember[]> {
