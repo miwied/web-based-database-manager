@@ -1,65 +1,74 @@
 .login {
-    float: left;
-    width: 50%;
-    height: 100vh;
+  float: left;
+  width: 50%;
+  height: 100vh;
 }
 .picture {
-    float: right;
-    width: 50%;
+  float: right;
+  width: 50%;
 }
 .content {
-    margin-top: 35%;
-    margin-left: 30%;
-    
+  margin-top: 35%;
+  margin-left: 30%;
 }
 h1 {
-    margin-bottom: 10px;
-    margin-top: 0px;
+  margin-bottom: 10px;
+  margin-top: 0px;
 }
 .line {
-    width: 112px;
-    height: 1px;
-    border-top: 2px solid #CC6969;
-    position: absolute;
+  width: 112px;
+  height: 1px;
+  border-top: 2px solid #cc6969;
+  margin-top: -10px;
 }
 .form {
-    padding-top: 20px;
+  padding-top: 20px;
 }
 .input {
-    
-    width: 381px;
-    height: 39px;  
-    background: #FFFFFF;
-    border: 1px solid #000000;
-    border-radius: 5px;
-    padding-left: 10px;
-    
+  width: 381px;
+  height: 39px;
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding-left: 10px;
 }
 ::placeholder {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
-.label{
-    padding-top: 6px;
-    padding-bottom: 6px;
+.label {
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
 br {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 .submitLogin {
-    width: 395px;
-    height: 39px;
-
-    background: #CC6969;
-    font-size: medium;
-    color: #FFFFFF;
-    border-radius: 5px;
-    margin-top: 12px;
-    cursor: pointer;
+  width: 395px;
+  height: 39px;
+  background: #cc6969;
+  font-size: medium;
+  color: #ffffff;
+  margin-top: 12px;
 }
+
 .image {
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-    margin-bottom: -7px;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  margin-bottom: -7px;
+}
+
+.option-container {
+  margin-top: 15px;
+  display: flex;
+  width: 393px;
+}
+
+.option-login {
+  width: 50%;
+}
+
+.option-register {
+  width: 50%;
 }

@@ -2,7 +2,6 @@
 
 use Firebase\JWT\JWT;
 
-require_once PROJECT_ROOT_PATH . "/Models/Database.php";
 require_once PROJECT_ROOT_PATH . "/vendor/autoload.php";
 class LoginController extends BaseController
 {
@@ -16,9 +15,6 @@ class LoginController extends BaseController
         $this->repo = new DBRepository();
         $this->requestMethod = $_SERVER["REQUEST_METHOD"];
     }
-    /**
-     * "/login?username=INPUT&password=INPUT" Endpoint - Get list of 
-     */
 
     private function setFromQueryParams()
     {

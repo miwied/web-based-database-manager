@@ -515,7 +515,7 @@ ALTER TABLE `trainer`
 -- AUTO_INCREMENT für Tabelle `login_data`
 --
 ALTER TABLE `login_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `grundbeitrag`

@@ -1,28 +1,31 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
+import { APP_ROUTES } from './app-routing.module';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './Components/login/login.component';
-import { SportsclubtableComponent } from './Components/sportsclubtable/sportsclubtable.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSortModule } from '@angular/material/sort';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
+// components
+import { AppComponent } from './app.component';
+import { MemberAddDialogComponent } from './Components/member-add-dialog/member-add-dialog.component';
+import { MemberDeleteDialogComponent } from './Components/member-delete-dialog/member-delete-dialog.component';
+import { LoginComponent } from './Components/login/login.component';
 import { MemberEditDialogComponent } from './Components/member-edit-dialog/member-edit-dialog.component';
+import { SportsclubtableComponent } from './Components/sportsclubtable/sportsclubtable.component';
+
+// angular material
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select'; 
-import { MatDialogModule } from '@angular/material/dialog';
-import { RouterModule } from '@angular/router';
-import { APP_ROUTES } from './app-routing.module';
-import { MemberDeleteDialogComponent } from './Components/member-delete-dialog/member-delete-dialog.component';
-import { MemberAddDialogComponent } from './Components/member-add-dialog/member-add-dialog.component';
-import { RegisterComponent } from './Components/register/register.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,6 @@ import { RegisterComponent } from './Components/register/register.component';
     MemberEditDialogComponent,
     MemberDeleteDialogComponent,
     MemberAddDialogComponent,
-    RegisterComponent,
   ],
   imports: [
     RouterModule.forRoot(APP_ROUTES),
@@ -51,6 +53,7 @@ import { RegisterComponent } from './Components/register/register.component';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
+    MatButtonToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

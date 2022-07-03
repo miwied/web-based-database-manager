@@ -1,5 +1,9 @@
-Member: 
-getMembers =   `${this.baseUrl}/member`;
-getMember =    `${this.baseUrl}/member/${memberId}`;
-updateMember = `${this.baseUrl}/member/${memberId}`;
-deleteMember = `${this.baseUrl}/member/${memberId}`;
+Member:
+getMembers = 'http://localhost/index.php/member/list'
+
+BasicFee:
+getBasicFees = 'http://localhost/index.php/basicFee/list'
+
+Login:
+getToken = 'http://localhost/login.php/getToken?username=USERNAME&password=PASSWORD'
+getToken = 'http://localhost/login.php/addUser?username=USERNAME&password=PASSWORD'

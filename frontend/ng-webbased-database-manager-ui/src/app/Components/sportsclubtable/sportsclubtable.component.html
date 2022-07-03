@@ -18,7 +18,14 @@
 </div>
 
 <div class="buttons">
-  <button class="addNewUser" mat-flat-button color="accent" (click)="openAddDialog()" > Neuen Nutzer anlegen </button>
+  <button
+    class="addNewUser"
+    mat-flat-button
+    color="accent"
+    (click)="openAddDialog()"
+  >
+    Neuen Nutzer anlegen
+  </button>
 
   <mat-form-field class="filter" appearance="fill">
     <mat-label>Filter</mat-label>
@@ -30,7 +37,13 @@
       type="text"
       [(ngModel)]="value"
     />
-    <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value = ''" >
+    <button
+      *ngIf="value"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="value = ''"
+    >
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>

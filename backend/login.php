@@ -10,16 +10,16 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 
-if ((isset($uri[2]) && ($uri[2] != 'login'))) {
+if ((isset($uri[1]) && ($uri[2] != 'addUser' && $uri[2] != 'getToken')) && isset($uri[2])) {
     header("HTTP/1.1 404 Not Found");
     exit();
 }
 
 $loginController = new LoginController();
 
-if (isset($uri[3]) && $uri[3] == 'addUser') {
+if ($uri[2] == 'addUser') {
     $loginController->createAction();
 }
-if (isset($uri[3]) && $uri[3] == 'getToken') {
+if ($uri[2] == 'getToken') {
     $loginController->listAction();
 }
