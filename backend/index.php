@@ -12,7 +12,7 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 
-if ((isset($uri[2]) && ($uri[2] != 'member' && $uri[2] != 'basicFee' && $uri[2] != 'login'))) {
+if ((isset($uri[2]) && ($uri[2] != 'member' && $uri[2] != 'basicFee'))) {
     header("HTTP/1.1 404 Not Found");
     exit();
 }
@@ -28,13 +28,6 @@ if ($uri[2] == 'basicFee') {
     $basicFeeController = new BasicFeeController();
     $basicFeeController->listAction();
 }
-
-if ($uri[2] == 'login') {
-    require_once PROJECT_ROOT_PATH . "/Controllers/loginController.php";
-    $loginController = new LoginController();
-    $loginController->createAction();
-}
-
 
 // $headers = getallheaders();
 // if (!preg_match('/Bearer\s(\S+)/', $headers["Authorization"], $matches)) {
