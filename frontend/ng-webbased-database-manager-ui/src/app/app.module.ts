@@ -16,12 +16,13 @@ import { MemberEditDialogComponent } from './Components/member-edit-dialog/membe
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select'; 
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app-routing.module';
 import { MemberDeleteDialogComponent } from './Components/member-delete-dialog/member-delete-dialog.component';
 import { MemberAddDialogComponent } from './Components/member-add-dialog/member-add-dialog.component';
+import { RegisterComponent } from './Components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MemberAddDialogComponent } from './Components/member-add-dialog/member-
     MemberEditDialogComponent,
     MemberDeleteDialogComponent,
     MemberAddDialogComponent,
+    RegisterComponent,
   ],
   imports: [
     RouterModule.forRoot(APP_ROUTES),
