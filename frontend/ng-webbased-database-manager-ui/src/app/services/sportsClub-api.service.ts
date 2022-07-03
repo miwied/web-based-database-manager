@@ -26,9 +26,9 @@ export class SportsClubApiService {
 
   getAuth() {}
 
-  async setHttpOptions() { }
-  
-//addMember noch hinzufügen
+  async setHttpOptions() {}
+
+  //addMember noch hinzufügen
 
   //CRUD
   getMembers(): Observable<IMember[]> {
@@ -114,6 +114,16 @@ export class SportsClubApiService {
         map((Users) => {
           this.setToken(Users[0].name);
           this.getLoggedInName.emit(true);
+          return Users;
+        })
+      );
+  }
+
+  public userregistration(name: string,  pwd: string) {
+    return this.httpClient
+      .post<any>(this.baseUrl + '/register.php', { name, pwd })
+      .pipe(
+        map((Users) => {
           return Users;
         })
       );

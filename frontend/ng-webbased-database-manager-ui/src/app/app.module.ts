@@ -23,6 +23,7 @@ import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app-routing.module';
 import { MemberDeleteDialogComponent } from './Components/member-delete-dialog/member-delete-dialog.component';
 import { MemberAddDialogComponent } from './Components/member-add-dialog/member-add-dialog.component';
+import { RegisterComponent } from './Components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MemberAddDialogComponent } from './Components/member-add-dialog/member-
     MemberEditDialogComponent,
     MemberDeleteDialogComponent,
     MemberAddDialogComponent,
+    RegisterComponent,
   ],
   imports: [
     RouterModule.forRoot(APP_ROUTES),
