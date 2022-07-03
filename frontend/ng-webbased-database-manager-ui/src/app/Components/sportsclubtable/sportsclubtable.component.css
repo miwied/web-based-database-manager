@@ -55,11 +55,26 @@
   position: absolute;
 }
 
-.addNewUser {
-  grid-area: bottom;
-  width: fit-content;
+.buttons {
+  margin-top: 60px;
+  height: 70px;
 }
 
+.addNewUser {
+  margin-left: 10%;
+  grid-area: bottom;
+  width: fit-content;
+  height: 51.6167px;
+  float:left;
+  background-color: #e26d6d;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 300px;
+  float: right;
+  margin-right: 10%;
+}
 
 /* button{
   background-color: transparent;
@@ -88,18 +103,10 @@ table {
 }
 
 .Table {
-  margin-top: 80px;
   margin-left: 10%;
   margin-right: 10%;
   margin-bottom: 5%;
   width: 80%;
-}
-  
-.mat-form-field {
-  font-size: 14px;
-  width: 300px;
-  float: right;
-  margin-right: 10%;
 }
   
 td, th {
