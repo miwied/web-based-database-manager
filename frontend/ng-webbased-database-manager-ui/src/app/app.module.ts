@@ -16,7 +16,7 @@ import { MemberEditDialogComponent } from './Components/member-edit-dialog/membe
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-
+import {MatSelectModule} from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app-routing.module';
@@ -48,6 +48,7 @@ import { MemberAddDialogComponent } from './Components/member-add-dialog/member-
     MatIconModule,
     MatInputModule,
     MatButtonModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

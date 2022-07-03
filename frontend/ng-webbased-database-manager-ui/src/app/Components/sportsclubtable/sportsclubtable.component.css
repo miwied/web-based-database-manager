@@ -65,7 +65,8 @@
   grid-area: bottom;
   width: fit-content;
   height: 51.6167px;
-  float:left
+  float:left;
+  background-color: #e26d6d;
 }
 
 .mat-form-field {
