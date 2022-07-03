@@ -46,4 +46,16 @@ class DBRepository
         $sql = "SELECT ma_id FROM trainer";
         return $this->db->queryWithParams($sql, [["mi_id" => $mi_id]]);
     }
+
+    public function getLoginData($username)
+    {
+        $sql = "SELECT password FROM login_data";
+        return $this->db->queryWithParams($sql, [["username" => $username]]);
+    }
+
+    public function postLoginData($username, $password)
+    {
+        $sql = "INSERT into login_data(username, password) VALUES (?,?)";
+        $this->db->insertWithParams($sql, [$username, $password]);
+    }
 }

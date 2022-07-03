@@ -33,4 +33,13 @@ class Database
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    // insert into login_data(id, username, password) values(2,"testuser","hallo123");
+
+    public function insertWithParams($sql, $params)
+    {
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute($params);
+    }
 }
