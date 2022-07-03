@@ -23,6 +23,12 @@ class DBRepository
         return $this->db->query($sql);
     }
 
+    public function putMember($member)
+    {
+        $sql = "UPDATE mitglied SET vorname = :vorname, nachname = :nachname, plz = :plz, ort = :ort, geschlecht = :geschlecht";
+        return $this->db->query($sql);
+    }
+
     public function getSportsByMemberId($mi_id)
     {
         $sql = "SELECT sa_id FROM mitglied_sportart";

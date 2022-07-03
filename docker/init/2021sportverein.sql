@@ -29,18 +29,18 @@ USE `2021sportverein`;
 --
 
 CREATE TABLE `login_data` (
-  `id` int(11) NOT NULL,
+  `id` int AUTO_INCREMENT NOT NULL,
   `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+  `password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Daten für Tabelle `login`
 --
 
-INSERT INTO `login_data` (`id`, `username`, `password`) VALUES
-(1, 'admin', 'masterpassword');
-
+INSERT INTO `login_data` (`username`, `password`) VALUES
+('admin', 'masterpassword');
 
 -- --------------------------------------------------------
 
@@ -51,20 +51,21 @@ INSERT INTO `login_data` (`id`, `username`, `password`) VALUES
 CREATE TABLE `grundbeitrag` (
   `gb_id` int(11) NOT NULL,
   `personengruppe` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `beitrag` decimal(7,2) NOT NULL
+  `beitrag` decimal(7,2) NOT NULL,
+  PRIMARY KEY (gb_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Daten für Tabelle `grundbeitrag`
 --
 
-INSERT INTO `grundbeitrag` (`gb_id`, `personengruppe`, `beitrag`) VALUES
-(1, 'Erwachsene', '75.00'),
-(2, 'Schüler/Studenten', '40.00'),
-(3, 'Senioren/Rentner', '30.00'),
-(4, 'Auszubildende', '45.00'),
-(5, 'Ehrenmitglieder', '10.00'),
-(6, 'Personen mit Handicap', '5.00');
+INSERT INTO `grundbeitrag` (`personengruppe`, `beitrag`) VALUES
+('Erwachsene', '75.00'),
+('Schüler/Studenten', '40.00'),
+('Senioren/Rentner', '30.00'),
+('Auszubildende', '45.00'),
+('Ehrenmitglieder', '10.00'),
+('Personen mit Handicap', '5.00');
 
 -- --------------------------------------------------------
 
