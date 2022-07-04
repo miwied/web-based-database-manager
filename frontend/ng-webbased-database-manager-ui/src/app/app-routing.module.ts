@@ -17,7 +17,7 @@ export const APP_ROUTES: Routes = [
   {
     path: 'table',
     component: SportsclubtableComponent,
-    //canActivate: [AuthguardGuard],
+    canActivate: [AuthguardGuard],
   },
 ];
 

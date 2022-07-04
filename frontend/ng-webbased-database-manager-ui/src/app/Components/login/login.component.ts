@@ -32,24 +32,31 @@ export class LoginComponent implements OnInit {
   postdata(angForm: FormGroup) {
     switch (this.selection) {
       case 'Login':
+        console.log(angForm.value.username);
+        console.log(angForm.value.password);
         this.dataService
           .userLogin(angForm.value.username, angForm.value.password)
-          .pipe(first())
           .subscribe({
             next: (data) => {
+              console.log(data);
               const redirect = this.dataService.redirectUrl
                 ? this.dataService.redirectUrl
-                : '/dashboard';
+                : '/table';
               this.router.navigate([redirect]);
             },
-            error: () => alert('User name or password is incorrect'),
+            error: (e) => {
+              console.log(e);
+              alert('User name or password is incorrect');
+            },
           });
         break;
       case 'Register':
         this.dataService
           .userRegistration(angForm.value.username, angForm.value.password)
           .subscribe({
-            next: (value) => {},
+            next: (value) => {
+              alert('Nutzer angelegt');
+            },
             error: () => alert('Error occured'),
           });
         break;

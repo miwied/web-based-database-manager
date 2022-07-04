@@ -111,8 +111,8 @@ export class SportsClubApiService {
     this.httpOptions.headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
     });
-    let url = `${this.loginUrl}/login?username=${username}&password=${password}`;
-    return this.httpClient.post<string>(url, {}, this.httpOptions).pipe(
+    let url = `${this.loginUrl}/getToken?username=${username}&password=${password}`;
+    return this.httpClient.post<any>(url, {}, this.httpOptions).pipe(
       map((token) => {
         this.setToken(token);
         this.getLoggedInName.emit(true);
@@ -124,9 +124,12 @@ export class SportsClubApiService {
   userRegistration(username: string, password: string) {
     this.httpOptions.headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers':
+        'Origin, X-Requested-With, Content-Type, Accept',
     });
     let url = `${this.loginUrl}/addUser?username=${username}&password=${password}`;
-    console.log(url);
     return this.httpClient.post(url, {}, this.httpOptions);
   }
 

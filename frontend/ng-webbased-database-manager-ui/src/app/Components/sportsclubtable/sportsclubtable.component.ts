@@ -58,6 +58,7 @@ export class SportsclubtableComponent implements AfterViewInit {
   }
 
   Logout() {
+    this.sportClubService.deleteToken();
     this.router.navigate([`login`]);
   }
 

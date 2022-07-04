@@ -57,7 +57,7 @@ class LoginController extends BaseController
                         'HS512'
                     );
                     apache_setenv('TOKEN', $token);
-                    $responsedata = $token;
+                    $responsedata = json_encode($token);
                 } else {
                     $strErrorDesc = 'Invalid credentials';
                     $strErrorHeader = 'HTTP/1.1 400 Bad Request';
