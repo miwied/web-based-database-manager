@@ -43,6 +43,7 @@ export class SportsclubtableComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
     this.sportClubService.getMembers().subscribe({
       next: (data) => {
+        console.log(data);
         this.dataSource.data = data;
       },
     });

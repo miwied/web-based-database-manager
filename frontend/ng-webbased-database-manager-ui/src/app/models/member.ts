@@ -5,10 +5,14 @@ export interface IMember {
   zipCode: number;
   city: string;
   gender: string;
-  feeId: number;
+  feeGroup: string;
+  fee: number;
   sportIds: any;
-  playsInTeam: boolean;
+  sports: any;
+  isPlayer: boolean;
   playerTeamId: number;
+  playerTeamName: string;
   isTrainer: boolean;
   trainerTeamId: number;
+  trainerTeamName: string;
 }

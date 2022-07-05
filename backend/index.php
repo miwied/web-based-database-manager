@@ -36,7 +36,16 @@ if ((isset($uri[2]) && ($uri[2] != 'member' && $uri[2] != 'basicFee'))) {
 if ($uri[2] == 'member') {
     require_once PROJECT_ROOT_PATH . "/Controllers/memberController.php";
     $memberController = new MemberController();
-    $memberController->listAction();
+    if ($uri[3] == 'edit') {
+        $memberController->putAction();
+    } else if ($uri[3] == 'get') {
+        $memberController->listAction();
+    } else if ($uri[3] == 'delete' && isset($uri[4])) {
+        $memberController->deleteAction($uri[4]);
+    } else {
+        header("HTTP/1.1 404 Not Found");
+        exit();
+    }
 }
 
 if ($uri[2] == 'basicFee') {

@@ -13,7 +13,6 @@ export class AppComponent {
   constructor(private dataService: SportsClubApiService) {
     dataService.getLoggedInName.subscribe((name) => this.changeName(name));
     if (this.dataService.isLoggedIn()) {
-      console.log('loggedin');
       this.loginbtn = false;
       this.logoutbtn = true;
     } else {

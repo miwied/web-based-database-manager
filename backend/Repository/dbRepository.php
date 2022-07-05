@@ -19,8 +19,40 @@ class DBRepository
 
     public function putMember($member)
     {
-        $sql = "UPDATE mitglied SET vorname = :vorname, nachname = :nachname, plz = :plz, ort = :ort, geschlecht = :geschlecht";
-        return $this->db->query($sql);
+        $sqlUpdateMember = "UPDATE mitglied SET vorname = ?, nachname = ?, plz = ?, ort = ?, geschlecht = ? WHERE mi_id = ?";
+        $this->db->executeWithParams($sqlUpdateMember, [$member["firstName"], $member["lastName"], $member["zipCode"], $member["city"], $member["gender"], $member["memberId"]]);
+        foreach ($member["sportIds"] as $key => $value) {
+            $sqlUpdateMemberSportsAssociation = "UPDATE mitglied_sportart SET mi_id = ?, sa_id = ? WHERE mi_id = ? AND sa_id = ?";
+            $this->db->executeWithParams($sqlUpdateMemberSportsAssociation, [$member["memberId"], $value["sa_id"], $member["memberId"], $value["sa_id"]]);
+        }
+        $sqlUpdateMemberPlayerAssociation = "UPDATE spieler SET ma_id = ?, mi_id = ? WHERE ma_id = ? AND mi_id = ?";
+        $this->db->executeWithParams($sqlUpdateMemberPlayerAssociation, [$member["playerTeamId"], $member["memberId"], $member["playerTeamId"], $member["memberId"]]);
+    }
+
+    public function deleteMember($id)
+    {
+        // $sqlDelete = "DELETE FROM mitglied as m join sportart as sp on m.mi_id = sp.mi_id join mitglied_sportart as ms on m.mi_id = ms.mi_id join spieler as spi on m.mi_id = spi.mi_id join trainer as t on m.mi_id = t.mi_id where mi_id = ?";
+        // $this->db->executeWithParams($sqlDelete, [$id]);
+
+        // // update unnötige mi_id spalte in der sportart tabelle weil sonst constraint fehlschlägt
+        // $sqlUpdateSportMember = "DELETE FROM sportart WHERE mi_id = ?";
+        // $this->db->executeWithParams($sqlUpdateSportMember, [$id]);
+
+        // // lösche assoziation mit der sportart
+        // $sqlDeleteMemberSportAssociation = "DELETE FROM mitglied_sportart WHERE mi_id = ?";
+        // $this->db->executeWithParams($sqlDeleteMemberSportAssociation, [$id]);
+
+        // // lösche assoziation mit der mannschaft als spieler
+        // $sqlDeleteMemberPlayerAssociation = "DELETE FROM spieler WHERE mi_id = ?";
+        // $this->db->executeWithParams($sqlDeleteMemberPlayerAssociation, [$id]);
+
+        // // lösche assoziation mit der mannschaft als trainer
+        // $sqlDeleteMemberTrainerAssociation = "DELETE FROM trainer WHERE mi_id = ?";
+        // $this->db->executeWithParams($sqlDeleteMemberTrainerAssociation, [$id]);
+
+        // lösche das eigentliche Mitglied
+        $sqlDeleteMember = "DELETE FROM mitglied WHERE mi_id = ?";
+        $this->db->executeWithParams($sqlDeleteMember, [$id]);
     }
 
     // #sports / member
