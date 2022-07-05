@@ -1,14 +1,17 @@
-FROM node:latest
+### STEP 1: Dependecies ###
+FROM node:16-alpine as dependencies
+RUN mkdir -p /dependencies
+WORKDIR /dependencies
+COPY package*.json ./
+RUN ["npm", "install"]
 
-RUN mkdir /usr/src/cahce
-WORKDIR /usr/src/cache
-
-COPY package.json ./
-COPY package-lock.json ./
-
-RUN npm install -g @angular/cli @angular-devkit/build-angular && npm install
+### STEP 2: Run ###
+FROM dependencies as run
+RUN mkdir -p /app
+WORKDIR /app
+COPY --from=dependencies /dependencies/package.json /dependencies/package-lock.json ./ 
+COPY --from=dependencies /dependencies/node_modules ./node_modules 
+COPY src ./src 
+COPY *.json ./ 
 EXPOSE 4200
-
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
-CMD ["npm", "start"]
+ENTRYPOINT ["npm", "start"]

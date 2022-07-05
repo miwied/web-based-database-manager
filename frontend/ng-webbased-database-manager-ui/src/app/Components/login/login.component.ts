@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   postdata(angForm: FormGroup) {
     switch (this.selection) {
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
             next: (value) => {
               alert('Nutzer angelegt');
             },
-            error: () => alert('Error occured'),
+            error: (error) => error.status == 409 ? alert('User existiert bereits') : console.log(error)
           });
         break;
       default:

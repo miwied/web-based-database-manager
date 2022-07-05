@@ -93,7 +93,20 @@ class LoginController extends BaseController
             try {
                 $this->setFromQueryParams();
                 $hashToStoreInDb = password_hash($this->password, PASSWORD_BCRYPT);
-                $this->repo->postLoginData($this->username, $hashToStoreInDb);
+
+                $usernameCount = $this->repo->getUsernameCount($this->username);
+                $userAlreadyExists = false;
+
+                if ($usernameCount[0]["COUNT(1)"] > 0) {
+                    $userAlreadyExists = true;
+                }
+
+                if (!$userAlreadyExists) {
+                    $this->repo->postLoginData($this->username, $hashToStoreInDb);
+                } else {
+                    $strErrorDesc = 'User already exists :)';
+                    $strErrorHeader = 'HTTP/1.1 409 Conflict';
+                }
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
