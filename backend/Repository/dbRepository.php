@@ -10,6 +10,12 @@ class DBRepository
         $this->db = new Database();
     }
 
+    public function getBasicFeeInfo($gb_id)
+    {
+        $sql = "SELECT personengruppe, beitrag FROM grundbeitrag WHERE gb_id = ?";
+        return $this->db->queryWithParams($sql, [$gb_id]);
+    }
+
     // #members
     public function getMembers()
     {
@@ -58,15 +64,27 @@ class DBRepository
     // #sports / member
     public function getSportsByMemberId($mi_id)
     {
-        $sql = "SELECT sa_id FROM mitglied_sportart";
-        return $this->db->queryWithParams($sql, [["mi_id" => $mi_id]]);
+        $sql = "SELECT sa_id FROM mitglied_sportart WHERE mi_id = ?";
+        return $this->db->queryWithParams($sql, [$mi_id]);
+    }
+
+    public function getSportsInfoById($sa_id)
+    {
+        $sql = "SELECT abteilung, beitrag FROM sportart WHERE sa_id = ?";
+        return $this->db->queryWithParams($sql, [$sa_id]);
     }
 
     // #player / team
     public function getPlayerTeamInfo($mi_id)
     {
-        $sql = "SELECT ma_id FROM spieler";
-        return $this->db->queryWithParams($sql, [["mi_id" => $mi_id]]);
+        $sql = "SELECT ma_id FROM spieler WHERE mi_id = ?";
+        return $this->db->queryWithParams($sql, [$mi_id]);
+    }
+
+    public function getTeamName($ma_id)
+    {
+        $sql = "SELECT teamname FROM mannschaft WHERE ma_id = ?";
+        return $this->db->queryWithParams($sql, [$ma_id]);
     }
 
     public function putTeamname($teamname)
@@ -76,26 +94,26 @@ class DBRepository
     // #trainer
     public function getTrainerInfo($mi_id)
     {
-        $sql = "SELECT ma_id FROM trainer";
-        return $this->db->queryWithParams($sql, [["mi_id" => $mi_id]]);
+        $sql = "SELECT ma_id FROM trainer WHERE mi_id = ?";
+        return $this->db->queryWithParams($sql, [$mi_id]);
     }
 
     // #login
     public function getLoginData($username)
     {
-        $sql = "SELECT password FROM login_data";
-        return $this->db->queryWithParams($sql, [["username" => $username]]);
+        $sql = "SELECT password FROM login_data WHERE username = ?";
+        return $this->db->queryWithParams($sql, [$username]);
     }
 
     public function getUsernameCount($username)
     {
-        $sql = "SELECT COUNT(1) FROM login_data";
-        return $this->db->queryWithParams($sql, [["username" => $username]]);
+        $sql = "SELECT COUNT(1) FROM login_data WHERE username = ?";
+        return $this->db->queryWithParams($sql, [$username]);
     }
 
     public function postLoginData($username, $password)
     {
         $sql = "INSERT into login_data(username, password) VALUES (?,?)";
-        $this->db->insertWithParams($sql, [$username, $password]);
+        $this->db->executeWithParams($sql, [$username, $password]);
     }
 }

@@ -48,12 +48,6 @@ if ($uri[2] == 'member') {
     }
 }
 
-if ($uri[2] == 'basicFee') {
-    require_once PROJECT_ROOT_PATH . "/Controllers/basicFeeController.php";
-    $basicFeeController = new BasicFeeController();
-    $basicFeeController->listAction();
-}
-
 // $headers = getallheaders();
 // if (!preg_match('/Bearer\s(\S+)/', $headers["Authorization"], $matches)) {
 //     header('HTTP/1.0 400 Bad Request');

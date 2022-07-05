@@ -1,5 +1,4 @@
 <?php
-require_once PROJECT_ROOT_PATH . "/Models/Entities/member.php";
 class MemberController extends BaseController
 {
     protected $repo;
@@ -111,17 +110,16 @@ class MemberController extends BaseController
     private function mapMembers($input)
     {
         $result = array();
-        foreach ($input as $key => $value) {
+        foreach ($input as $k => $value) {
             // get sports info
-            $sportsIds = $this->repo->getSportsByMemberId($value['mi_id']);
-            // echo json_encode($sportsIds);
+            $sportsIds = $this->repo->getSportsByMemberId($value["mi_id"]);
             $sports = array();
             foreach ($sportsIds as $key => $id) {
                 array_push($sports, $this->repo->getSportsInfoById($id["sa_id"]));
             }
 
             // get info about which team the member plays for (if he is a player)
-            $playerTeams = $this->repo->getPlayerTeamInfo($value['mi_id']);
+            $playerTeams = $this->repo->getPlayerTeamInfo($value["mi_id"]);
             $isPlayer = count($playerTeams) > 0;
             $playerTeamId = $isPlayer ? $playerTeams[0]["ma_id"] : null;
             $playerTeamName = $isPlayer ? $this->repo->getTeamName($playerTeamId) : null;
@@ -130,28 +128,27 @@ class MemberController extends BaseController
             $trainerTeams = $this->repo->getTrainerInfo($value['mi_id']);
             $isTrainer = count($trainerTeams) > 0;
             $trainerTeamId = $isTrainer ? $trainerTeams[0]["ma_id"] : null;
-
             $trainerTeamName = $isTrainer ? $this->repo->getTeamName($trainerTeamId) : null;
 
             // get info about the name of the fee group
-            $feeInfo = $this->repo->getBasicFeeInfo($value['gb_id']);
-            $feeGroup = $feeInfo[0]['personengruppe'];
+            $feeInfo = $this->repo->getBasicFeeInfo($value["gb_id"]);
+            $feeGroup = $feeInfo[0]["personengruppe"];
 
             // get info about the fees the member pays
-            $fee = $feeInfo[0]['beitrag'];
+            $fee = $feeInfo[0]["beitrag"];
             foreach ($sports as $key => $sportsFee) {
-                if ($key == 'beitrag') {
+                if ($key == "beitrag") {
                     $fee += $sportsFee;
                 }
             }
 
             $tmp = (object) [
-                'memberId' => $value['mi_id'],
-                'firstName' => $value['vorname'],
-                'lastName' => $value['nachname'],
-                'zipCode' => $value['plz'],
-                'city' => $value['ort'],
-                'gender' => $value['geschlecht'],
+                'memberId' => $value["mi_id"],
+                'firstName' => $value["vorname"],
+                'lastName' => $value["nachname"],
+                'zipCode' => $value["plz"],
+                'city' => $value["ort"],
+                'gender' => $value["geschlecht"],
                 'feeGroup' => $feeGroup,
                 'fee' => $fee,
                 'sportIds' => $sportsIds,
