@@ -53,6 +53,13 @@ class DBRepository
         return $this->db->queryWithParams($sql, [["username" => $username]]);
     }
 
+    // TODO: Funktion erstellen welche prüft ob Login-Daten schon existieren
+    // public function checkLoginData($username, $password)
+    // {
+    //     $sql = "SELECT password FROM login_data";
+    //     return $this->db->queryWithParams($sql, [["username" => $username]]);
+    // }
+
     public function postLoginData($username, $password)
     {
         $sql = "INSERT into login_data(username, password) VALUES (?,?)";

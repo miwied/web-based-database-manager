@@ -18,11 +18,9 @@ services:
     build: ../frontend/ng-webbased-database-manager-ui
     volumes:
       - ../frontend/ng-webbased-database-manager-ui:/usr/src/app
-
+      # - ../frontend/ng-webbased-database-manager-ui/node_modules:/usr/src/app/node_modules
     ports:
       - '4200:4200'
-    command: /usr/src/app/entrypoint.sh
-   
 
   mysql:
     container_name: mariadb
