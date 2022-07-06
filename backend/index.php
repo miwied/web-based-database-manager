@@ -86,14 +86,15 @@ if ($uri[2] == 'team') {
     $teamController = new TeamController();
 
     switch ($uri[3]) {
-        // case 'create':
-        //     $teamController->listAction();
-        //     break;
+        case 'create':
+            $teamController->createAction();
+            break;
         case 'edit':
-        $teamController->putAction();
+            $teamController->putAction();
         break;
         case 'delete':
-            $teamController->deleteAction();
+            if(isset($uri[4])) $teamController->deleteAction($uri[4]);
+            else throw404Error();  
             break;
         default:
             throw404Error();  

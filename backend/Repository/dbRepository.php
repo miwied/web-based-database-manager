@@ -76,16 +76,22 @@ class DBRepository
     }
 
     // #team
-    public function getTeamName($ma_id)
+    public function createTeam($team)
     {
-        $sql = "SELECT teamname FROM mannschaft WHERE ma_id = ?";
-        return $this->db->queryWithParams($sql, [$ma_id]);
+        $sql = "INSERT into mannschaft(sa_id, teamname) VALUES (?,?)";
+        $this->db->executeWithParams($sql, [$team["sportsId"], $team["name"]]);
     }
 
     public function putTeamname($team)
     {
         $sql = "UPDATE mannschaft SET teamname = ? WHERE ma_id = ? AND sa_id = ?";
         $this->db->executeWithParams($sql, [$team["name"], $team["teamId"], $team["sportsId"]]);
+    }
+
+    public function deleteTeam($id)
+    {
+        $sql = "DELETE FROM mannschaft WHERE ma_id = ?";
+        $this->db->executeWithParams($sql, [$id]);
     }
 
     // #player
