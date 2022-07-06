@@ -102,7 +102,7 @@ class LoginController extends BaseController
                 }
 
                 if (!$userAlreadyExists) {
-                    $this->repo->postLoginData($this->username, $hashToStoreInDb);
+                    $this->repo->putLoginData($this->username, $hashToStoreInDb);
                 } else {
                     $strErrorDesc = 'User already exists :)';
                     $strErrorHeader = 'HTTP/1.1 409 Conflict';

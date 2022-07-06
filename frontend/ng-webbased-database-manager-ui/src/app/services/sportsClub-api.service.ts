@@ -130,7 +130,7 @@ export class SportsClubApiService {
       'Access-Control-Allow-Headers':
         'Origin, X-Requested-With, Content-Type, Accept',
     });
-    let url = `${this.loginUrl}/addUser?username=${username}&password=${password}`;
+    let url = `${this.loginUrl}/createUser?username=${username}&password=${password}`;
     return this.httpClient.post(url, {}, this.httpOptions);
   }
 

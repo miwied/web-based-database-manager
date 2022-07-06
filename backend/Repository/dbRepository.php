@@ -109,7 +109,7 @@ class DBRepository
         return $this->db->queryWithParams($sql, [$username]);
     }
 
-    public function postLoginData($username, $password)
+    public function putLoginData($username, $password)
     {
         $sql = "INSERT into login_data(username, password) VALUES (?,?)";
         $this->db->executeWithParams($sql, [$username, $password]);
