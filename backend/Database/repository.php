@@ -8,6 +8,12 @@ class DBRepository
         $this->db = new Database();
     }
 
+    private function getBasicFeeId($feeGroup)
+    {
+        $sql = "SELECT gb_id FROM grundbeitrag WHERE personengruppe = ?";
+        return $this->db->queryWithParams($sql, [$feeGroup]);
+    }
+
     public function getBasicFeeInfo($gb_id)
     {
         $sql = "SELECT personengruppe, beitrag FROM grundbeitrag WHERE gb_id = ?";
@@ -15,6 +21,15 @@ class DBRepository
     }
 
     // #members
+    public function createMember($member)
+    {
+        var_dump($member);
+        // get fee id because we only get the fee group from the frontend
+        $feeId = $this->getBasicFeeId($member["feeGroup"]);
+        $sqlCreateMember = "INSERT into mitglied(vorname, nachname, plz, ort, geschlecht, or_id, gb_id) VALUES (?,?,?,?,?,?,?)";
+        $this->db->executeWithParams($sqlCreateMember, [$member["firstName"], $member["lastName"], $member["zipCode"], $member["city"], $member["gender"], 2, $feeId]);
+    }
+
     public function getMembers()
     {
         $sql = "SELECT * FROM mitglied";

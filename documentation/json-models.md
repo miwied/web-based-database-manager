@@ -1,7 +1,35 @@
 **'create-objects' are always the same as the 'edit-objects' only without the primary key.**
 
 ### Member:
-*edit-object:*
+
+_create-object:_
+
+    {
+      "firstName": "Gabi",
+      "lastName": "Ziegler",
+      "zipCode": "95326",
+      "city": "Kulmbach",
+      "gender": "w",
+      "feeGroup": "Erwachsene",
+      "fee": "75.00",
+      "sportIds": [
+        {
+          "sa_id": "3"
+        },
+        {
+          "sa_id": "5"
+        },
+        {
+          "sa_id": "8"
+        }
+      ],
+      "isPlayer": false,
+      "playerTeamId": null,
+      "isTrainer": true,
+      "trainerTeamId": "4",
+    }
+
+_edit-object:_
 
     {
       "memberId": "1",
@@ -56,7 +84,8 @@
     }
 
 ### Sport:
-*edit-object:*
+
+_edit-object:_
 
     {
       "sportId": "1",
@@ -66,7 +95,8 @@
     }
 
 ### Team:
-*edit-object:*
+
+_edit-object:_
 
     {
       "teamId": "4",

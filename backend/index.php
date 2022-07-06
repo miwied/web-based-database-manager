@@ -75,6 +75,9 @@ if ($uri[2] == 'member') {
     $memberController = new MemberController();
 
     switch ($uri[3]) {
+        case 'create':
+            $memberController->createAction();
+            break;
         case 'get':
             $memberController->getAction();
             break;
