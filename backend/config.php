@@ -7,4 +7,4 @@ define("DB_PORT", 3306);
 define("JWT_SECRET_KEY", "gdajgpdjogjdsklgjksdgjsd3419385923tajgfdak");
 define("JWT_MODIFIER", "+5 minutes"); // add time to token expiration
 define("JWT_DOMAIN_NAME", "sportverein");
-define("pepper", "c1isvFdxMDdmjOlvxpecFw");
+define("PEPPER", "c1isvFdxMDdmjOlvxpecFw");

@@ -2,7 +2,7 @@
 
 use Firebase\JWT\JWT;
 
-// require_once PROJECT_ROOT_PATH . "/vendor/autoload.php";
+require_once PROJECT_ROOT_PATH . "/vendor/autoload.php";
 class LoginController extends BaseController
 {
     protected $repo;
@@ -34,11 +34,10 @@ class LoginController extends BaseController
     {
         if (strtoupper($this->requestMethod) == 'POST') {
             $strErrorDesc = '';
-            $pepper = pepper;
             try {
                 $this->setFromQueryParams();
                 $existingHashFromDb = $this->repo->getPwdByUsername($this->username);
-                $pwdPeppered = hash_hmac("sha256", $this->password, $pepper);
+                $pwdPeppered = hash_hmac("sha256", $this->password, PEPPER);
                 $isPasswordCorrect = password_verify($pwdPeppered, $existingHashFromDb[0]["password"]);
                 if ($isPasswordCorrect) {
                     $secret_Key  = JWT_SECRET_KEY;
@@ -92,10 +91,9 @@ class LoginController extends BaseController
     {
         if (strtoupper($this->requestMethod) == 'POST') {
             $strErrorDesc = '';
-            $pepper = pepper;
             try {
                 $this->setFromQueryParams();
-                $pwdPeppered = hash_hmac("sha256", $this->password, $pepper);
+                $pwdPeppered = hash_hmac("sha256", $this->password, PEPPER);
                 $hashToStoreInDb = password_hash($pwdPeppered, PASSWORD_BCRYPT);
                 $usernameCount = $this->repo->getUsernameCount($this->username);
                 $userAlreadyExists = false;
