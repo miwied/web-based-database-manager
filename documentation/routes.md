@@ -1,7 +1,7 @@
 ### Login:
- - **createUser**
+ - **createUser**<br />
  'http://localhost/login.php/createUser?username=USERNAME&password=PASSWORD'
- - **getToken**
+ - **getToken**<br />
  'http://localhost/login.php/getToken?username=USERNAME&password=PASSWORD'
  
 ### Member:
