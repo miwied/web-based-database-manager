@@ -2,7 +2,7 @@
 
 use Firebase\JWT\JWT;
 
-require_once PROJECT_ROOT_PATH . "/vendor/autoload.php";
+// require_once PROJECT_ROOT_PATH . "/vendor/autoload.php";
 class LoginController extends BaseController
 {
     protected $repo;
@@ -29,17 +29,17 @@ class LoginController extends BaseController
         }
     }
 
-
-    //#TODO PASSWORD PEPPER: https://www.php.net/manual/de/function.password-hash.php#usernotes
     // check if inserted password matches the password in database and response with token if so
     public function listAction()
     {
         if (strtoupper($this->requestMethod) == 'POST') {
             $strErrorDesc = '';
-            $this->setFromQueryParams();
+            $pepper = pepper;
             try {
-                $existingHashFromDb = $this->repo->getLoginData($this->username);
-                $isPasswordCorrect = password_verify($this->password, $existingHashFromDb[0]["password"]);
+                $this->setFromQueryParams();
+                $existingHashFromDb = $this->repo->getPwdByUsername($this->username);
+                $pwdPeppered = hash_hmac("sha256", $this->password, $pepper);
+                $isPasswordCorrect = password_verify($pwdPeppered, $existingHashFromDb[0]["password"]);
                 if ($isPasswordCorrect) {
                     $secret_Key  = JWT_SECRET_KEY;
                     $date   = new DateTimeImmutable();
@@ -87,15 +87,17 @@ class LoginController extends BaseController
         }
     }
 
+    //#TODO PASSWORD PEPPER: https://www.php.net/manual/de/function.password-hash.php#usernotes
     // create users in database
     public function createAction()
     {
         if (strtoupper($this->requestMethod) == 'POST') {
             $strErrorDesc = '';
+            $pepper = pepper;
             try {
                 $this->setFromQueryParams();
-                $hashToStoreInDb = password_hash($this->password, PASSWORD_BCRYPT);
-
+                $pwdPeppered = hash_hmac("sha256", $this->password, $pepper);
+                $hashToStoreInDb = password_hash($pwdPeppered, PASSWORD_BCRYPT);
                 $usernameCount = $this->repo->getUsernameCount($this->username);
                 $userAlreadyExists = false;
 

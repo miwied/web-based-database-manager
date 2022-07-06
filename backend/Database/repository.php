@@ -133,7 +133,7 @@ class DBRepository
     }
 
     // #login
-    public function getLoginData($username)
+    public function getPwdByUsername($username)
     {
         $sql = "SELECT password FROM login_data WHERE username = ?";
         return $this->db->queryWithParams($sql, [$username]);
