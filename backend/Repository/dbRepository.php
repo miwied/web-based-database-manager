@@ -37,6 +37,7 @@ class DBRepository
 
     public function deleteMember($id)
     {
+        // TODO: OLD CODE, CAN BE DELETED IF HAPPY WITH CURRENT FUNCTIONALITY
         // $sqlDelete = "DELETE FROM mitglied as m join sportart as sp on m.mi_id = sp.mi_id join mitglied_sportart as ms on m.mi_id = ms.mi_id join spieler as spi on m.mi_id = spi.mi_id join trainer as t on m.mi_id = t.mi_id where mi_id = ?";
         // $this->db->executeWithParams($sqlDelete, [$id]);
 
@@ -62,25 +63,19 @@ class DBRepository
     }
 
     // #sports / member
-    public function getSportsByMemberId($mi_id)
-    {
-        $sql = "SELECT sa_id FROM mitglied_sportart WHERE mi_id = ?";
-        return $this->db->queryWithParams($sql, [$mi_id]);
-    }
-
     public function getSportsInfoById($sa_id)
     {
         $sql = "SELECT abteilung, beitrag FROM sportart WHERE sa_id = ?";
         return $this->db->queryWithParams($sql, [$sa_id]);
     }
 
-    // #player / team
-    public function getPlayerTeamInfo($mi_id)
+    public function getSportsByMemberId($mi_id)
     {
-        $sql = "SELECT ma_id FROM spieler WHERE mi_id = ?";
+        $sql = "SELECT sa_id FROM mitglied_sportart WHERE mi_id = ?";
         return $this->db->queryWithParams($sql, [$mi_id]);
     }
 
+    // #player / team
     public function getTeamName($ma_id)
     {
         $sql = "SELECT teamname FROM mannschaft WHERE ma_id = ?";
@@ -89,6 +84,12 @@ class DBRepository
 
     public function putTeamname($teamname)
     {
+    }
+
+    public function getPlayerTeamInfo($mi_id)
+    {
+        $sql = "SELECT ma_id FROM spieler WHERE mi_id = ?";
+        return $this->db->queryWithParams($sql, [$mi_id]);
     }
 
     // #trainer
@@ -105,15 +106,15 @@ class DBRepository
         return $this->db->queryWithParams($sql, [$username]);
     }
 
-    public function getUsernameCount($username)
-    {
-        $sql = "SELECT COUNT(1) FROM login_data WHERE username = ?";
-        return $this->db->queryWithParams($sql, [$username]);
-    }
-
     public function postLoginData($username, $password)
     {
         $sql = "INSERT into login_data(username, password) VALUES (?,?)";
         $this->db->executeWithParams($sql, [$username, $password]);
+    }
+
+    public function getUsernameCount($username)
+    {
+        $sql = "SELECT COUNT(1) FROM login_data WHERE username = ?";
+        return $this->db->queryWithParams($sql, [$username]);
     }
 }

@@ -545,7 +545,7 @@ ALTER TABLE `sportart`
 -- Constraints der Tabelle `mannschaft`
 --
 ALTER TABLE `mannschaft`
-  ADD CONSTRAINT `sa_id` FOREIGN KEY (`sa_id`) REFERENCES `sportart` (`sa_id`);
+  ADD CONSTRAINT `sa_id` FOREIGN KEY (`sa_id`) REFERENCES `sportart` (`sa_id`) ON DELETE CASCADE;
 
 --
 -- Constraints der Tabelle `mitglied`
@@ -557,28 +557,28 @@ ALTER TABLE `mitglied`
 -- Constraints der Tabelle `mitglied_sportart`
 --
 ALTER TABLE `mitglied_sportart`
-  ADD CONSTRAINT `mi_id` FOREIGN KEY (`mi_id`) REFERENCES `mitglied` (`mi_id`),
-  ADD CONSTRAINT `mitglied_sportart_ibfk_1` FOREIGN KEY (`sa_id`) REFERENCES `sportart` (`sa_id`);
+  ADD CONSTRAINT `mi_id` FOREIGN KEY (`mi_id`) REFERENCES `mitglied` (`mi_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `mitglied_sportart_ibfk_1` FOREIGN KEY (`sa_id`) REFERENCES `sportart` (`sa_id`) ON DELETE CASCADE;
 
 --
 -- Constraints der Tabelle `spieler`
 --
 ALTER TABLE `spieler`
-  ADD CONSTRAINT `spieler_ibfk_1` FOREIGN KEY (`ma_id`) REFERENCES `mannschaft` (`ma_id`),
-  ADD CONSTRAINT `spieler_ibfk_2` FOREIGN KEY (`mi_id`) REFERENCES `mitglied` (`mi_id`);
+  ADD CONSTRAINT `spieler_ibfk_1` FOREIGN KEY (`ma_id`) REFERENCES `mannschaft` (`ma_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `spieler_ibfk_2` FOREIGN KEY (`mi_id`) REFERENCES `mitglied` (`mi_id`) ON DELETE CASCADE;
 
 --
 -- Constraints der Tabelle `sportart`
 --
 ALTER TABLE `sportart`
-  ADD CONSTRAINT `sportart_ibfk_1` FOREIGN KEY (`mi_id`) REFERENCES `mitglied` (`mi_id`);
+  ADD CONSTRAINT `sportart_ibfk_1` FOREIGN KEY (`mi_id`) REFERENCES `mitglied` (`mi_id`) ON DELETE CASCADE;
 
 --
 -- Constraints der Tabelle `trainer`
 --
 ALTER TABLE `trainer`
-  ADD CONSTRAINT `trainer_ibfk_1` FOREIGN KEY (`ma_id`) REFERENCES `mannschaft` (`ma_id`),
-  ADD CONSTRAINT `trainer_ibfk_2` FOREIGN KEY (`mi_id`) REFERENCES `mitglied` (`mi_id`);
+  ADD CONSTRAINT `trainer_ibfk_1` FOREIGN KEY (`ma_id`) REFERENCES `mannschaft` (`ma_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `trainer_ibfk_2` FOREIGN KEY (`mi_id`) REFERENCES `mitglied` (`mi_id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
