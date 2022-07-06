@@ -34,21 +34,22 @@ export class SportsClubApiService {
 
   //CRUD
   getMembers(): Observable<IMember[]> {
-    let url = `${this.indexUrl}/member/list`;
+    let url = `${this.indexUrl}/member/get`;
     return this.httpClient.get<IMember[]>(url, this.httpOptions);
   }
-  getMember(memberId: number): Observable<IMember> {
-    let url = `${this.indexUrl}/member/${memberId}`;
-    return this.httpClient.get<IMember>(url, this.httpOptions);
+
+  createMember(member: IMember): void {
+    let url = `${this.indexUrl}/member/create/`;
+    this.httpClient.put<any>(url, member, this.httpOptions);
   }
 
-  updateMember(memberId: number, member: IMember): void {
-    let url = `${this.indexUrl}/member/${memberId}`;
+  updateMember(member: IMember): void {
+    let url = `${this.indexUrl}/member/edit/`;
     this.httpClient.put<any>(url, member, this.httpOptions);
   }
 
   deleteMember(memberId: number) {
-    let url = `${this.indexUrl}/member/${memberId}`;
+    let url = `${this.indexUrl}/member/delete/${memberId}`;
     this.httpClient.delete(url, this.httpOptions);
   }
 
