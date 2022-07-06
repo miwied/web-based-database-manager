@@ -8,15 +8,15 @@ class TeamController extends BaseController
         $this->repo = new DBRepository();
     }
 
-    public function putTeam($team)
+    public function putAction()
     {
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-
+        echo("nice");
         if (strtoupper($requestMethod) == 'PUT') {
             try {
-                $arrMembers = $this->repo->getMembers();
-                $responseData = json_encode($this->mapMembers($arrMembers));
+                $this->repo->putMember(json_decode(file_get_contents('php://input'), true));
+                $responseData = 'Mitglied erfolgreich bearbeitet';
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong!';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -30,7 +30,7 @@ class TeamController extends BaseController
         if (!$strErrorDesc) {
             $this->sendOutput(
                 $responseData,
-                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+                array('Content-Type: application/json', 'HTTP/1.1 204 No Content')
             );
         } else {
             $this->sendOutput(

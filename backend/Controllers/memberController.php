@@ -8,9 +8,7 @@ class MemberController extends BaseController
         $this->repo = new DBRepository();
     }
 
-    /**
-     * "/member/list" Endpoint - Get list of members
-     */
+    // get list of members
     public function listAction()
     {
         $strErrorDesc = '';
@@ -43,6 +41,7 @@ class MemberController extends BaseController
         }
     }
 
+    // edit member
     public function putAction()
     {
         $strErrorDesc = '';
@@ -75,6 +74,7 @@ class MemberController extends BaseController
         }
     }
 
+    // delete member
     public function deleteAction($id)
     {
         $strErrorDesc = '';
@@ -107,6 +107,7 @@ class MemberController extends BaseController
         }
     }
 
+    // member mapping
     private function mapMembers($input)
     {
         $result = array();

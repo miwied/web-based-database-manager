@@ -75,17 +75,21 @@ class DBRepository
         return $this->db->queryWithParams($sql, [$mi_id]);
     }
 
-    // #player / team
+    // #team
     public function getTeamName($ma_id)
     {
         $sql = "SELECT teamname FROM mannschaft WHERE ma_id = ?";
         return $this->db->queryWithParams($sql, [$ma_id]);
     }
 
-    public function putTeamname($teamname)
+    public function putTeamname($teamname, $ma_id)
     {
+        $sqlUpdateMember = "UPDATE mannschaft SET teamname = ? WHERE ma_id = ?";
+        $this->db->executeWithParams($sqlUpdateMember, [$teamname, $ma_id]);
     }
 
+
+    // #player
     public function getPlayerTeamInfo($mi_id)
     {
         $sql = "SELECT ma_id FROM spieler WHERE mi_id = ?";

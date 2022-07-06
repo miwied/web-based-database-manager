@@ -28,23 +28,74 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 
-if ((isset($uri[2]) && ($uri[2] != 'member' && $uri[2] != 'basicFee'))) {
+// all valid endpoint - uris
+$validUris = array('member', 'basicFee', 'sport', 'team');
+
+// function to check if the endpoint (uri[2]) is set and valid
+function checkIfUriIsValid() {
+    global $validUris;
+    global $uri;
+
+    if(isset($uri[2]))
+    {
+        foreach($validUris as $validUri)
+        {
+            if($uri[2] == $validUri) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+function throw404Error() {
     header("HTTP/1.1 404 Not Found");
     exit();
 }
 
+// throw error if uri is invalid also if uri[3] is not set we can't do anything
+if (!checkIfUriIsValid() || !isset($uri[3])) {
+    throw404Error();
+}
+
+// member endpoint handling
 if ($uri[2] == 'member') {
     require_once PROJECT_ROOT_PATH . "/Controllers/memberController.php";
     $memberController = new MemberController();
-    if ($uri[3] == 'edit') {
-        $memberController->putAction();
-    } else if ($uri[3] == 'get') {
-        $memberController->listAction();
-    } else if ($uri[3] == 'delete' && isset($uri[4])) {
-        $memberController->deleteAction($uri[4]);
-    } else {
-        header("HTTP/1.1 404 Not Found");
-        exit();
+
+    switch ($uri[3]) {
+        case 'edit':
+            $memberController->putAction();
+            break;
+        case 'get':
+            $memberController->listAction();
+            break;
+        case 'delete':
+            if(isset($uri[4])) $memberController->deleteAction($uri[4]);
+            else throw404Error();  
+            break;
+        default:
+            throw404Error();    
+    }
+}
+
+// team endpoint handling
+if ($uri[2] == 'team') {
+    require_once PROJECT_ROOT_PATH . "/Controllers/teamController.php";
+    $teamController = new TeamController();
+
+    switch ($uri[3]) {
+        // case 'delete':
+        //     $teamController->deleteAction();
+        //     break;
+        // case 'create':
+        //     $teamController->listAction();
+        //     break;
+        case 'edit':
+          $teamController->putAction();
+            break;
+        default:
+            throw404Error();  
     }
 }
 
