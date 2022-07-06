@@ -74,16 +74,22 @@ class DBRepository
     }
 
     // #team
-    public function getTeamname($ma_id)
-    {
-        $sql = "SELECT teamname FROM mannschaft WHERE ma_id = ?";
-        return $this->db->queryWithParams($sql, [$ma_id]);
-    }
-
     public function createTeam($team)
     {
         $sql = "INSERT into mannschaft(sa_id, teamname) VALUES (?,?)";
         $this->db->executeWithParams($sql, [$team["sportsId"], $team["name"]]);
+    }
+
+    public function getTeam()
+    {
+        $sql = "SELECT * FROM mannschaft";
+        return $this->db->query($sql);
+    }
+
+    public function getTeamname($ma_id)
+    {
+        $sql = "SELECT teamname FROM mannschaft WHERE ma_id = ?";
+        return $this->db->queryWithParams($sql, [$ma_id]);
     }
 
     public function putTeamname($team)
@@ -103,6 +109,12 @@ class DBRepository
     {
         $sql = "INSERT into sportart(abteilung, beitrag, mi_id) VALUES (?,?,?)";
         $this->db->executeWithParams($sql, [$sport["name"], $sport["fee"], $sport["leaderId"]]);
+    }
+
+    public function getSport()
+    {
+        $sql = "SELECT * FROM sportart";
+        return $this->db->query($sql);
     }
 
     public function putSport($sport)

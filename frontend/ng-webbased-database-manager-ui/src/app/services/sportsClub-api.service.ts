@@ -26,9 +26,15 @@ export class SportsClubApiService {
     this.loginUrl = 'http://localhost/login.php';
   }
 
-  getAuth() {}
-
-  async setHttpOptions() {}
+  setHttpOptions() {
+    let token = this.getToken();
+    if (token) {
+      this.httpOptions.headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      });
+    }
+  }
 
   //addMember noch hinzufügen
 
@@ -58,7 +64,7 @@ export class SportsClubApiService {
     this.httpClient.post<ISport[]>(url, sport, this.httpOptions);
   }
 
-  updateSport( sport: ISport) :void {
+  updateSport(sport: ISport): void {
     let url = `${this.indexUrl}/sport/edit`;
     this.httpClient.put<any>(url, sport, this.httpOptions);
   }
@@ -67,7 +73,7 @@ export class SportsClubApiService {
     this.httpClient.delete(url, this.httpOptions);
   }
 
-  createTeamTeams(team : ITeam): void {
+  createTeamTeams(team: ITeam): void {
     let url = `${this.indexUrl}/team/create`;
     this.httpClient.post(url, team, this.httpOptions);
   }

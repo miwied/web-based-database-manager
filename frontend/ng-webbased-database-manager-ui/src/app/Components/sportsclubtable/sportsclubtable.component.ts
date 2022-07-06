@@ -1,4 +1,9 @@
-import { AfterViewInit,AfterContentInit, Component, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  AfterContentInit,
+  Component,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,7 +23,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   templateUrl: './sportsclubtable.component.html',
   styleUrls: ['./sportsclubtable.component.css'],
 })
-export class SportsclubtableComponent implements AfterViewInit, AfterContentInit {
+export class SportsclubtableComponent
+  implements AfterViewInit, AfterContentInit
+{
   displayedColumns: string[] = [
     'memberId',
     'firstName',
@@ -27,10 +34,10 @@ export class SportsclubtableComponent implements AfterViewInit, AfterContentInit
     'city',
     'gender',
     'isPlayer',
+    'playerTeamName',
     'isTrainer',
     'teamname',
     'sports',
-    'playerTeamName',
     'fee',
     'action_btn',
   ];
@@ -48,14 +55,11 @@ export class SportsclubtableComponent implements AfterViewInit, AfterContentInit
   ) {}
 
   ngAfterViewInit(): void {
-      
-
+    this.sportClubService.setHttpOptions();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.sportClubService.getMembers().subscribe({
       next: (data) => {
-        console.log(data);
-
         this.dataSource.data = data;
       },
     });
@@ -63,7 +67,6 @@ export class SportsclubtableComponent implements AfterViewInit, AfterContentInit
 
   ngAfterContentInit() {
     const helper = new JwtHelperService();
-
     var decodedToken = helper.decodeToken<any>(
       this.sportClubService.getToken()?.toString()
     );
@@ -73,7 +76,6 @@ export class SportsclubtableComponent implements AfterViewInit, AfterContentInit
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

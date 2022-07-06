@@ -1,8 +1,10 @@
 <?php
 
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 require __DIR__ . "/bootstrap.php";
+require_once PROJECT_ROOT_PATH . "/vendor/autoload.php";
 
 // Allow from any origin
 if (isset($_SERVER['HTTP_ORIGIN'])) {
@@ -24,38 +26,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
+$headers = getallheaders();
+if (!array_key_exists('Authorization', $headers)) {
+    header('HTTP/1.0 400 Bad Request');
+    echo 'No Authorization header found';
+    exit;
+}
+
+if (!preg_match('/Bearer\s(\S+)/', $headers["Authorization"], $matches)) {
+    header('HTTP/1.0 400 Bad Request');
+    echo 'Token not found in request';
+    exit;
+}
+
+$jwt = $matches[1];
+if (!$jwt) {
+    // No token was able to be extracted from the authorization header
+    header('HTTP/1.0 400 Bad Request');
+    exit;
+}
+
+$token = JWT::decode($jwt, new key(JWT_SECRET_KEY, 'HS512'));
+$now = new DateTimeImmutable();
+$serverName = JWT_DOMAIN_NAME;
+
+if (
+    $token->iss !== $serverName ||
+    $token->nbf > $now->getTimestamp() ||
+    $token->exp < $now->getTimestamp()
+) {
+    header('HTTP/1.1 401 Unauthorized');
+    exit;
+}
+
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
-
-// all valid endpoint - uris
-$validUris = array('member', 'basicFee', 'sport', 'team');
-
-// function to check if the endpoint (uri[2]) is set and valid
-function checkIfUriIsValid()
-{
-    global $validUris;
-    global $uri;
-
-    if (isset($uri[2])) {
-        foreach ($validUris as $validUri) {
-            if ($uri[2] == $validUri) {
-                return true;
-            }
-        }
-        return false;
-    }
-}
 
 // function for throwing a http 404 error  
 function throw404Error()
 {
     header("HTTP/1.1 404 Not Found");
     exit();
-}
-
-// throw error if uri is invalid also if uri[3] is not set we can't do anything
-if (!checkIfUriIsValid() || !isset($uri[3])) {
-    throw404Error();
 }
 
 // member endpoint handling
@@ -65,7 +76,7 @@ if ($uri[2] == 'member') {
 
     switch ($uri[3]) {
         case 'get':
-            $memberController->listAction();
+            $memberController->getAction();
             break;
         case 'edit':
             $memberController->putAction();
@@ -88,6 +99,9 @@ if ($uri[2] == 'team') {
         case 'create':
             $teamController->createAction();
             break;
+        case 'get':
+            $teamController->getAction();
+            break;
         case 'edit':
             $teamController->putAction();
             break;
@@ -109,6 +123,9 @@ if ($uri[2] == 'sport') {
         case 'create':
             $sportController->createAction();
             break;
+        case 'get':
+            $sportController->getAction();
+            break;
         case 'edit':
             $sportController->putAction();
             break;
@@ -121,29 +138,4 @@ if ($uri[2] == 'sport') {
     }
 }
 
-// $headers = getallheaders();
-// if (!preg_match('/Bearer\s(\S+)/', $headers["Authorization"], $matches)) {
-//     header('HTTP/1.0 400 Bad Request');
-//     echo 'Token not found in request';
-//     exit;
-// }
-
-// $jwt = $matches[1];
-// if (!$jwt) {
-//     // No token was able to be extracted from the authorization header
-//     header('HTTP/1.0 400 Bad Request');
-//     exit;
-// }
-
-// $token = JWT::decode($jwt, JWT_SECRET_KEY, ['HS512']);
-// $now = new DateTimeImmutable();
-// $serverName = "your.domain.name";
-
-// if (
-//     $token->iss !== $serverName ||
-//     $token->nbf > $now->getTimestamp() ||
-//     $token->exp < $now->getTimestamp()
-// ) {
-//     header('HTTP/1.1 401 Unauthorized');
-//     exit;
-// }
+throw404Error();

@@ -87,7 +87,6 @@ class LoginController extends BaseController
         }
     }
 
-    //#TODO PASSWORD PEPPER: https://www.php.net/manual/de/function.password-hash.php#usernotes
     // create users in database
     public function createAction()
     {

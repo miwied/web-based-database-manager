@@ -9,7 +9,7 @@ class MemberController extends BaseController
     }
 
     // get list of members
-    public function listAction()
+    public function getAction()
     {
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
@@ -123,13 +123,13 @@ class MemberController extends BaseController
             $playerTeams = $this->repo->getPlayerTeamInfo($value["mi_id"]);
             $isPlayer = count($playerTeams) > 0;
             $playerTeamId = $isPlayer ? $playerTeams[0]["ma_id"] : null;
-            $playerTeamName = $isPlayer ? $this->repo->getTeamName($playerTeamId) : null;
+            $playerTeamName = $isPlayer ? $this->repo->getTeamname($playerTeamId) : null;
 
             // get info about which team the member is training (if he is a trainer)
             $trainerTeams = $this->repo->getTrainerInfo($value['mi_id']);
             $isTrainer = count($trainerTeams) > 0;
             $trainerTeamId = $isTrainer ? $trainerTeams[0]["ma_id"] : null;
-            $trainerTeamName = $isTrainer ? $this->repo->getTeamName($trainerTeamId) : null;
+            $trainerTeamName = $isTrainer ? $this->repo->getTeamname($trainerTeamId) : null;
 
             // get info about the name of the fee group
             $feeInfo = $this->repo->getBasicFeeInfo($value["gb_id"]);
