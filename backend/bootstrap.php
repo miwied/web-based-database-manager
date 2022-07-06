@@ -8,4 +8,7 @@ require_once PROJECT_ROOT_PATH . "/config.php";
 require_once PROJECT_ROOT_PATH . "/Controllers/baseController.php";
 
 // include the repository file
-require_once PROJECT_ROOT_PATH . "/Repository/dbRepository.php";
+require_once PROJECT_ROOT_PATH . "/Database/repository.php";
+
+// include the dbContext file
+require_once PROJECT_ROOT_PATH . "/Database/dbContext.php";

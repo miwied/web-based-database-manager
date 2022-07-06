@@ -1,6 +1,4 @@
 <?php
-require_once PROJECT_ROOT_PATH . "/dbContext/Database.php";
-
 class DBRepository
 {
     protected $db = null;
@@ -76,7 +74,7 @@ class DBRepository
     }
 
     // #team
-    public function getTeamName($ma_id)
+    public function getTeamname($ma_id)
     {
         $sql = "SELECT teamname FROM mannschaft WHERE ma_id = ?";
         return $this->db->queryWithParams($sql, [$ma_id]);

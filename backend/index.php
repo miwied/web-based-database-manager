@@ -2,7 +2,6 @@
 
 use Firebase\JWT\JWT;
 
-require_once('./vendor/autoload.php');
 require __DIR__ . "/bootstrap.php";
 
 // Allow from any origin
@@ -32,15 +31,14 @@ $uri = explode('/', $uri);
 $validUris = array('member', 'basicFee', 'sport', 'team');
 
 // function to check if the endpoint (uri[2]) is set and valid
-function checkIfUriIsValid() {
+function checkIfUriIsValid()
+{
     global $validUris;
     global $uri;
 
-    if(isset($uri[2]))
-    {
-        foreach($validUris as $validUri)
-        {
-            if($uri[2] == $validUri) {
+    if (isset($uri[2])) {
+        foreach ($validUris as $validUri) {
+            if ($uri[2] == $validUri) {
                 return true;
             }
         }
@@ -49,7 +47,8 @@ function checkIfUriIsValid() {
 }
 
 // function for throwing a http 404 error  
-function throw404Error() {
+function throw404Error()
+{
     header("HTTP/1.1 404 Not Found");
     exit();
 }
@@ -72,11 +71,11 @@ if ($uri[2] == 'member') {
             $memberController->putAction();
             break;
         case 'delete':
-            if(isset($uri[4])) $memberController->deleteAction($uri[4]);
-            else throw404Error();  
+            if (isset($uri[4])) $memberController->deleteAction($uri[4]);
+            else throw404Error();
             break;
         default:
-            throw404Error();    
+            throw404Error();
     }
 }
 
@@ -91,13 +90,13 @@ if ($uri[2] == 'team') {
             break;
         case 'edit':
             $teamController->putAction();
-        break;
+            break;
         case 'delete':
-            if(isset($uri[4])) $teamController->deleteAction($uri[4]);
-            else throw404Error();  
+            if (isset($uri[4])) $teamController->deleteAction($uri[4]);
+            else throw404Error();
             break;
         default:
-            throw404Error();  
+            throw404Error();
     }
 }
 
@@ -112,13 +111,13 @@ if ($uri[2] == 'sport') {
             break;
         case 'edit':
             $sportController->putAction();
-        break;
+            break;
         case 'delete':
-            if(isset($uri[4])) $sportController->deleteAction($uri[4]);
-            else throw404Error();  
+            if (isset($uri[4])) $sportController->deleteAction($uri[4]);
+            else throw404Error();
             break;
         default:
-            throw404Error();  
+            throw404Error();
     }
 }
 
