@@ -68,13 +68,13 @@ if ($uri[2] == 'member') {
         case 'get':
             $memberController->listAction();
             break;
-            case 'edit':
+        case 'edit':
             $memberController->putAction();
             break;
-            case 'delete':
-                if(isset($uri[4])) $memberController->deleteAction($uri[4]);
-                else throw404Error();  
-                break;
+        case 'delete':
+            if(isset($uri[4])) $memberController->deleteAction($uri[4]);
+            else throw404Error();  
+            break;
         default:
             throw404Error();    
     }

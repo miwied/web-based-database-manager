@@ -82,7 +82,7 @@ class TeamController extends BaseController
 
         if (strtoupper($requestMethod) == 'DELETE') {
             try {
-                $this->repo->deleteMember($id);
+                $this->repo->deleteTeam($id);
                 $responseData = 'Mannschaft erfolgreich gelöscht';
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong!';
