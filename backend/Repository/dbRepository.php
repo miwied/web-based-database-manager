@@ -76,6 +76,12 @@ class DBRepository
     }
 
     // #team
+    public function getTeamName($ma_id)
+    {
+        $sql = "SELECT teamname FROM mannschaft WHERE ma_id = ?";
+        return $this->db->queryWithParams($sql, [$ma_id]);
+    }
+
     public function createTeam($team)
     {
         $sql = "INSERT into mannschaft(sa_id, teamname) VALUES (?,?)";
@@ -112,7 +118,7 @@ class DBRepository
         $sql = "DELETE FROM sportart WHERE sa_id = ?";
         $this->db->executeWithParams($sql, [$id]);
     }
-    
+
 
     // #player
     public function getPlayerTeamInfo($mi_id)
