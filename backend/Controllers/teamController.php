@@ -12,11 +12,11 @@ class TeamController extends BaseController
     {
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        echo("nice");
+
         if (strtoupper($requestMethod) == 'PUT') {
             try {
-                $this->repo->putMember(json_decode(file_get_contents('php://input'), true));
-                $responseData = 'Mitglied erfolgreich bearbeitet';
+                $this->repo->putTeamname(json_decode(file_get_contents('php://input'), true));
+                $responseData = 'Teamname erfolgreich bearbeitet';
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong!';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';

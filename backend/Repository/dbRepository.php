@@ -82,12 +82,11 @@ class DBRepository
         return $this->db->queryWithParams($sql, [$ma_id]);
     }
 
-    public function putTeamname($teamname, $ma_id)
+    public function putTeamname($team)
     {
-        $sqlUpdateMember = "UPDATE mannschaft SET teamname = ? WHERE ma_id = ?";
-        $this->db->executeWithParams($sqlUpdateMember, [$teamname, $ma_id]);
+        $sql = "UPDATE mannschaft SET teamname = ? WHERE ma_id = ? AND sa_id = ?";
+        $this->db->executeWithParams($sql, [$team["name"], $team["teamId"], $team["sportsId"]]);
     }
-
 
     // #player
     public function getPlayerTeamInfo($mi_id)

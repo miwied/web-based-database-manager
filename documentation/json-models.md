@@ -1,5 +1,5 @@
 Member:
-<!-- {
+{
   "memberId": "1",
   "firstName": "Gabi",
   "lastName": "Ziegler",
@@ -49,24 +49,19 @@ Member:
       "teamname": "Wettkämpfer"
     }
   ]
-} -->
+}
 
 Sport:
-<!--
 {
   "sportId": "1",
-  "name": "Fußball";
-  "fee": "35";
-  "leaderId": "4";
+  "name": "Fußball",
+  "fee": "35",
+  "leaderId": "4"
 }
--->
 
 Team:
-<!--
 {
-  "teamId": "4";
-  "sportsId": "6";
-  "name": "Die Hurensöhne";
+  "teamId": "4",
+  "sportsId": "6",
+  "name": "ATS Hof West"
 }
--->
-

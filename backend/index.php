@@ -93,7 +93,7 @@ if ($uri[2] == 'team') {
         //     $teamController->listAction();
         //     break;
         case 'edit':
-          $teamController->putAction();
+            $teamController->putAction();
             break;
         default:
             throw404Error();  
