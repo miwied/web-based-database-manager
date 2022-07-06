@@ -29,6 +29,8 @@ class LoginController extends BaseController
         }
     }
 
+
+    //#TODO PASSWORD PEPPER: https://www.php.net/manual/de/function.password-hash.php#usernotes
     // check if inserted password matches the password in database and response with token if so
     public function listAction()
     {

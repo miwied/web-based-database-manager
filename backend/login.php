@@ -30,16 +30,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 
-if ((isset($uri[1]) && ($uri[2] != 'createUser' && $uri[2] != 'getToken')) && isset($uri[2])) {
+// all valid endpoint - uris
+$validUris = array('createUser', 'getToken');
+
+// function to check if the endpoint (uri[2]) is set and valid
+function checkIfUriIsValid() {
+    global $validUris;
+    global $uri;
+
+    if(isset($uri[1]) && isset($uri[2]))
+    {
+        foreach($validUris as $validUri)
+        {
+            if($uri[2] == $validUri) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+// function for throwing a http 404 error  
+function throw404Error() {
     header("HTTP/1.1 404 Not Found");
     exit();
 }
 
+// throw error if uri is invalid
+if (!checkIfUriIsValid()) {
+    throw404Error();
+}
+
 $loginController = new LoginController();
 
-if ($uri[2] == 'createUser') {
-    $loginController->createAction();
-}
-if ($uri[2] == 'getToken') {
-    $loginController->listAction();
+switch ($uri[2]) {
+    case 'createUser':
+        $loginController->createAction();
+        break;
+    case 'getToken':
+        $loginController->listAction();
+        break;
 }
