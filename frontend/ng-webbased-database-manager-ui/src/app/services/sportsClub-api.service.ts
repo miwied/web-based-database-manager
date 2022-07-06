@@ -40,7 +40,7 @@ export class SportsClubApiService {
 
   createMember(member: IMember): void {
     let url = `${this.indexUrl}/member/create/`;
-    this.httpClient.put<any>(url, member, this.httpOptions);
+    this.httpClient.post<any>(url, member, this.httpOptions);
   }
 
   updateMember(member: IMember): void {
@@ -53,58 +53,23 @@ export class SportsClubApiService {
     this.httpClient.delete(url, this.httpOptions);
   }
 
-  getSports(): Observable<ISport[]> {
-    let url = `${this.indexUrl}/sport`;
-    return this.httpClient.get<ISport[]>(url, this.httpOptions);
+  createSport(sport: ISport): void {
+    let url = `${this.indexUrl}/sport/create`;
+    this.httpClient.post<ISport[]>(url, sport, this.httpOptions);
   }
 
-  getSport(sportId: number): Observable<ISport> {
-    let url = `${this.indexUrl}/sport/${sportId}`;
-    return this.httpClient.get<ISport>(url, this.httpOptions);
-  }
-  updateSport(sportId: number, sport: ISport) {
-    let url = `${this.indexUrl}/sport/${sportId}`;
+  updateSport( sport: ISport) :void {
+    let url = `${this.indexUrl}/sport/edit`;
     this.httpClient.put<any>(url, sport, this.httpOptions);
   }
   deleteSport(sportId: number) {
-    let url = `${this.indexUrl}/sport/${sportId}`;
+    let url = `${this.indexUrl}/sport/delete/${sportId}`;
     this.httpClient.delete(url, this.httpOptions);
   }
 
-  getTeams(): Observable<ITeam[]> {
-    let url = `${this.indexUrl}/team`;
-    return this.httpClient.get<ITeam[]>(url, this.httpOptions);
-  }
-
-  getTeam(teamId: number): Observable<ITeam> {
-    let url = `${this.indexUrl}/team/${teamId}`;
-    return this.httpClient.get<ITeam>(url, this.httpOptions);
-  }
-  updateTeam(teamId: number, team: ITeam) {
-    let url = `${this.indexUrl}/team/${teamId}`;
-    this.httpClient.put<any>(url, team, this.httpOptions);
-  }
-  deleteTeam(teamId: number) {
-    let url = `${this.indexUrl}/sport/${teamId}`;
-    this.httpClient.delete(url, this.httpOptions);
-  }
-
-  getBasicFees(): Observable<IBasicFee[]> {
-    let url = `${this.indexUrl}/basicfee`;
-    return this.httpClient.get<IBasicFee[]>(url, this.httpOptions);
-  }
-
-  getBasicFee(basicfeeId: number): Observable<IBasicFee> {
-    let url = `${this.indexUrl}/basicfee/${basicfeeId}`;
-    return this.httpClient.get<IBasicFee>(url, this.httpOptions);
-  }
-  updateBasicFee(basicfeeId: number, basicfee: IBasicFee) {
-    let url = `${this.indexUrl}/basicfee/${basicfeeId}`;
-    this.httpClient.put<any>(url, basicfee, this.httpOptions);
-  }
-  deleteBasicFee(basicfeeId: number) {
-    let url = `${this.indexUrl}/basicfee/${basicfeeId}`;
-    this.httpClient.delete(url, this.httpOptions);
+  createTeamTeams(team : ITeam): void {
+    let url = `${this.indexUrl}/team/create`;
+    this.httpClient.post(url, team, this.httpOptions);
   }
 
   //userLogin

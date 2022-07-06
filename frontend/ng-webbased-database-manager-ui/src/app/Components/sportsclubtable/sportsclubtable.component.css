@@ -1,3 +1,67 @@
+
+.mat-column-memberId{
+  flex: none;
+    width: 5%;
+}
+
+.mat-column-firstName {
+  flex: none;
+  width: 15%;
+}
+.mat-column-lastName {
+  flex: none;
+  width: 15%;
+}
+
+.mat-column-zipCode {
+  flex: none;
+  width: 10%;
+}
+.mat-column-city {
+  flex: none;
+  width: 10%;
+}
+
+.mat-column-gender {
+  flex: none;
+  width: 5%;
+}
+
+.mat-column-isPlayer {
+  flex: none;
+  width: 7%;
+}
+
+.mat-column-isTrainer {
+  flex: none;
+  width: 7%;
+}
+
+.mat-column-teamname {
+  flex: none;
+  width: 10%;
+}
+
+.mat-column-sports {
+  flex: none;
+  width: 5%;
+}
+
+.mat-column-playerTeamName {
+  flex: none;
+  width: 7%;
+}
+
+.mat-column-fee {
+  flex: none;
+  width: 15%;
+}
+
+.mat-column-action_btn {
+  flex: none;
+  width: 10%;
+}
+
 .class_action_btn{
   display: flex;
   justify-content: center;
