@@ -48,6 +48,7 @@ function checkIfUriIsValid() {
     }
 }
 
+// function for throwing a http 404 error  
 function throw404Error() {
     header("HTTP/1.1 404 Not Found");
     exit();
