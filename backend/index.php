@@ -101,6 +101,27 @@ if ($uri[2] == 'team') {
     }
 }
 
+// sport endpoint handling
+if ($uri[2] == 'sport') {
+    require_once PROJECT_ROOT_PATH . "/Controllers/sportController.php";
+    $sportController = new SportController();
+
+    switch ($uri[3]) {
+        case 'create':
+            $sportController->createAction();
+            break;
+        case 'edit':
+            $sportController->putAction();
+        break;
+        case 'delete':
+            if(isset($uri[4])) $sportController->deleteAction($uri[4]);
+            else throw404Error();  
+            break;
+        default:
+            throw404Error();  
+    }
+}
+
 // $headers = getallheaders();
 // if (!preg_match('/Bearer\s(\S+)/', $headers["Authorization"], $matches)) {
 //     header('HTTP/1.0 400 Bad Request');

@@ -94,6 +94,26 @@ class DBRepository
         $this->db->executeWithParams($sql, [$id]);
     }
 
+    // #sport
+    public function createSport($sport)
+    {
+        $sql = "INSERT into sportart(abteilung, beitrag, mi_id) VALUES (?,?,?)";
+        $this->db->executeWithParams($sql, [$sport["name"], $sport["fee"], $sport["leaderId"]]);
+    }
+
+    public function putSport($sport)
+    {
+        $sql = "UPDATE sportart SET abteilung = ?, beitrag = ?, mi_id = ?  WHERE sa_id = ?";
+        $this->db->executeWithParams($sql, [$sport["name"], $sport["fee"], $sport["leaderId"], $sport["sportId"]]);
+    }
+
+    public function deleteSport($id)
+    {
+        $sql = "DELETE FROM sportart WHERE sa_id = ?";
+        $this->db->executeWithParams($sql, [$id]);
+    }
+    
+
     // #player
     public function getPlayerTeamInfo($mi_id)
     {
