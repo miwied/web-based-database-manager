@@ -1,11 +1,11 @@
 # Projektarbeit „Webseite und Datenbank für einen Sportverein“
-### Anmerkungen:
+### Anmerkungen
  - Gruppennote – Individualnote stehen im Verhältnis 50 -50
  - Jedes Gruppenmitglied ist für mindestens eine Seite / ein Formular verantwortlich
  - Jeder muss Quelltext zum Projekt beitragen!
   
 ### Bewertungskriterien – 090322v01
-**(Anforderungen / Dokumente / Funktionsfähige Teilergebnisse)**
+(Anforderungen / Dokumente / Funktionsfähige Teilergebnisse)
 | | |
 |--|--|
 | ***Login*** | • Der Nutzer soll sich anmelden können.<br/><br/>• Die Anmeldedaten werden anhand einer Tabelle der Datenbank überprüft.<br/> <br/>• Die Nutzerdaten werden **sicher** (d.h. nicht im Klartext!) in der Datenbank hinterlegt.<br/><br/> • Bei erfolgreicher Authentifizierung soll eine **Session** erzeugt werden, so dass der Nutzer auf andere Seiten wechseln kann.<br/><br/> • Die Eingabe falscher Anmeldedaten soll zu einer Fehlermeldung führen.<br/><br/> • **Alle weiteren Seiten sollen nur erreicht werden können, wenn sich der Nutzer erfolgreich angemeldet hat!** |
