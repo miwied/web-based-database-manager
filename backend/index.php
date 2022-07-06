@@ -65,16 +65,16 @@ if ($uri[2] == 'member') {
     $memberController = new MemberController();
 
     switch ($uri[3]) {
-        case 'edit':
-            $memberController->putAction();
-            break;
         case 'get':
             $memberController->listAction();
             break;
-        case 'delete':
-            if(isset($uri[4])) $memberController->deleteAction($uri[4]);
-            else throw404Error();  
+            case 'edit':
+            $memberController->putAction();
             break;
+            case 'delete':
+                if(isset($uri[4])) $memberController->deleteAction($uri[4]);
+                else throw404Error();  
+                break;
         default:
             throw404Error();    
     }
@@ -86,14 +86,14 @@ if ($uri[2] == 'team') {
     $teamController = new TeamController();
 
     switch ($uri[3]) {
-        // case 'delete':
-        //     $teamController->deleteAction();
-        //     break;
         // case 'create':
         //     $teamController->listAction();
         //     break;
         case 'edit':
-            $teamController->putAction();
+        $teamController->putAction();
+        break;
+        case 'delete':
+            $teamController->deleteAction();
             break;
         default:
             throw404Error();  
