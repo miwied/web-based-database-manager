@@ -1,155 +1,67 @@
-<h1>Neuen Nutzer anlegen</h1>
-<div class="line"></div>
+<div class="title">
+Neuen Nutzer hinzufügen
+    <div class="line"></div>
+</div>
 
-<form class="edit-member-form">
-  <div>
-    <mat-form-field class="edit-member-input" appearance="fill">
-      <mat-label>Vorname</mat-label>
-      <input
-        type="name"
-        matInput
-        [formControl]="editNameMemberFormControl"
-        [errorStateMatcher]="matcher"
-        placeholder="Max"
-      />
-      <mat-error
-        *ngIf="
-          editNameMemberFormControl.hasError('name') &&
-          !editNameMemberFormControl.hasError('required')
-        "
-      >
-        Bitte gebe einen gültigen Vornamen ein.
-      </mat-error>
-      <mat-error *ngIf="editNameMemberFormControl.hasError('required')">
-        Name wird benötigt
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field class="edit-member-input" appearance="fill">
-      <mat-label>Nachname</mat-label>
-      <input
-        type="surname"
-        matInput
-        [formControl]="editSurnameMemberFormControl"
-        [errorStateMatcher]="matcher"
-        placeholder="Mustermann"
-      />
-      <mat-error
-        *ngIf="
-          editSurnameMemberFormControl.hasError('name') &&
-          !editSurnameMemberFormControl.hasError('required')
-        "
-      >
-        Bitte gebe einen gültigen Nachnamen ein.
-      </mat-error>
-      <mat-error *ngIf="editSurnameMemberFormControl.hasError('required')">
-        Nachname wird benötigt
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <hr />
-  <div>
-    <mat-form-field class="edit-member-input" appearance="fill">
-      <mat-label>PLZ</mat-label>
-      <input
-        type="plz"
-        matInput
-        [formControl]="editZipcodeMemberFormControl"
-        [errorStateMatcher]="matcher"
-        placeholder="12345"
-      />
-      <mat-error
-        *ngIf="
-          editZipcodeMemberFormControl.hasError('name') &&
-          !editZipcodeMemberFormControl.hasError('required')
-        "
-      >
-        Bitte geben Sie eine gültige PLZ ein.
-      </mat-error>
-      <mat-error *ngIf="editZipcodeMemberFormControl.hasError('required')">
-        PLZ wird benötigt
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field class="edit-member-input" appearance="fill">
-      <mat-label>Ort</mat-label>
-      <input
-        type="ort"
-        matInput
-        [formControl]="editLocationMemberFormControl"
-        [errorStateMatcher]="matcher"
-        placeholder="Musterstadt"
-      />
-      <mat-error
-        *ngIf="
-          editLocationMemberFormControl.hasError('name') &&
-          !editLocationMemberFormControl.hasError('required')
-        "
-      >
-        Bitte geben Sie einen gültigen Ort ein.
-      </mat-error>
-      <mat-error *ngIf="editLocationMemberFormControl.hasError('required')">
-        Ort wird benötigt
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <hr>
-  <div>
-    <mat-form-field class="edit-member-input" appearance="fill">
-      <mat-label>Geschlecht</mat-label>
-      <mat-select [formControl]="editGenderMemberFormControl" required>
-        <mat-option>--</mat-option>
-        <mat-option *ngFor="let gender of genders" [value]="gender">
-          {{ gender }}
-        </mat-option>
-      </mat-select>
-      <mat-error
-        *ngIf="
-          editGenderMemberFormControl.hasError('name') &&
-          !editGenderMemberFormControl.hasError('required')
-        "
-      >
-        Bitte wähle ein Geschlecht aus.
-      </mat-error>
-      <mat-error *ngIf="editGenderMemberFormControl.hasError('required')">
-        Geschlecht wird benötigt
-      </mat-error>
-    </mat-form-field>
-  </div>
-    <div>
-    <mat-form-field class="edit-member-input" appearance="fill">
-      <mat-label>Sportart</mat-label>
-      <mat-select [formControl]="editSportMemberFormControl" required>
-        <mat-option>--</mat-option>
-        <mat-option *ngFor="let sport of sports" [value]="sport">
-          {{ sport }}
-        </mat-option>
-      </mat-select>
-      <mat-error
-        *ngIf="
-          editSportMemberFormControl.hasError('name') &&
-          !editSportMemberFormControl.hasError('required')
-        "
-      >
-        Bitte wähle eine Sportart aus.
-      </mat-error>
-      <mat-error *ngIf="editSportMemberFormControl.hasError('required')">
-        Sportart wird benötigt
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <hr>
-<div>
-   <button
- (click)="addMember()"
-    class="addNewUser"
-    mat-flat-button
-    color="accent"
-   
-  >
-  Hinzufügen
-  </button>
-  </div>
+<form class="example-form">
+  <mat-form-field class="left-side" appearance="fill">
+    <mat-label>Vorname</mat-label>
+    <input matInput [formControl]="nameFormControl" placeholder="">
+    <mat-error *ngIf="nameFormControl.hasError('required')">
+      Vorname wird <strong>benötigt</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="right-side" appearance="fill">
+    <mat-label>Nachname</mat-label>
+    <input matInput [formControl]="surnameFormControl" placeholder="">
+    <mat-error *ngIf="surnameFormControl.hasError('required')">
+      Nachname wird <strong>benötigt</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="left-side" appearance="fill">
+    <mat-label>PLZ</mat-label>
+    <input matInput [formControl]="plzFormControl" placeholder="">
+    <mat-error *ngIf="plzFormControl.hasError('required')">
+      PLZ wird <strong>benötigt</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="right-side" appearance="fill">
+    <mat-label>Ort</mat-label>
+    <input matInput [formControl]="placeFormControl" placeholder="">
+    <mat-error *ngIf="placeFormControl.hasError('required')">
+      Ort wird <strong>benötigt</strong>
+    </mat-error>
+  </mat-form-field>
+
+<mat-form-field class="left-side" appearance="fill">
+  <mat-label>Geschlecht</mat-label>
+  <mat-select [formControl]="gender" required>
+    <mat-option>--</mat-option>
+    <mat-option *ngFor="let animal of gendersArray" [value]="animal">
+      {{animal}}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="gender.hasError('required')">Bitte wähle ein Geschlecht aus</mat-error>
+  <mat-hint>{{gender.value?.sound}}</mat-hint>
+</mat-form-field>
+
+<mat-form-field   class="right-side" appearance="fill">
+  <mat-label>Sportarten</mat-label>
+  <mat-select [formControl]="selectFormControl" multiple>
+    <mat-select-trigger>
+      {{selectFormControl.value?.[0] || ''}}
+      <span *ngIf="(selectFormControl.value?.length || 0) > 1" class="example-additional-selection">
+        (+{{(selectFormControl.value?.length || 0) - 1}} {{selectFormControl.value?.length === 2 ? 'other' : 'others'}})
+      </span>
+    </mat-select-trigger>
+    <mat-option *ngFor="let topping of sportsArray" [value]="topping">{{topping}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+  <button class="add" mat-flat-button color="accent" (click)="addMember()"> Hinzufügen </button>
 </form>
+
