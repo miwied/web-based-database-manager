@@ -10,7 +10,7 @@
 (mit nachfolgendem Json-Objekt als Body übergeben im Request (ohne memberId))
 - **getMembers**<br />
 'http://localhost/index.php/member/get'<br />
-- **putMember** <br />
+- **putMember**<br />
 'http://localhost/index.php/member/edit' <br />
 (mit nachfolgendem Json-Objekt als Body übergeben im Request)
 - **deleteMember**<br />
