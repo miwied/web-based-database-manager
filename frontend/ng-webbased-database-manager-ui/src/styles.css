@@ -10,3 +10,24 @@ body{
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.snackbar-success {
+    color: white;
+    background: #40bd5d;
+}
+
+.snackbar-error {
+    background: #bd4040;
+}
+
+.snackbar-error .mat-button {
+    color: white;
+    background: #7e2c2c;
+    font-size: 15px;
+}
+
+.snackbar-success .mat-button {
+    color: white;
+    background: #308f46;
+    font-size: 15px;
+}

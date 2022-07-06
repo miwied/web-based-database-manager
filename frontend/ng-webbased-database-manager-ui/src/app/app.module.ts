@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // components
 import { AppComponent } from './app.component';
@@ -54,6 +55,7 @@ import { MatTableModule } from '@angular/material/table';
     MatButtonModule,
     MatSelectModule,
     MatButtonToggleModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

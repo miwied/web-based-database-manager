@@ -54,9 +54,9 @@ export class SportsClubApiService {
     this.httpClient.put<any>(url, member, this.httpOptions);
   }
 
-  deleteMember(memberId: number) {
+  deleteMember(memberId: number): Observable<any> {
     let url = `${this.indexUrl}/member/delete/${memberId}`;
-    this.httpClient.delete(url, this.httpOptions);
+    return this.httpClient.delete(url, this.httpOptions);
   }
 
   createSport(sport: ISport): void {

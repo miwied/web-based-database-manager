@@ -3,6 +3,7 @@ import {
   AfterContentInit,
   Component,
   ViewChild,
+  OnInit,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,6 +16,7 @@ import { MemberAddDialogComponent } from '../member-add-dialog/member-add-dialog
 import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 import { IMember } from 'src/app/models/member';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { DataSharingService } from 'src/app/services/data-sharing.service';
 /**
  * @title Data table with sorting, pagination, and filtering.
  */
@@ -24,7 +26,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   styleUrls: ['./sportsclubtable.component.css'],
 })
 export class SportsclubtableComponent
-  implements AfterViewInit, AfterContentInit
+  implements AfterViewInit, AfterContentInit, OnInit
 {
   displayedColumns: string[] = [
     'memberId',
@@ -51,14 +53,20 @@ export class SportsclubtableComponent
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private sportClubService: SportsClubApiService
+    private apiService: SportsClubApiService,
+    private dataSharingService: DataSharingService
   ) {}
 
+  ngOnInit(): void {
+    this.apiService.setHttpOptions();
+    this.dataSharingService.loadData();
+  }
+
   ngAfterViewInit(): void {
-    this.sportClubService.setHttpOptions();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.sportClubService.getMembers().subscribe({
+
+    this.dataSharingService.getTableData().subscribe({
       next: (data) => {
         this.dataSource.data = data;
       },
@@ -68,7 +76,7 @@ export class SportsclubtableComponent
   ngAfterContentInit() {
     const helper = new JwtHelperService();
     var decodedToken = helper.decodeToken<any>(
-      this.sportClubService.getToken()?.toString()
+      this.apiService.getToken()?.toString()
     );
     this.tokenUserName = decodedToken.userName;
   }
@@ -82,7 +90,7 @@ export class SportsclubtableComponent
   }
 
   Logout() {
-    this.sportClubService.deleteToken();
+    this.apiService.deleteToken();
     this.router.navigate([`login`]);
     alert('Du wirst ausgeloggt.');
   }
@@ -94,8 +102,12 @@ export class SportsclubtableComponent
     });
   }
 
-  openDeleteDialog() {
-    const dialogRef = this.dialog.open(MemberDeleteDialogComponent);
+  openDeleteDialog(row: any) {
+    const dialogRef = this.dialog.open(MemberDeleteDialogComponent, {
+      data: {
+        member: row,
+      },
+    });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });

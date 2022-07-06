@@ -4,6 +4,8 @@ import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 import { MatDialog } from '@angular/material/dialog';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,7 +18,8 @@ export class LoginComponent implements OnInit {
     private dialog: MatDialog,
     private fb: FormBuilder,
     private dataService: SportsClubApiService,
-    private router: Router
+    private router: Router,
+    private snackBarService: SnackBarService
   ) {
     this.angForm = this.fb.group({
       username: [
@@ -27,7 +30,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   postdata(angForm: FormGroup) {
     switch (this.selection) {
@@ -46,7 +49,12 @@ export class LoginComponent implements OnInit {
             },
             error: (e) => {
               console.log(e);
-              alert('User name or password is incorrect');
+              this.snackBarService.showSnackBar(
+                'Nutzername oder Passwort ungültig',
+                'start',
+                'bottom',
+                'snackbar-error'
+              );
             },
           });
         break;
@@ -54,10 +62,22 @@ export class LoginComponent implements OnInit {
         this.dataService
           .userRegistration(angForm.value.username, angForm.value.password)
           .subscribe({
-            next: (value) => {
-              alert('Nutzer angelegt');
-            },
-            error: (error) => error.status == 409 ? alert('User existiert bereits') : console.log(error)
+            next: (value) =>
+              this.snackBarService.showSnackBar(
+                'Nutzer angelegt',
+                'start',
+                'bottom',
+                'snackbar-success'
+              ),
+            error: (error) =>
+              error.status == 409
+                ? this.snackBarService.showSnackBar(
+                    'Nutzer bereits angelegt',
+                    'start',
+                    'bottom',
+                    'snackbar-error'
+                  )
+                : console.log(error),
           });
         break;
       default:
