@@ -100,7 +100,6 @@ export class SportsclubtableComponent
       'bottom',
       'snackbar-neutral'
     );
-    // alert('Du wirst ausgeloggt.');
   }
 
   openEditDialog() {
