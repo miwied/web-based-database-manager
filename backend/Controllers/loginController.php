@@ -16,9 +16,6 @@ class LoginController
         $queryStringParams = $this->getQueryStringParams();
         $this->username = $queryStringParams["username"];
         $this->password = $queryStringParams["password"];
-        var_dump($this->username);
-        var_dump($this->password);
-
         $this->repo = new DBRepository();
         $this->httpHelper = new HttpExtensionMethods();
         $this->requestMethod = $_SERVER["REQUEST_METHOD"];

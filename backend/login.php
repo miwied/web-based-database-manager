@@ -23,8 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
-$this->httpHelper = new HttpExtensionMethods();
-$uri = $this->httpHelper->getUriSegments();
+$uri = HttpExtensionMethods::getUriSegments();
 
 // function for throwing a http 404 error  
 function throw404Error()
@@ -34,15 +33,12 @@ function throw404Error()
 }
 
 if (isset($uri[1]) && isset($uri[2])) {
-    echo ("test1");
     $loginController = new LoginController();
     switch ($uri[2]) {
         case 'createUser':
-
             $loginController->createAction();
             break;
         case 'getToken':
-            echo ("test2");
             $loginController->listAction();
             break;
         default:

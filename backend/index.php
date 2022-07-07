@@ -59,8 +59,7 @@ if (
     exit;
 }
 
-$this->httpHelper = new HttpExtensionMethods();
-$uri = $this->httpHelper->getUriSegments();
+$uri = HttpExtensionMethods::getUriSegments();
 
 // function for throwing a http 404 error  
 function throw404Error()

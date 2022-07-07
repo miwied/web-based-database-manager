@@ -6,7 +6,7 @@ class HttpExtensionMethods
      * 
      * @return array
      */
-    public function getUriSegments()
+    public static function getUriSegments()
     {
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $uri = explode('/', $uri);
@@ -20,7 +20,7 @@ class HttpExtensionMethods
      * @param mixed  $data
      * @param string $httpHeader
      */
-    public function sendOutput($data, $httpHeaders = array())
+    public static function sendOutput($data, $httpHeaders = array())
     {
         header_remove('Set-Cookie');
 
