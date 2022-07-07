@@ -11,8 +11,8 @@ export interface IMember {
   sports: any;
   isPlayer: boolean;
   playerTeamId: number;
-  playerTeamName: string;
+  playerTeamName: any;
   isTrainer: boolean;
   trainerTeamId: number;
-  trainerTeamName: string;
+  trainerTeamName: any;
 }

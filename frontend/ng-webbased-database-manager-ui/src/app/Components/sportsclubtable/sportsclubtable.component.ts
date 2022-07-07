@@ -39,7 +39,7 @@ export class SportsclubtableComponent
     'isPlayer',
     'playerTeamName',
     'isTrainer',
-    'teamname',
+    'trainerTeamName',
     'sports',
     'fee',
     'action_btn',
@@ -128,4 +128,3 @@ export class SportsclubtableComponent
     });
   }
 }
-
