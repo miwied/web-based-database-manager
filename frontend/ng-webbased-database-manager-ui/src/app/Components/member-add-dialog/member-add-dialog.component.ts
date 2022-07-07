@@ -12,8 +12,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { IBasicFee } from 'src/app/models/basicFees';
 import { IMember } from 'src/app/models/member';
 import { ISport } from 'src/app/models/sport';
+import { ITeam } from 'src/app/models/team';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -31,8 +33,12 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./member-add-dialog.component.css'],
 })
 export class MemberAddDialogComponent implements OnInit, AfterContentInit {
+
+  
   gendersArray: string[] = ['Männlich', 'Weiblich', 'Divers'];
   sports: ISport[];
+  teams: ITeam[];
+  basicFees: IBasicFee[];
 
   nameFormControl = new FormControl('', [
     Validators.required,
@@ -60,14 +66,19 @@ export class MemberAddDialogComponent implements OnInit, AfterContentInit {
     Validators.maxLength(30),
   ]);
   gender = new FormControl(null, Validators.required);
-
+  basicFee = new FormControl(null, Validators.required);
+  sport = new FormControl(null, Validators.required);
+  team = new FormControl(null, Validators.required);
   selectFormControl = new FormControl([Validators.required]);
+
   matcher = new MyErrorStateMatcher();
 
   constructor(private dataSharingService: DataSharingService) {}
 
   ngOnInit(): void {
     this.dataSharingService.loadSportsData();
+    this.dataSharingService.loadBasicFeeData();
+    this.dataSharingService.loadTeamsData();
   }
 
   ngAfterContentInit(): void {
@@ -75,6 +86,19 @@ export class MemberAddDialogComponent implements OnInit, AfterContentInit {
       next: (teamData) => {
         console.log(teamData);
         this.sports = teamData;
+      },
+    });
+    this.dataSharingService.getBasicFeeData().subscribe({
+      next: (basicFeeData) => {
+        console.log(basicFeeData);
+        this.basicFees = basicFeeData;
+      },
+    });
+
+    this.dataSharingService.getTeamsData().subscribe({
+      next: (teamsData) => {
+        console.log(teamsData);
+        this.teams = teamsData;
       },
     });
   }

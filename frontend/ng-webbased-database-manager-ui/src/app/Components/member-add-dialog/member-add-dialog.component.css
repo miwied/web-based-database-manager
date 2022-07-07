@@ -29,9 +29,27 @@
     margin-bottom: 20px;
 }
 
+.bottom {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.bottom-left {
+    justify-content: flex-start;
+}
+
+.bottom-right {
+    justify-content: flex-end;
+}
+
 .add {
     height: 51.6167px;
     width: 45%;
     background-color: #e26d6d;
-    margin-left: 55%;
+
+}
+
+.example-margin {
+   width: 20px;
 }

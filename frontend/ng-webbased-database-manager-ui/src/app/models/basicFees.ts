@@ -1,5 +1,5 @@
 export interface IBasicFee {
   id: number;
-  group: string;
+  personengruppe: string;
   basicFee: number;
 }

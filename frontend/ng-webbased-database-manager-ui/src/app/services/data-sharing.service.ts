@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { IBasicFee } from '../models/basicFees';
 import { IMember } from '../models/member';
 import { ISport } from '../models/sport';
 import { ITeam } from '../models/team';
@@ -21,6 +22,9 @@ export class DataSharingService {
     new Array()
   );
 
+  basicFeeData$: BehaviorSubject<IBasicFee[]> = new BehaviorSubject<
+    IBasicFee[]
+  >(new Array());
   constructor(private apiService: SportsClubApiService) {}
 
   getTableData(): Observable<IMember[]> {
@@ -80,9 +84,28 @@ export class DataSharingService {
   }
 
   deleteTeam(teamId: number) {
-    let filtered = this.teamsData$.value.filter(
-      (team) => team.id != teamId
-    );
+    let filtered = this.teamsData$.value.filter((team) => team.id != teamId);
     this.teamsData$.next(filtered);
+  }
+
+  getBasicFeeData(): Observable<IBasicFee[]> {
+    const observable = new Observable<IBasicFee[]>();
+    (<any>observable).source = this.basicFeeData$;
+    return observable;
+  }
+
+  loadBasicFeeData() {
+    this.apiService.getBasicFee().subscribe({
+      next: (basicFee: any) => {
+        this.basicFeeData$.next(basicFee);
+      },
+    });
+  }
+
+  deleteBasicFee(basicFeeId: number) {
+    let filtered = this.basicFeeData$.value.filter(
+      (basicFee) => basicFee.id != basicFeeId
+    );
+    this.basicFeeData$.next(filtered);
   }
 }
