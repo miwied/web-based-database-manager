@@ -33,7 +33,7 @@ function throw404Error()
     exit();
 }
 
-if ($uri[1] == 'login' && isset($uri[2]))
+if (isset($uri[1]) && isset($uri[2]))
 {
     $loginController = new LoginController();
     switch ($uri[2]) {
@@ -44,9 +44,12 @@ if ($uri[1] == 'login' && isset($uri[2]))
             $loginController->listAction();
             break;
         default:
-            throw404Error()
-            break;
+            throw404Error();
     }
 }
+else
+{
+    // the uri doesn't match
+    throw404Error();
+}
 
-throw404Error();

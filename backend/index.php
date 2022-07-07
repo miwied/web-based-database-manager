@@ -161,4 +161,5 @@ if ($uri[2] == 'sport') {
     }
 }
 
+// no uri was matching if you get here
 throw404Error();
