@@ -87,6 +87,10 @@ export class SportsClubApiService {
     this.httpClient.post(url, team, this.httpOptions);
   }
 
+  getBasicFee(): Observable<IBasicFee[]>{
+     let url = `${this.indexUrl}/basicFee/get`;
+     return this.httpClient.get<IBasicFee[]>(url, this.httpOptions);
+  }
   //userLogin
   userLogin(username: string, password: string) {
     this.httpOptions.headers = new HttpHeaders({
