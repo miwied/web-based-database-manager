@@ -28,7 +28,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox'; 
-
+import { MatSliderModule } from '@angular/material/slider'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +58,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatButtonToggleModule,
     MatSnackBarModule,
     MatCheckboxModule,
+    MatSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

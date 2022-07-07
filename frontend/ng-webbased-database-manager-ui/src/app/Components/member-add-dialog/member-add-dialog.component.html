@@ -50,7 +50,7 @@
     <mat-hint>{{ gender.value?.sound }}</mat-hint>
   </mat-form-field>
 
-  <mat-form-field class="right-side" appearance="fill">
+  <mat-form-field id="sportFormField" class="right-side" appearance="fill">
     <mat-label>Sportarten</mat-label>
     <mat-select [formControl]="selectFormControl" multiple>
       <mat-select-trigger>
@@ -85,7 +85,11 @@
 
   <mat-form-field class="right-side" appearance="fill">
     <mat-label>Team</mat-label>
-    <mat-select [formControl]="team" required>
+    <mat-select
+     [disabled]="disableTeamSelect"
+      [formControl]="team"
+      required
+    >
       <mat-option>--</mat-option>
       <mat-option *ngFor="let team of teams" [value]="team">
         {{ team.teamname }}
@@ -97,16 +101,16 @@
     <mat-hint>{{ basicFee.value?.sound }}</mat-hint>
   </mat-form-field>
 
-  <div class="bottom">
-    <div class="bottom-left">
-      <mat-checkbox>Spieler</mat-checkbox>
-      <mat-checkbox>Trainer</mat-checkbox>
-    </div>
 
-    <div class="bottom-right">
-      <button class="add" mat-flat-button color="accent" (click)="addMember()">
-        Hinzufügen
-      </button>
-    </div>
+
+  <div>
+
+
+<mat-slider (change)="toggleSlider($event)" min="1" max="3" step="1" value="1"></mat-slider>
+{{sliderValue}}
   </div>
+
+  <button class="add" mat-flat-button color="accent" (click)="addMember()">
+    Hinzufügen
+  </button>
 </form>
