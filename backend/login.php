@@ -23,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = explode('/', $uri);
+$this->httpHelper = new HttpExtensionMethods();
+$uri = $this->httpHelper->getUriSegments();
 
 // function for throwing a http 404 error  
 function throw404Error()
@@ -33,23 +33,22 @@ function throw404Error()
     exit();
 }
 
-if (isset($uri[1]) && isset($uri[2]))
-{
+if (isset($uri[1]) && isset($uri[2])) {
+    echo ("test1");
     $loginController = new LoginController();
     switch ($uri[2]) {
         case 'createUser':
+
             $loginController->createAction();
             break;
         case 'getToken':
+            echo ("test2");
             $loginController->listAction();
             break;
         default:
             throw404Error();
     }
-}
-else
-{
+} else {
     // the uri doesn't match
     throw404Error();
 }
-

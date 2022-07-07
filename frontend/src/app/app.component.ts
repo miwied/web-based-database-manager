@@ -6,7 +6,7 @@ import { SportsClubApiService } from './services/sportsClub-api.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'ng-webbased-database-manager-ui';
+  title = 'frontend';
   loginbtn: boolean;
   logoutbtn: boolean;
 

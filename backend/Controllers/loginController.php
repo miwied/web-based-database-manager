@@ -3,30 +3,31 @@
 use Firebase\JWT\JWT;
 
 require_once PROJECT_ROOT_PATH . "/vendor/autoload.php";
-class LoginController extends BaseController
+class LoginController
 {
-    protected $repo;
+    private $repo;
+    private $httpHelper;
     private $password = '';
     private $username = '';
     private $requestMethod = '';
 
     public function __construct()
     {
+        $queryStringParams = $this->getQueryStringParams();
+        $this->username = $queryStringParams["username"];
+        $this->password = $queryStringParams["password"];
+        var_dump($this->username);
+        var_dump($this->password);
+
         $this->repo = new DBRepository();
+        $this->httpHelper = new HttpExtensionMethods();
         $this->requestMethod = $_SERVER["REQUEST_METHOD"];
     }
 
-    private function setFromQueryParams()
+    private function getQueryStringParams()
     {
-        $arrQueryStringParams = $this->getQueryStringParams();
-        foreach ($arrQueryStringParams as $key => $value) {
-            if ($key == "password") {
-                $this->password = $value;
-            }
-            if ($key == "username") {
-                $this->username = $value;
-            }
-        }
+        parse_str($_SERVER['QUERY_STRING'], $query);
+        return $query;
     }
 
     // check if inserted password matches the password in database and response with token if so
@@ -35,10 +36,10 @@ class LoginController extends BaseController
         if (strtoupper($this->requestMethod) == 'POST') {
             $strErrorDesc = '';
             try {
-                $this->setFromQueryParams();
                 $existingHashFromDb = $this->repo->getPwdByUsername($this->username);
                 $pwdPeppered = hash_hmac("sha256", $this->password, PEPPER);
                 $isPasswordCorrect = password_verify($pwdPeppered, $existingHashFromDb[0]["password"]);
+
                 if ($isPasswordCorrect) {
                     $secret_Key  = JWT_SECRET_KEY;
                     $date   = new DateTimeImmutable();
@@ -74,12 +75,12 @@ class LoginController extends BaseController
 
         // send output
         if (!$strErrorDesc) {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 $responsedata,
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         } else {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
@@ -92,7 +93,6 @@ class LoginController extends BaseController
         if (strtoupper($this->requestMethod) == 'POST') {
             $strErrorDesc = '';
             try {
-                $this->setFromQueryParams();
                 // check if user already exists
                 $usernameCount = $this->repo->getUsernameCount($this->username);
                 $userAlreadyExists = false;
@@ -120,7 +120,7 @@ class LoginController extends BaseController
 
         // send output
         if ($strErrorDesc) {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );

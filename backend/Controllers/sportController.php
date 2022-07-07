@@ -1,5 +1,5 @@
 <?php
-class SportController extends BaseController
+class SportController
 {
     protected $repo;
 

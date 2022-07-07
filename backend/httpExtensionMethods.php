@@ -1,20 +1,12 @@
 <?php
-class BaseController
+class HttpExtensionMethods
 {
-    /**
-     * __call magic method.
-     */
-    public function __call($name, $arguments)
-    {
-        $this->sendOutput('', array('HTTP/1.1 404 Not Found'));
-    }
-
     /**
      * Get URI elements.
      * 
      * @return array
      */
-    protected function getUriSegments()
+    public function getUriSegments()
     {
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $uri = explode('/', $uri);
@@ -23,23 +15,12 @@ class BaseController
     }
 
     /**
-     * Get querystring params.
-     * 
-     * @return array
-     */
-    protected function getQueryStringParams()
-    {
-        parse_str($_SERVER['QUERY_STRING'], $query);
-        return $query;
-    }
-
-    /**
      * Send API output.
      *
      * @param mixed  $data
      * @param string $httpHeader
      */
-    protected function sendOutput($data, $httpHeaders = array())
+    public function sendOutput($data, $httpHeaders = array())
     {
         header_remove('Set-Cookie');
 

@@ -1,11 +1,13 @@
 <?php
-class BasicFeeController extends BaseController
+class BasicFeeController
 {
-    protected $repo;
+    private $repo;
+    private $httpHelper;
 
     public function __construct()
     {
         $this->repo = new DBRepository();
+        $this->httpHelper = new HttpExtensionMethods();
     }
 
     // get list of basicFees
@@ -28,12 +30,12 @@ class BasicFeeController extends BaseController
 
         // send output
         if (!$strErrorDesc) {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 $responseData,
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         } else {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );

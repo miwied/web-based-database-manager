@@ -59,8 +59,8 @@ if (
     exit;
 }
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = explode('/', $uri);
+$this->httpHelper = new HttpExtensionMethods();
+$uri = $this->httpHelper->getUriSegments();
 
 // function for throwing a http 404 error  
 function throw404Error()
@@ -70,8 +70,7 @@ function throw404Error()
 }
 
 // if uri[3] is not set we can't do anything
-if(!isset($uri[3]))
-{
+if (!isset($uri[3])) {
     throw404Error();
 }
 

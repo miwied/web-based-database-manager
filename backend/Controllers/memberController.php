@@ -1,16 +1,19 @@
 <?php
-class MemberController extends BaseController
+class MemberController
 {
-    protected $repo;
+    private $repo;
+    private $httpHelper;
 
     public function __construct()
     {
         $this->repo = new DBRepository();
+        $this->httpHelper = new HttpExtensionMethods();
     }
 
     // create a new member
     public function createAction()
     {
+        $this->httpHelper = new HttpExtensionMethods();
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
 
@@ -29,12 +32,12 @@ class MemberController extends BaseController
 
         // send output
         if (!$strErrorDesc) {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 $responseData,
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         } else {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
@@ -62,12 +65,12 @@ class MemberController extends BaseController
 
         // send output
         if (!$strErrorDesc) {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 $responseData,
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         } else {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
@@ -95,12 +98,12 @@ class MemberController extends BaseController
 
         // send output
         if (!$strErrorDesc) {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 $responseData,
                 array('Content-Type: application/json', 'HTTP/1.1 204 No Content')
             );
         } else {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
@@ -128,12 +131,12 @@ class MemberController extends BaseController
 
         // send output
         if (!$strErrorDesc) {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 $responseData,
                 array('Content-Type: application/json', 'HTTP/1.1 204 No Content')
             );
         } else {
-            $this->sendOutput(
+            $this->httpHelper->sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );

@@ -1,5 +1,5 @@
 <?php
-class TeamController extends BaseController
+class TeamController
 {
     protected $repo;
 
