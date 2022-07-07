@@ -10,11 +10,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // components
 import { AppComponent } from './app.component';
-import { MemberAddDialogComponent } from './Components/member-add-dialog/member-add-dialog.component';
+import { MemberInputDialogComponent } from './Components/member-input-dialog/member-input-dialog.component';
 import { MemberDeleteDialogComponent } from './Components/member-delete-dialog/member-delete-dialog.component';
 import { LoginComponent } from './Components/login/login.component';
 import { MemberEditDialogComponent } from './Components/member-edit-dialog/member-edit-dialog.component';
-import { SportsclubtableComponent } from './Components/sportsclubtable/sportsclubtable.component';
+import { SportsClubTableComponent } from './Components/sports-club-table/sports-club-table.component';
 
 // angular material
 import { MatButtonModule } from '@angular/material/button';
@@ -27,16 +27,16 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { MatCheckboxModule } from '@angular/material/checkbox'; 
-import { MatSliderModule } from '@angular/material/slider'; 
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSliderModule } from '@angular/material/slider';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SportsclubtableComponent,
+    SportsClubTableComponent,
     MemberEditDialogComponent,
     MemberDeleteDialogComponent,
-    MemberAddDialogComponent,
+    MemberInputDialogComponent,
   ],
   imports: [
     RouterModule.forRoot(APP_ROUTES),

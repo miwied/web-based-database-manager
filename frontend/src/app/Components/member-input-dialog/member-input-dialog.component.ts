@@ -5,6 +5,8 @@ import {
   AfterContentInit,
   OnChanges,
   SimpleChanges,
+  Inject,
+  OnDestroy,
 } from '@angular/core';
 import {
   FormControl,
@@ -18,6 +20,9 @@ import { IMember } from 'src/app/models/member';
 import { ISport } from 'src/app/models/sport';
 import { ITeam } from 'src/app/models/team';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
     control: FormControl | null,
@@ -29,11 +34,13 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: 'app-member-add-dialog',
-  templateUrl: './member-add-dialog.component.html',
-  styleUrls: ['./member-add-dialog.component.css'],
+  selector: 'app-member-input-dialog',
+  templateUrl: './member-input-dialog.component.html',
+  styleUrls: ['./member-input-dialog.component.css'],
 })
-export class MemberAddDialogComponent implements OnInit, AfterContentInit {
+export class MemberInputDialogComponent
+  implements OnInit, AfterContentInit, OnDestroy
+{
   gendersArray: string[] = ['Männlich', 'Weiblich', 'Divers'];
   sports: ISport[];
   teams: ITeam[];
@@ -42,115 +49,97 @@ export class MemberAddDialogComponent implements OnInit, AfterContentInit {
   playerChecked: boolean = false;
   trainerChecked: boolean = false;
   sliderValue: string = 'Nichts';
-  disableTeamSelect : boolean = true;
+  disableTeamSelect: boolean = true;
+  member: IMember = {} as IMember;
+  submitType: string;
 
-  nameFormControl = new FormControl('', [
-    Validators.required,
+  firstNameFormControl = new FormControl(null, [
     Validators.pattern('^[a-zA-Z]+$'),
     Validators.minLength(2),
     Validators.maxLength(28), // Google sagt max 28
   ]);
-  surnameFormControl = new FormControl('', [
-    Validators.required,
+  lastNameFormControl = new FormControl(null, [
     Validators.pattern('^[a-zA-Z]+$'),
     Validators.minLength(2),
     Validators.maxLength(28),
   ]);
-  plzFormControl = new FormControl('', [
-    Validators.required,
+  zipCodeFormControl = new FormControl(null, [
     Validators.pattern('^[0-9]*$'),
     Validators.minLength(4),
     Validators.maxLength(6),
   ]);
 
-  placeFormControl = new FormControl('', [
-    Validators.required,
+  cityFormControl = new FormControl(null, [
     Validators.pattern('^[a-zA-Z]+$'),
     Validators.minLength(2),
     Validators.maxLength(30),
   ]);
-  gender = new FormControl(null, Validators.required);
-  basicFee = new FormControl(null, Validators.required);
-  sport = new FormControl();
-  team = new FormControl();
+  genderFormControl = new FormControl(null);
+  basicFeeFormControl = new FormControl(null);
+  teamFormControl = new FormControl();
 
+  sportFormControl = new FormControl();
 
-  selectFormControl = new FormControl([Validators.required]);
+  matcherFormControl = new MyErrorStateMatcher();
 
-  matcher = new MyErrorStateMatcher();
+  sportsDataSubscription: Subscription;
 
-  constructor(private dataSharingService: DataSharingService) {}
+  constructor(
+    private dataSharingService: DataSharingService,
+    @Inject(MAT_DIALOG_DATA) private data: any
+  ) {}
 
   ngOnInit(): void {
     this.dataSharingService.loadSportsData();
     this.dataSharingService.loadBasicFeeData();
     this.dataSharingService.loadTeamsData();
+    this.member = this.data.member;
+    console.log(this.member);
   }
 
   ngAfterContentInit(): void {
-    this.dataSharingService.getSportsData().subscribe({
-      next: (teamData) => {
-        console.log(teamData);
-        this.sports = teamData;
-      },
-    });
+    this.sportsDataSubscription = this.dataSharingService
+      .getSportsData()
+      .subscribe({
+        next: (teamData) => {
+          this.sports = teamData;
+        },
+      });
     this.dataSharingService.getBasicFeeData().subscribe({
       next: (basicFeeData) => {
-        console.log(basicFeeData);
         this.basicFees = basicFeeData;
       },
     });
-
     this.dataSharingService.getTeamsData().subscribe({
       next: (teamsData) => {
-        console.log(teamsData);
         this.teams = teamsData;
       },
     });
   }
 
-  toggleSlider(event: any) {
-    
-    if ((event.value == 1)) {
-      this.disableTeamSelect = true; 
-      this.sliderValue = 'Nichts';
-    }
-    if ((event.value == 2)) {
-        this.disableTeamSelect = false; 
-      this.sliderValue = 'Spieler';
-    }
-    if ((event.value == 3)) {
-        this.disableTeamSelect = false; 
-      this.sliderValue = 'Trainer';
-    }
-    console.log(event);
+  ngOnDestroy(): void {
+    this.sportsDataSubscription.unsubscribe();
   }
 
-  addMember() {
-    if (
-      !this.nameFormControl.valid ||
-      !this.surnameFormControl.valid ||
-      !this.plzFormControl.valid ||
-      !this.placeFormControl.valid ||
-      !this.gender.valid ||
-      !this.selectFormControl.valid ||
-      !this.basicFee.valid ||
-      !this.sport.valid ||
-      !this.disableTeamSelect
-    ) {
-      //   let member: IMember = {
-      //     firstName: this.nameFormControl.value,
-      //     lastName: this.surnameFormControl.value,
-      //     zipCode: this.plzFormControl.value,
-      //     city: this.placeFormControl.value,
+  toggleSlider(event: any) {
+    if (event.value == 1) {
+      this.disableTeamSelect = true;
+      this.sliderValue = 'Nichts';
+    }
+    if (event.value == 2) {
+      this.disableTeamSelect = false;
+      this.sliderValue = 'Spieler';
+    }
+    if (event.value == 3) {
+      this.disableTeamSelect = false;
+      this.sliderValue = 'Trainer';
+    }
+  }
 
-      //  }
+  submit(f: NgForm) {
+    console.log(f.value);
+    if (true) {
       console.log('Bitte fülle alle Felder aus.');
-    } else {
-
-          !this.sport.valid ||
-      !this.disableTeamSelect
-      console.log('Member angelegt');
     }
   }
 }

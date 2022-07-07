@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MemberEditDialogComponent } from '../member-edit-dialog/member-edit-dialog.component';
 import { MemberDeleteDialogComponent } from '../member-delete-dialog/member-delete-dialog.component';
-import { MemberAddDialogComponent } from '../member-add-dialog/member-add-dialog.component';
+import { MemberInputDialogComponent } from '../member-input-dialog/member-input-dialog.component';
 import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 import { IMember } from 'src/app/models/member';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -22,11 +22,11 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
  * @title Data table with sorting, pagination, and filtering.
  */
 @Component({
-  selector: 'app-sportsclubtable',
-  templateUrl: './sportsclubtable.component.html',
-  styleUrls: ['./sportsclubtable.component.css'],
+  selector: 'app-sports-club-table',
+  templateUrl: './sports-club-table.component.html',
+  styleUrls: ['./sports-club-table.component.css'],
 })
-export class SportsclubtableComponent
+export class SportsClubTableComponent
   implements AfterViewInit, AfterContentInit, OnInit
 {
   displayedColumns: string[] = [
@@ -103,26 +103,26 @@ export class SportsclubtableComponent
     );
   }
 
-  openEditDialog() {
-    const dialogRef = this.dialog.open(MemberEditDialogComponent);
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-
   openDeleteDialog(row: any) {
     const dialogRef = this.dialog.open(MemberDeleteDialogComponent, {
       data: {
         member: row,
       },
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
-  openAddDialog() {
-    const dialogRef = this.dialog.open(MemberAddDialogComponent);
+  openInputDialog(type: string, row?: string) {
+    const dialogRef = this.dialog.open(MemberInputDialogComponent, {
+      data: {
+        member: row,
+        type: type,
+      },
+      autoFocus: false,
+    });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });

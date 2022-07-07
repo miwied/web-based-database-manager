@@ -23,7 +23,7 @@
     class="addNewUser"
     mat-flat-button
     color="accent"
-    (click)="openAddDialog()"
+    (click)="openInputDialog('add')"
   >
     Neuen Nutzer anlegen
   </button>
@@ -159,7 +159,7 @@
         <td mat-cell *matCellDef="let row">{{ row.fee + " €" }}</td>
       </ng-container>
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Aktionen</th>
+        <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
           <div class="actions-container">
             <button
@@ -174,7 +174,7 @@
               mat-button
               color="primary"
               aria-label="Nutzer bearbeiten"
-              (click)="openEditDialog()"
+              (click)="openInputDialog('edit', row)"
             >
               <mat-icon>edit</mat-icon>
             </button>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './Components/login/login.component';
-import { SportsclubtableComponent } from './Components/sportsclubtable/sportsclubtable.component';
+import { SportsClubTableComponent } from './Components/sports-club-table/sports-club-table.component';
 import { AuthguardGuard } from './authguard.guard';
 
 export const APP_ROUTES: Routes = [
@@ -16,7 +16,7 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'table',
-    component: SportsclubtableComponent,
+    component: SportsClubTableComponent,
     canActivate: [AuthguardGuard],
   },
 ];
