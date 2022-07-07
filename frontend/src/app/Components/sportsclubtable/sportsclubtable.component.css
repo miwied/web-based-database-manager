@@ -1,22 +1,22 @@
-
-.mat-column-memberId{
+.mat-column-memberId {
   flex: none;
-    width: 5%;
+  width: 5%;
 }
 
 .mat-column-firstName {
   flex: none;
-  width: 15%;
+  width: 10%;
 }
 .mat-column-lastName {
   flex: none;
-  width: 15%;
+  width: 8%;
 }
 
 .mat-column-zipCode {
   flex: none;
-  width: 10%;
+  width: 7%;
 }
+
 .mat-column-city {
   flex: none;
   width: 10%;
@@ -24,7 +24,7 @@
 
 .mat-column-gender {
   flex: none;
-  width: 5%;
+  width: 8%;
 }
 
 .mat-column-isPlayer {
@@ -32,49 +32,49 @@
   width: 7%;
 }
 
+.mat-column-playerTeamName {
+  flex: none;
+  width: 10%;
+}
+
 .mat-column-isTrainer {
   flex: none;
   width: 7%;
 }
 
-.mat-column-teamname {
+.mat-column-trainerTeamName {
   flex: none;
   width: 10%;
 }
 
 .mat-column-sports {
   flex: none;
-  width: 5%;
-}
-
-.mat-column-playerTeamName {
-  flex: none;
-  width: 7%;
+  width: 10%;
 }
 
 .mat-column-fee {
   flex: none;
-  width: 15%;
+  width: 8%;
 }
 
-.mat-column-action_btn {
+.mat-column-actions {
   flex: none;
   width: 10%;
 }
 
-.class_action_btn{
+.actions-container {
   display: flex;
   justify-content: center;
-  width: 120px;
+  align-items: center;
 }
 
-.header{
+.header {
   background-color: #9e9e9e;
   height: 50px;
   margin-bottom: 20px;
 }
 
-.header .left{
+.header .left {
   float: left;
   height: 50px;
   margin-left: 70px;
@@ -82,7 +82,7 @@
   font-size: large;
 }
 
-.header .right{
+.header .right {
   float: right;
   height: 50px;
   margin-right: 70px;
@@ -99,7 +99,7 @@
   display: grid;
   grid-template-columns: 30vw;
   grid-template-rows: 5vh;
-  grid-template-areas: 
+  grid-template-areas:
     "top"
     "middle"
     "bottom";
@@ -114,7 +114,7 @@
   grid-area: middle;
   width: 175px;
   height: 1px;
-  border-top: 2px solid #CC6969;
+  border-top: 2px solid #cc6969;
   margin-top: 13px;
   position: absolute;
 }
@@ -129,7 +129,7 @@
   grid-area: bottom;
   width: fit-content;
   height: 51.6167px;
-  float:left;
+  float: left;
   background-color: #e26d6d;
 }
 
@@ -154,16 +154,16 @@
   cursor: pointer;
 } */
 
-.mat-elevation-z8{
+.mat-elevation-z8 {
   width: 100%;
 }
 
-.mat-header-cell{
+.mat-header-cell {
   color: black;
 }
 
 table {
-    width: 100%;
+  width: 100%;
 }
 
 .Table {
@@ -172,24 +172,24 @@ table {
   padding-bottom: 5%;
   width: 80%;
 }
-  
-td, th {
+
+td,
+th {
   width: 33%;
 }
 
 tr .header {
   background-color: #9e9e9e;
-  
 }
 
-.footer{
+.footer {
   margin-top: 20px;
   text-align: center;
   background-color: #e26d6d;
   height: 50px;
   font-size: large;
-  position:fixed;
-  bottom:0px;
+  position: fixed;
+  bottom: 0px;
   width: 100%;
 }
 .middle {

@@ -42,7 +42,7 @@ export class SportsclubtableComponent
     'trainerTeamName',
     'sports',
     'fee',
-    'action_btn',
+    'actions',
   ];
   dataSource: MatTableDataSource<IMember> = new MatTableDataSource();
   tokenUserName: string;
