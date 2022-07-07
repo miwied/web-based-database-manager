@@ -29,12 +29,12 @@ class TeamController
 
         // send output
         if (!$strErrorDesc) {
-            $this->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 $responseData,
                 array('Content-Type: application/json', 'HTTP/1.1 204 No Content')
             );
         } else {
-            $this->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
@@ -61,12 +61,12 @@ class TeamController
 
         // send output
         if (!$strErrorDesc) {
-            $this->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 $responseData,
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         } else {
-            $this->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
@@ -94,12 +94,12 @@ class TeamController
 
         // send output
         if (!$strErrorDesc) {
-            $this->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 $responseData,
                 array('Content-Type: application/json', 'HTTP/1.1 204 No Content')
             );
         } else {
-            $this->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
@@ -127,12 +127,12 @@ class TeamController
 
         // send output
         if (!$strErrorDesc) {
-            $this->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 $responseData,
                 array('Content-Type: application/json', 'HTTP/1.1 204 No Content')
             );
         } else {
-            $this->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );

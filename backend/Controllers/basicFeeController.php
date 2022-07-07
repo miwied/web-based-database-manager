@@ -2,12 +2,10 @@
 class BasicFeeController
 {
     private $repo;
-    private $httpHelper;
 
     public function __construct()
     {
         $this->repo = new DBRepository();
-        $this->httpHelper = new HttpExtensionMethods();
     }
 
     // get list of basicFees
@@ -30,12 +28,12 @@ class BasicFeeController
 
         // send output
         if (!$strErrorDesc) {
-            $this->httpHelper->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 $responseData,
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         } else {
-            $this->httpHelper->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );

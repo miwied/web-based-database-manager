@@ -6,7 +6,6 @@ require_once PROJECT_ROOT_PATH . "/vendor/autoload.php";
 class LoginController
 {
     private $repo;
-    private $httpHelper;
     private $password = '';
     private $username = '';
     private $requestMethod = '';
@@ -17,7 +16,6 @@ class LoginController
         $this->username = $queryStringParams["username"];
         $this->password = $queryStringParams["password"];
         $this->repo = new DBRepository();
-        $this->httpHelper = new HttpExtensionMethods();
         $this->requestMethod = $_SERVER["REQUEST_METHOD"];
     }
 
@@ -72,12 +70,12 @@ class LoginController
 
         // send output
         if (!$strErrorDesc) {
-            $this->httpHelper->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 $responsedata,
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         } else {
-            $this->httpHelper->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
@@ -117,7 +115,7 @@ class LoginController
 
         // send output
         if ($strErrorDesc) {
-            $this->httpHelper->sendOutput(
+            HttpExtensionMethods::sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
