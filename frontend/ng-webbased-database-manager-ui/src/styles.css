@@ -32,6 +32,7 @@ body {
 }
 
 .snackbar-error {
+    color: white;
     background: #bd4040;
 }
 

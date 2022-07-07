@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
             error: (error) =>
               error.status == 409
                 ? this.snackBarService.showSnackBar(
-                    'Nutzer bereits angelegt',
+                    'Nutzer ist bereits angelegt',
                     'start',
                     'bottom',
                     'snackbar-error'
