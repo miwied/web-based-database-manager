@@ -10,8 +10,7 @@ _create-object:_
       "zipCode": "95326",
       "city": "Kulmbach",
       "gender": "w",
-      "feeGroup": "Erwachsene",
-      "fee": "75.00",
+      "feeId": "1",
       "sportIds": [
         {
           "sa_id": "3"
@@ -24,9 +23,9 @@ _create-object:_
         }
       ],
       "isPlayer": false,
-      "playerTeamId": null,
+      "playerTeamId": "0",
       "isTrainer": true,
-      "trainerTeamId": "4",
+      "trainerTeamId": "3",
     }
 
 _edit-object:_

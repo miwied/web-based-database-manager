@@ -17,7 +17,7 @@ import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 import { IMember } from 'src/app/models/member';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
-import { _isNumberValue } from '@angular/cdk/coercion';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 /**
  * @title Data table with sorting, pagination, and filtering.
  */
@@ -55,7 +55,8 @@ export class SportsclubtableComponent
     public dialog: MatDialog,
     private router: Router,
     private apiService: SportsClubApiService,
-    private dataSharingService: DataSharingService
+    private dataSharingService: DataSharingService,
+    private snackBarService: SnackBarService
   ) {}
 
   ngOnInit(): void {
@@ -65,26 +66,6 @@ export class SportsclubtableComponent
   }
 
   ngAfterViewInit(): void {
-
-
-// this.dataSource.sortingDataAccessor = (
-//   data: any,
-//   sortHeaderId: string
-// ): string | number => {
-//   let value : any = null;
-//   if (sortHeaderId.includes('.')) {
-//     const ids = sortHeaderId.split('.');
-//     value = data;
-//     ids.forEach(function (x) {
-//       value = value ? value[x] : null;
-//     });
-//   } else {
-//     value = data[sortHeaderId];
-//   }
-//   return _isNumberValue(value) ? Number(value) : value;
-// };
-    
-
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
@@ -114,7 +95,12 @@ export class SportsclubtableComponent
   Logout() {
     this.apiService.deleteToken();
     this.router.navigate([`login`]);
-    alert('Du wirst ausgeloggt.');
+    this.snackBarService.showSnackBar(
+      'Du wurdest abgemeldet',
+      'left',
+      'bottom',
+      'snackbar-neutral'
+    );
   }
 
   openEditDialog() {

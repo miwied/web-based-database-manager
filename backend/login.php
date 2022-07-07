@@ -3,10 +3,6 @@
 require __DIR__ . "/bootstrap.php";
 require_once PROJECT_ROOT_PATH . "/Controllers/loginController.php";
 
-// header('Access-Control-Allow-Origin: *');
-// header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
-// header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
-
 // Allow from any origin
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
@@ -34,15 +30,14 @@ $uri = explode('/', $uri);
 $validUris = array('createUser', 'getToken');
 
 // function to check if the endpoint (uri[2]) is set and valid
-function checkIfUriIsValid() {
+function checkIfUriIsValid()
+{
     global $validUris;
     global $uri;
 
-    if(isset($uri[1]) && isset($uri[2]))
-    {
-        foreach($validUris as $validUri)
-        {
-            if($uri[2] == $validUri) {
+    if (isset($uri[1]) && isset($uri[2])) {
+        foreach ($validUris as $validUri) {
+            if ($uri[2] == $validUri) {
                 return true;
             }
         }
@@ -51,7 +46,8 @@ function checkIfUriIsValid() {
 }
 
 // function for throwing a http 404 error  
-function throw404Error() {
+function throw404Error()
+{
     header("HTTP/1.1 404 Not Found");
     exit();
 }

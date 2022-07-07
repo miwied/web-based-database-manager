@@ -28,4 +28,10 @@ class Database
     {
         $this->pdo->prepare($sql)->execute($params);
     }
+
+    public function executeWithParamsAndGetLastInsertedId($sql, $params)
+    {
+        $this->pdo->prepare($sql)->execute($params);
+        return $this->pdo->lastInsertId();
+    }
 }

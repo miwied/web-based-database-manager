@@ -69,6 +69,20 @@ function throw404Error()
     exit();
 }
 
+// basicFee endpoint handling
+if ($uri[2] == 'basicFee') {
+    require_once PROJECT_ROOT_PATH . "/Controllers/basicFeeController.php";
+    $basicFeeController = new BasicFeeController();
+
+    switch ($uri[3]) {
+        case 'get':
+            $basicFeeController->getAction();
+            break;
+        default:
+            throw404Error();
+    }
+}
+
 // member endpoint handling
 if ($uri[2] == 'member') {
     require_once PROJECT_ROOT_PATH . "/Controllers/memberController.php";
