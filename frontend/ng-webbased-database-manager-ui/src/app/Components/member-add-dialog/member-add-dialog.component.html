@@ -57,9 +57,15 @@ Neuen Nutzer hinzufügen
         (+{{(selectFormControl.value?.length || 0) - 1}} {{selectFormControl.value?.length === 2 ? 'other' : 'others'}})
       </span>
     </mat-select-trigger>
-    <mat-option *ngFor="let topping of sportsArray" [value]="topping">{{topping}}</mat-option>
+    <mat-option *ngFor="let sport of sports" [value]="sport.abteilung">
+     
+            {{ sport.abteilung }}
+    
+    </mat-option>
   </mat-select>
 </mat-form-field>
+
+
 
 
   <button class="add" mat-flat-button color="accent" (click)="addMember()"> Hinzufügen </button>

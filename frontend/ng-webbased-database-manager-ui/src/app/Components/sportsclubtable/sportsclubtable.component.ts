@@ -17,6 +17,7 @@ import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 import { IMember } from 'src/app/models/member';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
+import { _isNumberValue } from '@angular/cdk/coercion';
 /**
  * @title Data table with sorting, pagination, and filtering.
  */
@@ -60,9 +61,30 @@ export class SportsclubtableComponent
   ngOnInit(): void {
     this.apiService.setHttpOptions();
     this.dataSharingService.loadData();
+    this.dataSharingService.loadSportsData();
   }
 
   ngAfterViewInit(): void {
+
+
+// this.dataSource.sortingDataAccessor = (
+//   data: any,
+//   sortHeaderId: string
+// ): string | number => {
+//   let value : any = null;
+//   if (sortHeaderId.includes('.')) {
+//     const ids = sortHeaderId.split('.');
+//     value = data;
+//     ids.forEach(function (x) {
+//       value = value ? value[x] : null;
+//     });
+//   } else {
+//     value = data[sortHeaderId];
+//   }
+//   return _isNumberValue(value) ? Number(value) : value;
+// };
+    
+
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
@@ -120,3 +142,4 @@ export class SportsclubtableComponent
     });
   }
 }
+

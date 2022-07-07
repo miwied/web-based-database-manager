@@ -59,6 +59,11 @@ export class SportsClubApiService {
     return this.httpClient.delete(url, this.httpOptions);
   }
 
+  getSports(): Observable<ISport[]> {
+    let url = `${this.indexUrl}/sport/get`;
+    return this.httpClient.get<ISport[]>(url, this.httpOptions);
+  }
+
   createSport(sport: ISport): void {
     let url = `${this.indexUrl}/sport/create`;
     this.httpClient.post<ISport[]>(url, sport, this.httpOptions);
@@ -73,7 +78,11 @@ export class SportsClubApiService {
     this.httpClient.delete(url, this.httpOptions);
   }
 
-  createTeamTeams(team: ITeam): void {
+  getTeams(): Observable<ITeam[]> {
+    let url = `${this.indexUrl}/team/get`;
+    return this.httpClient.get<ITeam[]>(url, this.httpOptions);
+  }
+  createTeams(team: ITeam): void {
     let url = `${this.indexUrl}/team/create`;
     this.httpClient.post(url, team, this.httpOptions);
   }

@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterContentInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormControl,
   FormGroupDirective,
@@ -7,7 +13,8 @@ import {
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { IMember } from 'src/app/models/member';
-
+import { ISport } from 'src/app/models/sport';
+import { DataSharingService } from 'src/app/services/data-sharing.service';
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
     control: FormControl | null,
@@ -23,9 +30,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './member-add-dialog.component.html',
   styleUrls: ['./member-add-dialog.component.css'],
 })
-export class MemberAddDialogComponent implements OnInit {
+export class MemberAddDialogComponent implements OnInit, AfterContentInit {
   gendersArray: string[] = ['Männlich', 'Weiblich', 'Divers'];
-  sportsArray: string[] = ['Fußball', 'Handball', 'Strippen'];
+  sports: ISport[];
 
   nameFormControl = new FormControl('', [
     Validators.required,
@@ -57,10 +64,20 @@ export class MemberAddDialogComponent implements OnInit {
   selectFormControl = new FormControl([Validators.required]);
   matcher = new MyErrorStateMatcher();
 
-  constructor() {}
+  constructor(private dataSharingService: DataSharingService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dataSharingService.loadSportsData();
+  }
 
+  ngAfterContentInit(): void {
+    this.dataSharingService.getSportsData().subscribe({
+      next: (teamData) => {
+        console.log(teamData);
+        this.sports = teamData;
+      },
+    });
+  }
   addMember() {
     if (
       !this.nameFormControl.valid ||
@@ -70,14 +87,13 @@ export class MemberAddDialogComponent implements OnInit {
       !this.gender.valid ||
       !this.selectFormControl.valid
     ) {
+      //   let member: IMember = {
+      //     firstName: this.nameFormControl.value,
+      //     lastName: this.surnameFormControl.value,
+      //     zipCode: this.plzFormControl.value,
+      //     city: this.placeFormControl.value,
 
-    //   let member: IMember = {
-    //     firstName: this.nameFormControl.value,
-    //     lastName: this.surnameFormControl.value,
-    //     zipCode: this.plzFormControl.value,
-    //     city: this.placeFormControl.value,
-
-    //  }
+      //  }
       console.log('Bitte fülle alle Felder aus.');
     } else {
       console.log('Member angelegt');

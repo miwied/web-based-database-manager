@@ -1,6 +1,6 @@
 export interface ISport {
   id: number;
-  name: string;
+  abteilung: string;
   fee: number;
   leaderId: number;
 }
