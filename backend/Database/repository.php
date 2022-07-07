@@ -8,6 +8,12 @@ class DBRepository
         $this->db = new Database();
     }
 
+    public function getBasicFees()
+    {
+        $sql = "SELECT * FROM grundbeitrag";
+        return $this->db->query($sql);
+    }
+
     private function getBasicFeeId($feeGroup)
     {
         $sql = "SELECT gb_id FROM grundbeitrag WHERE personengruppe = ?";
@@ -23,11 +29,29 @@ class DBRepository
     // #members
     public function createMember($member)
     {
-        var_dump($member);
-        // get fee id because we only get the fee group from the frontend
-        $feeId = $this->getBasicFeeId($member["feeGroup"]);
-        $sqlCreateMember = "INSERT into mitglied(vorname, nachname, plz, ort, geschlecht, or_id, gb_id) VALUES (?,?,?,?,?,?,?)";
-        $this->db->executeWithParams($sqlCreateMember, [$member["firstName"], $member["lastName"], $member["zipCode"], $member["city"], $member["gender"], 2, $feeId]);
+        // create the member inside table mitglied and get the last inserted id for creating trainer info
+        $sqlCreateMember = "INSERT INTO mitglied(vorname, nachname, plz, ort, geschlecht, or_id, gb_id) VALUES (?,?,?,?,?,?,?)";
+        $memberId = $this->db->executeWithParamsAndGetLastInsertedId($sqlCreateMember, [$member["firstName"], $member["lastName"], $member["zipCode"], $member["city"], $member["gender"], 2, $member["feeId"]]);
+
+        // create the member-trainer association inside table trainer if isTrainer == true
+        if ($member["isTrainer"]) {
+            $sqlCreateTrainer = "INSERT INTO trainer(ma_id, mi_id) VALUES (?,?)";
+            $this->db->executeWithParams($sqlCreateTrainer, [$member["trainerTeamId"], $memberId]);
+        }
+
+        // create the member-player association inside table spieler if isPlayer == true
+        if ($member["isPlayer"]) {
+            $sqlCreatePlayer = "INSERT INTO spieler(ma_id, mi_id) VALUES (?,?)";
+            $this->db->executeWithParams($sqlCreatePlayer, [$member["playerTeamId"], $memberId]);
+        }
+
+        // create the member-sports association inside table mitglied_sportart if array is not empty
+        if (count($member["sportIds"]) > 0) {
+            foreach ($member["sportIds"] as $key => $sportId) {
+                $sqlCreateMemberSport = "INSERT INTO mitglied_sportart(mi_id, sa_id) VALUES(?,?)";
+                $this->db->executeWithParams($sqlCreateMemberSport, [$memberId, $sportId["sa_id"]]);
+            }
+        }
     }
 
     public function getMembers()
@@ -91,7 +115,7 @@ class DBRepository
     // #team
     public function createTeam($team)
     {
-        $sql = "INSERT into mannschaft(sa_id, teamname) VALUES (?,?)";
+        $sql = "INSERT INTO mannschaft(sa_id, teamname) VALUES (?,?)";
         $this->db->executeWithParams($sql, [$team["sportsId"], $team["name"]]);
     }
 
@@ -122,7 +146,7 @@ class DBRepository
     // #sport
     public function createSport($sport)
     {
-        $sql = "INSERT into sportart(abteilung, beitrag, mi_id) VALUES (?,?,?)";
+        $sql = "INSERT INTO sportart(abteilung, beitrag, mi_id) VALUES (?,?,?)";
         $this->db->executeWithParams($sql, [$sport["name"], $sport["fee"], $sport["leaderId"]]);
     }
 
@@ -168,7 +192,7 @@ class DBRepository
 
     public function putLoginData($username, $password)
     {
-        $sql = "INSERT into login_data(username, password) VALUES (?,?)";
+        $sql = "INSERT INTO login_data(username, password) VALUES (?,?)";
         $this->db->executeWithParams($sql, [$username, $password]);
     }
 

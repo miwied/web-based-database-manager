@@ -5,6 +5,11 @@
 - **getToken**<br/>
   'http://localhost/login.php/getToken?username=USERNAME&password=PASSWORD'
 
+### BasicFee:
+
+- **getBasicFees**<br/>
+  'http://localhost/index.php/basicFee/get'<br/>
+
 ### Member:
 
 - **createMember**<br/>
