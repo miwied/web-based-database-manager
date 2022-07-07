@@ -93,8 +93,7 @@ class LoginController extends BaseController
             $strErrorDesc = '';
             try {
                 $this->setFromQueryParams();
-                $pwdPeppered = hash_hmac("sha256", $this->password, PEPPER);
-                $hashToStoreInDb = password_hash($pwdPeppered, PASSWORD_BCRYPT);
+                // check if user already exists
                 $usernameCount = $this->repo->getUsernameCount($this->username);
                 $userAlreadyExists = false;
 
@@ -103,6 +102,8 @@ class LoginController extends BaseController
                 }
 
                 if (!$userAlreadyExists) {
+                    $pwdPeppered = hash_hmac("sha256", $this->password, PEPPER);
+                    $hashToStoreInDb = password_hash($pwdPeppered, PASSWORD_BCRYPT);
                     $this->repo->putLoginData($this->username, $hashToStoreInDb);
                 } else {
                     $strErrorDesc = 'User already exists :)';

@@ -69,6 +69,12 @@ function throw404Error()
     exit();
 }
 
+// if uri[3] is not set we can't do anything
+if(!isset($uri[3]))
+{
+    throw404Error();
+}
+
 // basicFee endpoint handling
 if ($uri[2] == 'basicFee') {
     require_once PROJECT_ROOT_PATH . "/Controllers/basicFeeController.php";
