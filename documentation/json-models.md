@@ -1,7 +1,4 @@
-**'create-objects' are always the same as the 'edit-objects' only without the primary key.**
-
 ### Member:
-
 _create-object:_
 
     {
@@ -83,6 +80,13 @@ _edit-object:_
     }
 
 ### Sport:
+_create-object:_
+
+    {
+      "name": "Fußball",
+      "fee": "35",
+      "leaderId": "4"
+    }
 
 _edit-object:_
 
@@ -94,6 +98,12 @@ _edit-object:_
     }
 
 ### Team:
+_create-object:_
+
+    {
+      "sportsId": "6",
+      "name": "ATS Hof West"
+    }
 
 _edit-object:_
 

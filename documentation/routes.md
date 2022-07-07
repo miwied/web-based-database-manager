@@ -8,7 +8,7 @@
 ### BasicFee:
 
 - **getBasicFees**<br/>
-  'http://localhost/index.php/basicFee/get'<br/>
+  'http://localhost/index.php/basicFee/get'
 
 ### Member:
 
