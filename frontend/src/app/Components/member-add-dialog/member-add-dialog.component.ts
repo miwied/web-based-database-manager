@@ -1,3 +1,4 @@
+import { temporaryAllocator } from '@angular/compiler/src/render3/view/util';
 import {
   Component,
   OnInit,
@@ -33,12 +34,15 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./member-add-dialog.component.css'],
 })
 export class MemberAddDialogComponent implements OnInit, AfterContentInit {
-
-  
   gendersArray: string[] = ['Männlich', 'Weiblich', 'Divers'];
   sports: ISport[];
   teams: ITeam[];
   basicFees: IBasicFee[];
+  checked = false;
+  playerChecked: boolean = false;
+  trainerChecked: boolean = false;
+  sliderValue: string = 'Nichts';
+  disableTeamSelect : boolean = true;
 
   nameFormControl = new FormControl('', [
     Validators.required,
@@ -67,8 +71,10 @@ export class MemberAddDialogComponent implements OnInit, AfterContentInit {
   ]);
   gender = new FormControl(null, Validators.required);
   basicFee = new FormControl(null, Validators.required);
-  sport = new FormControl(null, Validators.required);
-  team = new FormControl(null, Validators.required);
+  sport = new FormControl();
+  team = new FormControl();
+
+
   selectFormControl = new FormControl([Validators.required]);
 
   matcher = new MyErrorStateMatcher();
@@ -102,6 +108,24 @@ export class MemberAddDialogComponent implements OnInit, AfterContentInit {
       },
     });
   }
+
+  toggleSlider(event: any) {
+    
+    if ((event.value == 1)) {
+      this.disableTeamSelect = true; 
+      this.sliderValue = 'Nichts';
+    }
+    if ((event.value == 2)) {
+        this.disableTeamSelect = false; 
+      this.sliderValue = 'Spieler';
+    }
+    if ((event.value == 3)) {
+        this.disableTeamSelect = false; 
+      this.sliderValue = 'Trainer';
+    }
+    console.log(event);
+  }
+
   addMember() {
     if (
       !this.nameFormControl.valid ||
@@ -109,7 +133,10 @@ export class MemberAddDialogComponent implements OnInit, AfterContentInit {
       !this.plzFormControl.valid ||
       !this.placeFormControl.valid ||
       !this.gender.valid ||
-      !this.selectFormControl.valid
+      !this.selectFormControl.valid ||
+      !this.basicFee.valid ||
+      !this.sport.valid ||
+      !this.disableTeamSelect
     ) {
       //   let member: IMember = {
       //     firstName: this.nameFormControl.value,
@@ -120,6 +147,9 @@ export class MemberAddDialogComponent implements OnInit, AfterContentInit {
       //  }
       console.log('Bitte fülle alle Felder aus.');
     } else {
+
+          !this.sport.valid ||
+      !this.disableTeamSelect
       console.log('Member angelegt');
     }
   }
