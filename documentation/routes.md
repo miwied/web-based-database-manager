@@ -24,6 +24,8 @@
 - **createSport**<br/>
   'http://localhost/index.php/sport/create'<br/>
   (mit nachfolgendem Json-Objekt als Body übergeben im Request (ohne sportId))
+- **getSport**<br/>
+  'http://localhost/index.php/sport/get'<br/>
 - **putSport**<br/>
   http://localhost/index.php/sport/edit'<br/>
   (mit nachfolgendem JSON-Objekt als Body übergeben im Request)
@@ -36,6 +38,8 @@
 - **createTeam**<br/>
   'http://localhost/index.php/team/create'<br/>
   (mit nachfolgendem JSON-Objekt als Body übergeben im Request (ohne teamId))
+- **getTeam**<br/>
+  'http://localhost/index.php/team/get'<br/>
 - **putTeam**<br/>
   'http://localhost/index.php/team/edit'<br/>
   (mit nachfolgendem JSON-Objekt als Body übergeben im Request)
