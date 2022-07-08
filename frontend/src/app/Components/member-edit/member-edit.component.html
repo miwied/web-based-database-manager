@@ -1,75 +1,139 @@
-<div class="container">
-  <div class="items-left">
-    <mat-form-field appearance="outline">
-      <mat-label>{{ this.member.firstName }}</mat-label>
-      <input matInput placeholder="Neuer Vorname" />
-      <mat-hint>Vorname</mat-hint>
-    </mat-form-field>
+<form [formGroup]="editForm" class="example-form" (ngSubmit)="submit(editForm)">
+  <div class="container">
+    <div class="items-left">
+      <div class="items-left-top">
+        <mat-form-field appearance="outline" name="firstName">
+          <mat-label>{{ this.member.firstName }}</mat-label>
+          <input
+            matInput
+            placeholder="Neuer Vorname"
+            formControlName="firstName"
+          />
+          <mat-hint>Vorname</mat-hint>
+          <!-- <mat-error *ngIf="editForm.get('firstName')?.errors">
+            Vorname wird <strong>benötigt</strong>
+          </mat-error> -->
+        </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>{{ this.member.lastName }}</mat-label>
-      <input matInput placeholder="Neuer Nachname" />
-      <mat-hint>Nachname</mat-hint>
-    </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ this.member.lastName }}</mat-label>
+          <input
+            matInput
+            placeholder="Neuer Nachname"
+            formControlName="lastName"
+          />
+          <mat-hint>Nachname</mat-hint>
+        </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>{{ this.member.zipCode }}</mat-label>
-      <input matInput placeholder="Neue PLZ" />
-      <mat-hint>PLZ</mat-hint>
-    </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ this.member.zipCode }}</mat-label>
+          <input matInput placeholder="Neue PLZ" formControlName="zipCode" />
+          <mat-hint>PLZ</mat-hint>
+        </mat-form-field>
+      </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>{{ this.member.city }}</mat-label>
-      <input matInput placeholder="Neuer Ort" />
-      <mat-hint>Ort</mat-hint>
-    </mat-form-field>
+      <div class="items-left-bottom">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ this.member.city }}</mat-label>
+          <input matInput placeholder="Neuer Ort" formControlName="city" />
+          <mat-hint>Ort</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{
+            this.member.gender == "w"
+              ? "Weiblich"
+              : this.member.gender == "m"
+              ? "Männlich"
+              : "Divers"
+          }}</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option *ngFor="let gender of gendersArray" [value]="gender">
+              {{ gender }}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Geschlecht</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label> {{ this.member.feeGroup }} </mat-label>
+          <mat-select formControlName="feeGroup">
+            <mat-option *ngFor="let basicFee of basicFees" [value]="basicFee">
+              {{ basicFee.personengruppe }}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Beitragsgruppe</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="items-right">
+      <div class="items-right-top">
+        <mat-form-field appearance="outline">
+          <mat-label>
+            <span>
+              {{ formatSports() }}
+            </span>
+          </mat-label>
+          <mat-select multiple formControlName="sports">
+            <mat-option *ngFor="let sport of sports" [value]="sport">
+              {{ sport.abteilung }}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Sportarten</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>
+            <span>
+              {{
+                this.member.isPlayer
+                  ? "Spieler"
+                  : this.member.isTrainer
+                  ? "Trainer"
+                  : ""
+              }}
+            </span>
+          </mat-label>
+          <mat-select formControlName="role">
+            <mat-option [value]="'Keine Rolle'">Keine Rolle</mat-option>
+            <mat-option *ngFor="let role of roleArray" [value]="role">
+              {{ role }}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Rolle</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field
+          *ngIf="
+            editForm.get('role')?.value !== 'Keine Rolle' &&
+            editForm.get('role')?.value !== null
+          "
+          appearance="outline"
+        >
+          <mat-label>
+            <span *ngFor="let team of this.member.trainerTeamName">
+              {{ team.teamname }}
+            </span>
+          </mat-label>
+          <mat-select formControlName="team">
+            <mat-option *ngFor="let team of teams" [value]="team">
+              {{ team.teamname }}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Mannschaft</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="items-right-bottom">
+        <button class="btn-submit" type="submit" mat-button>
+          <mat-icon class="icon-submit">check</mat-icon>
+          Übernehmen
+        </button>
+        <button class="btn-delete" type="button" mat-button (click)="delete()">
+          <mat-icon class="icon-delete">delete_forever</mat-icon>
+          Löschen
+        </button>
+      </div>
+    </div>
   </div>
-
-  <div class="items-right">
-    <mat-form-field appearance="outline">
-      <mat-label>{{
-        this.member.gender == "w"
-          ? "Weiblich"
-          : this.member.gender == "m"
-          ? "Männlich"
-          : "Divers"
-      }}</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let gender of gendersArray" [value]="gender">
-          {{ gender }}
-        </mat-option>
-      </mat-select>
-      <mat-hint>Geschlecht</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>
-        <span *ngFor="let sport of this.member.sports">
-          {{ sport[0].abteilung }}
-        </span>
-      </mat-label>
-      <mat-select multiple>
-        <mat-option *ngFor="let sport of sports" [value]="sport">
-          {{ sport.abteilung }}
-        </mat-option>
-      </mat-select>
-      <mat-hint>Sportarten</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>
-        <span *ngFor="let team of this.member.trainerTeamName">
-          {{ team.teamname }}
-        </span>
-      </mat-label>
-      <mat-select multiple>
-        <mat-option *ngFor="let team of teams" [value]="team">
-          {{ team.teamname }}
-        </mat-option>
-      </mat-select>
-      <mat-hint>Mannschaft</mat-hint>
-    </mat-form-field>
-
-    <button mat-button>Speichern</button>
-  </div>
-</div>
+</form>

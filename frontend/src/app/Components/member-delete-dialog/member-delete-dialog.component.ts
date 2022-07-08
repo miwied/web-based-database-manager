@@ -32,7 +32,7 @@ export class MemberDeleteDialogComponent implements OnInit {
           'bottom',
           'snackbar-success'
         );
-        this.dataSharingService.delete(this.data.member.memberId);
+        this.dataSharingService.deleteMember(this.data.member.memberId);
       },
     });
   }

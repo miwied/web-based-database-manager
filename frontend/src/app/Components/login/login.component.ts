@@ -22,10 +22,7 @@ export class LoginComponent implements OnInit {
     private snackBarService: SnackBarService
   ) {
     this.angForm = this.fb.group({
-      username: [
-        '',
-        [Validators.required, Validators.minLength(1), Validators.email],
-      ],
+      username: ['', [Validators.required, Validators.minLength(1)]],
       password: ['', Validators.required],
     });
   }
@@ -35,13 +32,10 @@ export class LoginComponent implements OnInit {
   postdata(angForm: FormGroup) {
     switch (this.selection) {
       case 'Login':
-        console.log(angForm.value.username);
-        console.log(angForm.value.password);
         this.dataService
           .userLogin(angForm.value.username, angForm.value.password)
           .subscribe({
             next: (data) => {
-              console.log(data);
               const redirect = this.dataService.redirectUrl
                 ? this.dataService.redirectUrl
                 : '/table';

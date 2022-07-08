@@ -414,7 +414,7 @@ INSERT INTO `sportart` (`sa_id`, `abteilung`, `beitrag`, `mi_id`) VALUES
 (1, 'Fußball', '35.00', 20),
 (2, 'Handball', '25.00', 7),
 (3, 'Boxen', '15.00', 17),
-(4, 'Kraft Dreikampf', '30.00', 11),
+(4, 'Schwimmen', '30.00', 11),
 (5, 'Tennis', '100.00', 1),
 (6, 'Yoga', '10.00', 84),
 (7, 'Taekwondo', '25.00', 90),

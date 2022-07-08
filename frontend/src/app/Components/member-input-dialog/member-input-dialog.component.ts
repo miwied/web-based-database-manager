@@ -68,7 +68,6 @@ export class MemberInputDialogComponent
     Validators.minLength(4),
     Validators.maxLength(6),
   ]);
-
   cityFormControl = new FormControl(null, [
     Validators.pattern('^[a-zA-Z]+$'),
     Validators.minLength(2),
@@ -77,9 +76,7 @@ export class MemberInputDialogComponent
   genderFormControl = new FormControl(null);
   basicFeeFormControl = new FormControl(null);
   teamFormControl = new FormControl();
-
   sportFormControl = new FormControl();
-
   matcherFormControl = new MyErrorStateMatcher();
 
   sportsDataSubscription: Subscription;

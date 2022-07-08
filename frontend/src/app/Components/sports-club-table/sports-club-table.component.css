@@ -19,7 +19,7 @@
 
 .mat-column-city {
   flex: none;
-  width: 10%;
+  width: 12%;
 }
 
 .mat-column-gender {
@@ -49,23 +49,12 @@
 
 .mat-column-sports {
   flex: none;
-  width: 10%;
+  width: 13%;
 }
 
 .mat-column-fee {
   flex: none;
   width: 8%;
-}
-
-.mat-column-actions {
-  flex: none;
-  width: 10%;
-}
-
-.actions-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .header {
@@ -93,7 +82,7 @@
 }
 
 .title-block {
-  margin-top: 75px;
+  margin-top: 25px;
   margin-left: 10%;
   width: 30vw;
   display: grid;
@@ -120,7 +109,7 @@
 }
 
 .buttons {
-  margin-top: 60px;
+  margin-top: 20px;
   height: 70px;
 }
 
@@ -145,13 +134,34 @@
 }
 
 .container {
-  width: 100%;
-}
-
-Table {
   margin-left: 10%;
   margin-right: 10%;
+  height: 70vh;
   width: 80%;
+  border-radius: 10px;
+}
+
+.container-table {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  border-radius: 10px;
+}
+
+.container-table::-webkit-scrollbar {
+  width: 10px;
+}
+
+.container-table::-webkit-scrollbar-thumb {
+  background: #9e9e9e;
+  border-radius: 0 10px 10px 0;
+}
+
+.mat-table {
+  width: 100%;
+  background-color: transparent !important;
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
 }
 
 .member-edit {
@@ -185,11 +195,15 @@ tr.member-row {
   border-bottom-width: 0;
 }
 
+.container-paginator {
+  border-radius: 0 0 10px 10px;
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}
+
 mat-paginator {
-  margin-left: 10%;
-  margin-right: 10%;
-  padding-bottom: 5%;
-  width: 80%;
+  margin-left: auto;
 }
 
 td,
@@ -218,10 +232,4 @@ tr .header {
 .imgLogout {
   cursor: pointer;
   padding-left: 10px;
-}
-
-.example-button-container {
-  display: flex;
-  justify-content: center;
-  width: 120px;
 }

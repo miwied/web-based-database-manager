@@ -1,3 +1,7 @@
+mat-form-field {
+  padding-right: 4%;
+}
+
 .container {
   height: 20vh;
   display: grid;
@@ -7,27 +11,71 @@
 
 .items-left {
   grid-area: left;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-areas:
+    "top"
+    "bottom";
+  grid-template-rows: 50% 50%;
+}
+
+.items-left-top {
+  grid-area: top;
+}
+
+.items-left-bottom {
+  grid-area: bottom;
 }
 
 .items-right {
   grid-area: right;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-areas:
+    "top"
+    "bottom";
+  grid-template-rows: 50% 50%;
+}
+
+.items-right-top {
+  grid-area: top;
+}
+
+.items-right-bottom {
+  grid-area: bottom;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.btn-submit {
+  height: 2.5rem;
+  width: 20%;
+  border-radius: 25px;
+  margin-right: 4%;
+  margin-bottom: 5%;
+  background-color: rgb(118, 118, 255);
+  color: white;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
-mat-form-field {
-  padding-right: 4%;
+.icon-submit {
+  font-size: 24px;
 }
 
-button {
-  background-color: rgb(118, 118, 255);
+.btn-delete {
+  height: 2.5rem;
+  width: 20%;
+  border-radius: 25px;
+  margin-bottom: 5%;
+  background-color: red;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-delete {
+  font-size: 24px;
 }

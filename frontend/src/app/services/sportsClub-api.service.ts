@@ -49,9 +49,9 @@ export class SportsClubApiService {
     this.httpClient.post<any>(url, member, this.httpOptions);
   }
 
-  updateMember(member: IMember): void {
+  putMember(member: IMember): Observable<any> {
     let url = `${this.indexUrl}/member/edit/`;
-    this.httpClient.put<any>(url, member, this.httpOptions);
+    return this.httpClient.put<any>(url, member, this.httpOptions);
   }
 
   deleteMember(memberId: number): Observable<any> {
@@ -87,9 +87,9 @@ export class SportsClubApiService {
     this.httpClient.post(url, team, this.httpOptions);
   }
 
-  getBasicFee(): Observable<IBasicFee[]>{
-     let url = `${this.indexUrl}/basicFee/get`;
-     return this.httpClient.get<IBasicFee[]>(url, this.httpOptions);
+  getBasicFee(): Observable<IBasicFee[]> {
+    let url = `${this.indexUrl}/basicFee/get`;
+    return this.httpClient.get<IBasicFee[]>(url, this.httpOptions);
   }
   //userLogin
   userLogin(username: string, password: string) {

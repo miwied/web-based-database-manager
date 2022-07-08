@@ -56,7 +56,6 @@ export class SportsClubTableComponent
     'trainerTeamName',
     'sports',
     'fee',
-    'actions',
   ];
   dataSource: MatTableDataSource<IMember> = new MatTableDataSource();
   tokenUserName: string;
@@ -66,7 +65,7 @@ export class SportsClubTableComponent
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private router: Router,
     private apiService: SportsClubApiService,
     private dataSharingService: DataSharingService,
@@ -99,13 +98,13 @@ export class SportsClubTableComponent
         res = 'Spieler';
         break;
       case 'playerTeamName':
-        res = 'Mannschaft';
+        res = 'Spielt in';
         break;
       case 'isTrainer':
         res = 'Trainer';
         break;
       case 'trainerTeamName':
-        res = 'Mannschaft';
+        res = 'Trainiert';
         break;
       case 'sports':
         res = 'Sportarten';
@@ -126,13 +125,16 @@ export class SportsClubTableComponent
 
   mapInformation(input: any) {
     let res = '';
+    let counter = 0;
     if (Array.isArray(input)) {
       input.forEach((element) => {
         if (element.teamname) {
           res += element.teamname;
         } else if (Array.isArray(element)) {
           element.forEach((ele) => {
-            res += ele.abteilung + ' ';
+            if (counter == input.length - 1) res += ele.abteilung;
+            else res += ele.abteilung + ', ';
+            counter++;
           });
         }
       });
@@ -147,13 +149,12 @@ export class SportsClubTableComponent
         case 'd':
           res += 'Divers';
           break;
-
         default:
           break;
       }
     } else if (input == null) {
       res += 'keine';
-    } else if (input == false || input == true) {
+    } else if (input === false || input === true) {
       res += input ? 'Ja' : 'Nein';
     } else {
       res += input;
@@ -163,7 +164,7 @@ export class SportsClubTableComponent
 
   ngOnInit(): void {
     this.apiService.setHttpOptions();
-    this.dataSharingService.loadData();
+    this.dataSharingService.loadMembers();
     this.dataSharingService.loadSportsData();
   }
 
@@ -171,7 +172,7 @@ export class SportsClubTableComponent
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.dataSharingService.getTableData().subscribe({
+    this.dataSharingService.getMemberData().subscribe({
       next: (data) => {
         this.dataSource.data = data;
       },
