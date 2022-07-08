@@ -29,6 +29,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
+import { MemberEditComponent } from './Components/member-edit/member-edit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,7 @@ import { MatSliderModule } from '@angular/material/slider';
     MemberEditDialogComponent,
     MemberDeleteDialogComponent,
     MemberInputDialogComponent,
+    MemberEditComponent,
   ],
   imports: [
     RouterModule.forRoot(APP_ROUTES),

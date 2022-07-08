@@ -5,12 +5,18 @@ import {
   ViewChild,
   OnInit,
 } from '@angular/core';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MemberEditDialogComponent } from '../member-edit-dialog/member-edit-dialog.component';
 import { MemberDeleteDialogComponent } from '../member-delete-dialog/member-delete-dialog.component';
 import { MemberInputDialogComponent } from '../member-input-dialog/member-input-dialog.component';
 import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
@@ -25,10 +31,18 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   selector: 'app-sports-club-table',
   templateUrl: './sports-club-table.component.html',
   styleUrls: ['./sports-club-table.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('325ms ease')),
+    ]),
+  ],
 })
 export class SportsClubTableComponent
   implements AfterViewInit, AfterContentInit, OnInit
 {
+  expandedElement: IMember | null;
   displayedColumns: string[] = [
     'memberId',
     'firstName',
@@ -58,6 +72,94 @@ export class SportsClubTableComponent
     private dataSharingService: DataSharingService,
     private snackBarService: SnackBarService
   ) {}
+
+  mapColumnName(input: string) {
+    let res = '';
+
+    switch (input) {
+      case 'memberId':
+        res = 'Id';
+        break;
+      case 'firstName':
+        res = 'Vorname';
+        break;
+      case 'lastName':
+        res = 'Nachname';
+        break;
+      case 'zipCode':
+        res = 'Plz';
+        break;
+      case 'city':
+        res = 'Ort';
+        break;
+      case 'gender':
+        res = 'Geschlecht';
+        break;
+      case 'isPlayer':
+        res = 'Spieler';
+        break;
+      case 'playerTeamName':
+        res = 'Mannschaft';
+        break;
+      case 'isTrainer':
+        res = 'Trainer';
+        break;
+      case 'trainerTeamName':
+        res = 'Mannschaft';
+        break;
+      case 'sports':
+        res = 'Sportarten';
+        break;
+      case 'fee':
+        res = 'Gesamtgebühr';
+        break;
+      case 'actions':
+        res = '';
+        break;
+      default:
+        res = '';
+        break;
+    }
+
+    return res;
+  }
+
+  mapInformation(input: any) {
+    let res = '';
+    if (Array.isArray(input)) {
+      input.forEach((element) => {
+        if (element.teamname) {
+          res += element.teamname;
+        } else if (Array.isArray(element)) {
+          element.forEach((ele) => {
+            res += ele.abteilung + ' ';
+          });
+        }
+      });
+    } else if (input === 'w' || input === 'm' || input === 'd') {
+      switch (input) {
+        case 'w':
+          res += 'Weiblich';
+          break;
+        case 'm':
+          res += 'Männlich';
+          break;
+        case 'd':
+          res += 'Divers';
+          break;
+
+        default:
+          break;
+      }
+    } else if (input == null) {
+      res += 'keine';
+    } else if (input == false || input == true) {
+      res += input ? 'Ja' : 'Nein';
+    } else {
+      res += input;
+    }
+    return res;
+  }
 
   ngOnInit(): void {
     this.apiService.setHttpOptions();

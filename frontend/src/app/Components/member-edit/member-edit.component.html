@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="items-left">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ this.member.firstName }}</mat-label>
+      <input matInput placeholder="Neuer Vorname" />
+      <mat-hint>Vorname</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ this.member.lastName }}</mat-label>
+      <input matInput placeholder="Neuer Nachname" />
+      <mat-hint>Nachname</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ this.member.zipCode }}</mat-label>
+      <input matInput placeholder="Neue PLZ" />
+      <mat-hint>PLZ</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ this.member.city }}</mat-label>
+      <input matInput placeholder="Neuer Ort" />
+      <mat-hint>Ort</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div class="items-right">
+    <mat-form-field appearance="outline">
+      <mat-label>{{
+        this.member.gender == "w"
+          ? "Weiblich"
+          : this.member.gender == "m"
+          ? "Männlich"
+          : "Divers"
+      }}</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let gender of gendersArray" [value]="gender">
+          {{ gender }}
+        </mat-option>
+      </mat-select>
+      <mat-hint>Geschlecht</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>
+        <span *ngFor="let sport of this.member.sports">
+          {{ sport[0].abteilung }}
+        </span>
+      </mat-label>
+      <mat-select multiple>
+        <mat-option *ngFor="let sport of sports" [value]="sport">
+          {{ sport.abteilung }}
+        </mat-option>
+      </mat-select>
+      <mat-hint>Sportarten</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>
+        <span *ngFor="let team of this.member.trainerTeamName">
+          {{ team.teamname }}
+        </span>
+      </mat-label>
+      <mat-select multiple>
+        <mat-option *ngFor="let team of teams" [value]="team">
+          {{ team.teamname }}
+        </mat-option>
+      </mat-select>
+      <mat-hint>Mannschaft</mat-hint>
+    </mat-form-field>
+
+    <button mat-button>Speichern</button>
+  </div>
+</div>

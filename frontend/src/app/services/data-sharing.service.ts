@@ -25,6 +25,7 @@ export class DataSharingService {
   basicFeeData$: BehaviorSubject<IBasicFee[]> = new BehaviorSubject<
     IBasicFee[]
   >(new Array());
+
   constructor(private apiService: SportsClubApiService) {}
 
   getTableData(): Observable<IMember[]> {
