@@ -8,16 +8,11 @@ class DBRepository
         $this->db = new Database();
     }
 
+    // #basic fee
     public function getBasicFees()
     {
         $sql = "SELECT * FROM grundbeitrag";
         return $this->db->query($sql);
-    }
-
-    private function getBasicFeeId($feeGroup)
-    {
-        $sql = "SELECT gb_id FROM grundbeitrag WHERE personengruppe = ?";
-        return $this->db->queryWithParams($sql, [$feeGroup]);
     }
 
     public function getBasicFeeInfo($gb_id)
@@ -74,26 +69,6 @@ class DBRepository
 
     public function deleteMember($id)
     {
-        // TODO: OLD CODE, CAN BE DELETED IF HAPPY WITH CURRENT FUNCTIONALITY
-        // $sqlDelete = "DELETE FROM mitglied as m join sportart as sp on m.mi_id = sp.mi_id join mitglied_sportart as ms on m.mi_id = ms.mi_id join spieler as spi on m.mi_id = spi.mi_id join trainer as t on m.mi_id = t.mi_id where mi_id = ?";
-        // $this->db->executeWithParams($sqlDelete, [$id]);
-
-        // // update unnötige mi_id spalte in der sportart tabelle weil sonst constraint fehlschlägt
-        // $sqlUpdateSportMember = "DELETE FROM sportart WHERE mi_id = ?";
-        // $this->db->executeWithParams($sqlUpdateSportMember, [$id]);
-
-        // // lösche assoziation mit der sportart
-        // $sqlDeleteMemberSportAssociation = "DELETE FROM mitglied_sportart WHERE mi_id = ?";
-        // $this->db->executeWithParams($sqlDeleteMemberSportAssociation, [$id]);
-
-        // // lösche assoziation mit der mannschaft als spieler
-        // $sqlDeleteMemberPlayerAssociation = "DELETE FROM spieler WHERE mi_id = ?";
-        // $this->db->executeWithParams($sqlDeleteMemberPlayerAssociation, [$id]);
-
-        // // lösche assoziation mit der mannschaft als trainer
-        // $sqlDeleteMemberTrainerAssociation = "DELETE FROM trainer WHERE mi_id = ?";
-        // $this->db->executeWithParams($sqlDeleteMemberTrainerAssociation, [$id]);
-
         // lösche das eigentliche Mitglied
         $sqlDeleteMember = "DELETE FROM mitglied WHERE mi_id = ?";
         $this->db->executeWithParams($sqlDeleteMember, [$id]);
