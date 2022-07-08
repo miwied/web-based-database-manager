@@ -9,11 +9,10 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MemberDeleteDialogComponent } from '../member-delete-dialog/member-delete-dialog.component';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
+import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 import { IBasicFee } from 'src/app/models/basicFee';
 import { IMember, IMemberEdit } from 'src/app/models/member';
 import { ISport } from 'src/app/models/sport';
-import { ITeam } from 'src/app/models/team';
-import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 
 @Component({
   selector: 'app-member-edit',
@@ -126,23 +125,45 @@ export class MemberEditComponent implements OnInit, OnDestroy {
     return res;
   }
 
+  delete() {
+    const dialogRef = this.dialog.open(MemberDeleteDialogComponent, {
+      data: {
+        member: this.member,
+      },
+      autoFocus: false,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
   submit(f: FormGroup) {
+    let oldPlayerTeamId = this.member.playerTeamId;
+    let oldTrainerTeamId = this.member.trainerTeamId;
+    let oldSportIds = this.member.sportIds;
+    this.mapFormValuesToMember(f);
+    let memberEdit = this.mapToMemberEdit(
+      oldSportIds,
+      oldPlayerTeamId,
+      oldTrainerTeamId
+    );
+    this.apiService.putMember(memberEdit).subscribe({
+      next: () => {},
+    });
+    //this.editForm.controls['firstName'].setErrors(['test']);
+  }
+
+  mapFormValuesToMember(f: FormGroup): void {
     let sportIds: {}[] = [];
     let sports: any = [];
     if (f.value['sports']) {
       f.value['sports'].forEach((sport: any) => {
         sportIds.push({ sa_id: sport['sa_id'] });
-      });
-      f.value['sports'].forEach((sport: ISport) => {
         let tmp: ISport[] = new Array();
         tmp.push(sport);
         sports.push(tmp);
       });
     }
-
-    let oldPlayerTeamId = this.member.playerTeamId;
-    let oldTrainerTeamId = this.member.trainerTeamId;
-    let oldSportIds = this.member.sportIds;
 
     this.member.firstName = f.value['firstName']
       ? f.value['firstName']
@@ -175,31 +196,32 @@ export class MemberEditComponent implements OnInit, OnDestroy {
       this.member.isPlayer = false;
       this.member.isTrainer = true;
       this.member.trainerTeamId = f.value['team']['ma_id'];
-      this.member.trainerTeamName = f.value['team']['teamname'];
+      this.member.trainerTeamName = [
+        {
+          teamname: f.value['team']['teamname'],
+        },
+      ];
       this.member.playerTeamId = 0;
       this.member.playerTeamName = null;
     } else if (f.value['role'] == 'Spieler') {
       this.member.isTrainer = false;
       this.member.isPlayer = true;
       this.member.playerTeamId = f.value['team']['ma_id'];
-      this.member.playerTeamName = f.value['team']['teamname'];
+      this.member.playerTeamName = [
+        {
+          teamname: f.value['team']['teamname'],
+        },
+      ];
+      this.member.trainerTeamId = 0;
+      this.member.trainerTeamName = null;
+    } else if (f.value['role'] == 'Keine Rolle') {
+      this.member.isPlayer = false;
+      this.member.isTrainer = false;
+      this.member.playerTeamId = 0;
+      this.member.playerTeamName = null;
       this.member.trainerTeamId = 0;
       this.member.trainerTeamName = null;
     }
-
-    let memberEdit = this.mapToMemberEdit(
-      oldSportIds,
-      oldPlayerTeamId,
-      oldTrainerTeamId
-    );
-
-    console.log(JSON.stringify(memberEdit));
-
-    this.apiService.putMember(memberEdit).subscribe({
-      next: () => {},
-    });
-
-    //this.editForm.controls['firstName'].setErrors(['test']);
   }
 
   mapToMemberEdit(
@@ -226,17 +248,5 @@ export class MemberEditComponent implements OnInit, OnDestroy {
     member.newTrainerTeamId = this.member.trainerTeamId;
 
     return member;
-  }
-
-  delete() {
-    const dialogRef = this.dialog.open(MemberDeleteDialogComponent, {
-      data: {
-        member: this.member,
-      },
-      autoFocus: false,
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 }

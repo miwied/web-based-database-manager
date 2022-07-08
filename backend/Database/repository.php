@@ -8,7 +8,7 @@ class DBRepository
         $this->db = new Database();
     }
 
-    // #basic fee
+    // #basicFee
     public function getBasicFees()
     {
         $sql = "SELECT * FROM grundbeitrag";
@@ -57,35 +57,47 @@ class DBRepository
 
     public function putMember($member)
     {
-        // echo json_encode($member);
+        // update the member
         $sqlUpdateMember = "UPDATE mitglied SET vorname = ?, nachname = ?, plz = ?, ort = ?, geschlecht = ?, gb_id = ? WHERE mi_id = ?";
         $this->db->executeWithParams($sqlUpdateMember, [$member["firstName"], $member["lastName"], $member["zipCode"], $member["city"], $member["gender"], $member["feeId"], $member["memberId"]]);
-        foreach ($member["oldSportIds"] as $key => $oldSport) {
+
+        // delete old member-sports associations and create new ones
+        foreach ($member["oldSportIds"] as $key => $oldSport)
             $this->deleteMemberSportById($member["memberId"], $oldSport["sa_id"]);
-        }
-        foreach ($member["sportIds"] as $key => $newSport) {
+
+        foreach ($member["sportIds"] as $key => $newSport)
             $this->createSportForMember($member["memberId"], $newSport["sa_id"]);
-        }
+
+        // check if the member is a player, a trainer, or neither
         if ($member["isPlayer"]) {
-            if ($member["oldTrainerTeamId"]) {
+            // if he used to be a trainer we delete the trainer association
+            if ($member["oldTrainerTeamId"])
                 $this->deleteTrainer($member["memberId"], $member["oldTrainerTeamId"]);
-            }
+            // if he used to be a player before we update the player association
             if ($member["oldPlayerTeamId"]) {
                 $sqlUpdateMemberPlayerAssociation = "UPDATE spieler SET ma_id = ? WHERE ma_id = ? AND mi_id = ?";
                 $this->db->executeWithParams($sqlUpdateMemberPlayerAssociation, [$member["newPlayerTeamId"], $member["oldPlayerTeamId"], $member["memberId"]]);
-            } else {
-                $this->createPlayer($member["memberId"], $member["newPlayerTeamId"]);
             }
+            // if he was neither we create a new player association
+            else $this->createPlayer($member["memberId"], $member["newPlayerTeamId"]);
         } else if ($member["isTrainer"]) {
-            if ($member["oldPlayerTeamId"]) {
+            // if he used to be a player we delete the player association
+            if ($member["oldPlayerTeamId"])
                 $this->deletePlayer($member["memberId"], $member["oldPlayerTeamId"]);
-            }
+            // if he used to be a trainer before we update the trainer association
             if ($member["oldTrainerTeamId"]) {
                 $sqlUpdateMemberTrainerAssociation = "UPDATE trainer SET ma_id = ? WHERE ma_id = ? AND mi_id = ?";
                 $this->db->executeWithParams($sqlUpdateMemberTrainerAssociation, [$member["newTrainerTeamId"], $member["oldTrainerTeamId"], $member["memberId"]]);
-            } else {
-                $this->createTrainer($member["memberId"], $member["newTrainerTeamId"]);
             }
+            // if he was neither we create a new trainer association
+            else $this->createTrainer($member["memberId"], $member["newTrainerTeamId"]);
+        } else if (!($member['isPlayer'] && $member['isTrainer'])) {
+            // if he used to be a player we delete that association because the updated value tells us he is neither now
+            if ($member["oldPlayerTeamId"])
+                $this->deletePlayer($member["memberId"], $member["oldPlayerTeamId"]);
+            // if he used to be a trainer we delete that association because the updated value tells us he is neither now 
+            else if ($member["oldTrainerTeamId"])
+                $this->deleteTrainer($member["memberId"], $member["oldTrainerTeamId"]);
         }
     }
 

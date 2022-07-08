@@ -112,9 +112,16 @@
           appearance="outline"
         >
           <mat-label>
-            <span *ngFor="let team of this.member.trainerTeamName">
-              {{ team.teamname }}
-            </span>
+            <div *ngIf="member.trainerTeamName; else elseBlock">
+              <span *ngFor="let team of member.trainerTeamName">
+                {{ team.teamname }}
+              </span>
+            </div>
+            <ng-template #elseBlock>
+              <span *ngFor="let team of member.playerTeamName">
+                {{ team.teamname }}
+              </span>
+            </ng-template>
           </mat-label>
           <mat-select formControlName="team">
             <mat-option *ngFor="let t of teams" [value]="t">
