@@ -7,9 +7,20 @@
   flex: none;
   width: 10%;
 }
+
 .mat-column-lastName {
   flex: none;
   width: 8%;
+}
+
+.mat-column-gender {
+  flex: none;
+  width: 8%;
+}
+
+.mat-column-feeGroup {
+  flex: none;
+  width: 12%;
 }
 
 .mat-column-zipCode {
@@ -19,12 +30,7 @@
 
 .mat-column-city {
   flex: none;
-  width: 12%;
-}
-
-.mat-column-gender {
-  flex: none;
-  width: 8%;
+  width: 11%;
 }
 
 .mat-column-isPlayer {
@@ -96,15 +102,14 @@
 
 .title {
   grid-area: top;
-  font-size: 1cm;
+  font-size: 2rem;
 }
 
 .line {
   grid-area: middle;
-  width: 175px;
-  height: 1px;
+  width: 7%;
   border-top: 2px solid #cc6969;
-  margin-top: 13px;
+  margin-top: 12px;
   position: absolute;
 }
 

@@ -15,7 +15,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { IBasicFee } from 'src/app/models/basicFees';
+import { IBasicFee } from 'src/app/models/basicFee';
 import { IMember } from 'src/app/models/member';
 import { ISport } from 'src/app/models/sport';
 import { ITeam } from 'src/app/models/team';

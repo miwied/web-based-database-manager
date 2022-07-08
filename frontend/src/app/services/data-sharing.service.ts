@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IBasicFee } from '../models/basicFees';
+import { IBasicFee } from '../models/basicFee';
 import { IMember } from '../models/member';
 import { ISport } from '../models/sport';
 import { ITeam } from '../models/team';

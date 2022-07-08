@@ -1,10 +1,10 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IMember } from '../models/member';
+import { IMember, IMemberEdit } from '../models/member';
 import { ISport } from '../models/sport';
 import { ITeam } from '../models/team';
-import { IBasicFee } from '../models/basicFees';
+import { IBasicFee } from '../models/basicFee';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -49,7 +49,7 @@ export class SportsClubApiService {
     this.httpClient.post<any>(url, member, this.httpOptions);
   }
 
-  putMember(member: IMember): Observable<any> {
+  putMember(member: IMemberEdit): Observable<any> {
     let url = `${this.indexUrl}/member/edit/`;
     return this.httpClient.put<any>(url, member, this.httpOptions);
   }

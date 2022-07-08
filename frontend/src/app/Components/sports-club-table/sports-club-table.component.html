@@ -61,7 +61,11 @@
           {{ mapColumnName(column) }}
         </th>
         <td mat-cell *matCellDef="let element">
-          {{ mapInformation(element[column]) }}
+          {{
+            column !== "fee"
+              ? mapInformation(element[column])
+              : element[column] + "€"
+          }}
         </td>
       </ng-container>
 

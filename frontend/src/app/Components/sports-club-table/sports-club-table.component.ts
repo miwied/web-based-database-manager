@@ -47,9 +47,10 @@ export class SportsClubTableComponent
     'memberId',
     'firstName',
     'lastName',
+    'gender',
+    'feeGroup',
     'zipCode',
     'city',
-    'gender',
     'isPlayer',
     'playerTeamName',
     'isTrainer',
@@ -85,14 +86,17 @@ export class SportsClubTableComponent
       case 'lastName':
         res = 'Nachname';
         break;
+      case 'gender':
+        res = 'Geschlecht';
+        break;
+      case 'feeGroup':
+        res = 'Beitragsgruppe';
+        break;
       case 'zipCode':
         res = 'Plz';
         break;
       case 'city':
         res = 'Ort';
-        break;
-      case 'gender':
-        res = 'Geschlecht';
         break;
       case 'isPlayer':
         res = 'Spieler';

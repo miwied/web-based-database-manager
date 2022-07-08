@@ -57,14 +57,36 @@ class DBRepository
 
     public function putMember($member)
     {
-        $sqlUpdateMember = "UPDATE mitglied SET vorname = ?, nachname = ?, plz = ?, ort = ?, geschlecht = ? WHERE mi_id = ?";
-        $this->db->executeWithParams($sqlUpdateMember, [$member["firstName"], $member["lastName"], $member["zipCode"], $member["city"], $member["gender"], $member["memberId"]]);
-        foreach ($member["sportIds"] as $key => $value) {
-            $sqlUpdateMemberSportsAssociation = "UPDATE mitglied_sportart SET mi_id = ?, sa_id = ? WHERE mi_id = ? AND sa_id = ?";
-            $this->db->executeWithParams($sqlUpdateMemberSportsAssociation, [$member["memberId"], $value["sa_id"], $member["memberId"], $value["sa_id"]]);
+        // echo json_encode($member);
+        $sqlUpdateMember = "UPDATE mitglied SET vorname = ?, nachname = ?, plz = ?, ort = ?, geschlecht = ?, gb_id = ? WHERE mi_id = ?";
+        $this->db->executeWithParams($sqlUpdateMember, [$member["firstName"], $member["lastName"], $member["zipCode"], $member["city"], $member["gender"], $member["feeId"], $member["memberId"]]);
+        foreach ($member["oldSportIds"] as $key => $oldSport) {
+            $this->deleteMemberSportById($member["memberId"], $oldSport["sa_id"]);
         }
-        $sqlUpdateMemberPlayerAssociation = "UPDATE spieler SET ma_id = ?, mi_id = ? WHERE ma_id = ? AND mi_id = ?";
-        $this->db->executeWithParams($sqlUpdateMemberPlayerAssociation, [$member["playerTeamId"], $member["memberId"], $member["playerTeamId"], $member["memberId"]]);
+        foreach ($member["sportIds"] as $key => $newSport) {
+            $this->createSportForMember($member["memberId"], $newSport["sa_id"]);
+        }
+        if ($member["isPlayer"]) {
+            if ($member["oldTrainerTeamId"]) {
+                $this->deleteTrainer($member["memberId"], $member["oldTrainerTeamId"]);
+            }
+            if ($member["oldPlayerTeamId"]) {
+                $sqlUpdateMemberPlayerAssociation = "UPDATE spieler SET ma_id = ? WHERE ma_id = ? AND mi_id = ?";
+                $this->db->executeWithParams($sqlUpdateMemberPlayerAssociation, [$member["newPlayerTeamId"], $member["oldPlayerTeamId"], $member["memberId"]]);
+            } else {
+                $this->createPlayer($member["memberId"], $member["newPlayerTeamId"]);
+            }
+        } else if ($member["isTrainer"]) {
+            if ($member["oldPlayerTeamId"]) {
+                $this->deletePlayer($member["memberId"], $member["oldPlayerTeamId"]);
+            }
+            if ($member["oldTrainerTeamId"]) {
+                $sqlUpdateMemberTrainerAssociation = "UPDATE trainer SET ma_id = ? WHERE ma_id = ? AND mi_id = ?";
+                $this->db->executeWithParams($sqlUpdateMemberTrainerAssociation, [$member["newTrainerTeamId"], $member["oldTrainerTeamId"], $member["memberId"]]);
+            } else {
+                $this->createTrainer($member["memberId"], $member["newTrainerTeamId"]);
+            }
+        }
     }
 
     public function deleteMember($id)
@@ -81,10 +103,22 @@ class DBRepository
         return $this->db->queryWithParams($sql, [$sa_id]);
     }
 
+    private function createSportForMember($mi_id, $sa_id)
+    {
+        $sql = "INSERT INTO mitglied_sportart(mi_id, sa_id) VALUES (?,?)";
+        $this->db->executeWithParams($sql, [$mi_id, $sa_id]);
+    }
+
     public function getSportsByMemberId($mi_id)
     {
         $sql = "SELECT sa_id FROM mitglied_sportart WHERE mi_id = ?";
         return $this->db->queryWithParams($sql, [$mi_id]);
+    }
+
+    private function deleteMemberSportById($mi_id, $sa_id)
+    {
+        $sql = "DELETE FROM mitglied_sportart WHERE mi_id = ? AND sa_id = ?";
+        $this->db->executeWithParams($sql, [$mi_id, $sa_id]);
     }
 
     // #team
@@ -145,17 +179,41 @@ class DBRepository
 
 
     // #player
+    private function createPlayer($mi_id, $ma_id)
+    {
+        $sql = "INSERT INTO spieler(mi_id, ma_id) VALUES (?, ?)";
+        $this->db->executeWithParams($sql, [$mi_id, $ma_id]);
+    }
+
     public function getPlayerTeamInfo($mi_id)
     {
         $sql = "SELECT ma_id FROM spieler WHERE mi_id = ?";
         return $this->db->queryWithParams($sql, [$mi_id]);
     }
 
+    private function deletePlayer($mi_id, $ma_id)
+    {
+        $sql = "DELETE FROM spieler WHERE mi_id = ? AND ma_id = ?";
+        $this->db->executeWithParams($sql, [$mi_id, $ma_id]);
+    }
+
     // #trainer
+    private function createTrainer($mi_id, $ma_id)
+    {
+        $sql = "INSERT INTO trainer(mi_id, ma_id) VALUES (?, ?)";
+        $this->db->executeWithParams($sql, [$mi_id, $ma_id]);
+    }
+
     public function getTrainerInfo($mi_id)
     {
         $sql = "SELECT ma_id FROM trainer WHERE mi_id = ?";
         return $this->db->queryWithParams($sql, [$mi_id]);
+    }
+
+    private function deleteTrainer($mi_id, $ma_id)
+    {
+        $sql = "DELETE FROM trainer WHERE mi_id = ? AND ma_id = ?";
+        $this->db->executeWithParams($sql, [$mi_id, $ma_id]);
     }
 
     // #login

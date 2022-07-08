@@ -117,8 +117,8 @@
             </span>
           </mat-label>
           <mat-select formControlName="team">
-            <mat-option *ngFor="let team of teams" [value]="team">
-              {{ team.teamname }}
+            <mat-option *ngFor="let t of teams" [value]="t">
+              {{ t.teamname }}
             </mat-option>
           </mat-select>
           <mat-hint>Mannschaft</mat-hint>

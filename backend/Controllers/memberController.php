@@ -170,9 +170,9 @@ class MemberController
 
             // get info about the fees the member pays
             $fee = $feeInfo[0]["beitrag"];
-            foreach ($sports as $key => $sportsFee) {
-                if ($key == "beitrag") {
-                    $fee += $sportsFee;
+            foreach ($sports as $key => $sport) {
+                foreach ($sport as $key => $v) {
+                    $fee += $v["beitrag"];
                 }
             }
 
@@ -183,6 +183,7 @@ class MemberController
                 'zipCode' => $value["plz"],
                 'city' => $value["ort"],
                 'gender' => $value["geschlecht"],
+                'feeId' => $value["gb_id"],
                 'feeGroup' => $feeGroup,
                 'fee' => $fee,
                 'sportIds' => $sportsIds,
