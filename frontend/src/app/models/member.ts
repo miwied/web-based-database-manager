@@ -35,3 +35,17 @@ export interface IMemberEdit {
   oldTrainerTeamId: number;
   newTrainerTeamId: number;
 }
+
+export interface IMemberCreate {
+  firstName: string;
+  lastName: string;
+  zipCode: number;
+  city: string;
+  gender: string;
+  feeId: number;
+  sportIds: any;
+  isPlayer: boolean;
+  playerTeamId: number;
+  isTrainer: boolean;
+  trainerTeamId: number;
+}

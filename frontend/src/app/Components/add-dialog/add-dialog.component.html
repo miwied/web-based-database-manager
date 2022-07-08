@@ -1,4 +1,100 @@
-<div class="title">
+<div class="container">
+  <mat-tab-group>
+    <mat-tab label="Mitglied hinzufügen">
+      <form
+        class="container-member"
+        [formGroup]="addMemberForm"
+        (ngSubmit)="submit(addMemberForm)"
+      >
+        <div class="row-top">
+          <mat-form-field appearance="outline" name="firstName">
+            <mat-label>Vorname</mat-label>
+            <input matInput formControlName="firstName" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" name="lastName">
+            <mat-label>Nachname</mat-label>
+            <input matInput formControlName="lastName" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" name="gender">
+            <mat-label>Geschlecht</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option *ngFor="let gender of gendersArray" [value]="gender">
+                {{ gender }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="row-mid">
+          <mat-form-field appearance="outline" name="zipCode">
+            <mat-label>PLZ</mat-label>
+            <input matInput formControlName="zipCode" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" name="city">
+            <mat-label>Ort</mat-label>
+            <input matInput formControlName="city" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" name="feeGroup">
+            <mat-label>Beitragsgruppe</mat-label>
+            <mat-select formControlName="feeGroup">
+              <mat-option *ngFor="let basicFee of basicFees" [value]="basicFee">
+                {{ basicFee.personengruppe }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="row-bot">
+          <mat-form-field appearance="outline">
+            <mat-label>Sportart </mat-label>
+            <mat-select multiple formControlName="sports">
+              <mat-option *ngFor="let sport of sports" [value]="sport">
+                {{ sport.abteilung }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Rolle </mat-label>
+            <mat-select formControlName="role">
+              <mat-option [value]="'Keine Rolle'">Keine Rolle</mat-option>
+              <mat-option *ngFor="let role of roleArray" [value]="role">
+                {{ role }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label> Mannschaft </mat-label>
+            <mat-select
+              [disabled]="
+                !(
+                  addMemberForm.get('role')?.value !== 'Keine Rolle' &&
+                  addMemberForm.get('role')?.value !== null
+                )
+              "
+              formControlName="team"
+            >
+              <mat-option *ngFor="let t of teams" [value]="t">
+                {{ t.teamname }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="row-submit">
+          <button class="btn-submit" type="submit" mat-button>
+            Hinzufügen
+          </button>
+        </div>
+      </form>
+    </mat-tab>
+    <mat-tab label="Sportart hinzufügen"></mat-tab>
+    <mat-tab label="Mannschaft hinzufügen"></mat-tab>
+  </mat-tab-group>
+</div>
+
+<!-- <div class="title">
   Neuen Nutzer hinzufügen
   <div class="line"></div>
 </div>
@@ -18,9 +114,6 @@
     <mat-label>{{ this.member.firstName }}</mat-label>
     <input matInput [formControl]="firstNameFormControl" placeholder="" />
     <mat-hint> Vorname </mat-hint>
-    <!-- <mat-error *ngIf="firstNameFormControl.hasError('required')">
-      Vorname wird <strong>benötigt</strong>
-    </mat-error> -->
   </mat-form-field>
 
   <mat-form-field
@@ -37,9 +130,6 @@
     <mat-label>{{ this.member.lastName }}</mat-label>
     <input matInput [formControl]="lastNameFormControl" placeholder="" />
     <mat-hint> Nachname </mat-hint>
-    <!-- <mat-error *ngIf="lastNameFormControl.hasError('required')"> -->
-    <!-- Nachname wird <strong>benötigt</strong> -->
-    <!-- </mat-error> -->
   </mat-form-field>
 
   <mat-form-field
@@ -56,9 +146,6 @@
     <mat-label>{{ this.member.zipCode }}</mat-label>
     <input matInput [formControl]="zipCodeFormControl" placeholder="" />
     <mat-hint> PLZ </mat-hint>
-    <!-- <mat-error *ngIf="plzFormControl.hasError('required')"> -->
-    <!-- PLZ wird <strong>benötigt</strong> -->
-    <!-- </mat-error> -->
   </mat-form-field>
 
   <mat-form-field
@@ -73,9 +160,6 @@
     <mat-label> {{ this.member.city }} </mat-label>
     <input matInput [formControl]="cityFormControl" placeholder="" />
     <mat-hint> Ort </mat-hint>
-    <!-- <mat-error *ngIf="placeFormControl.hasError('required')"> -->
-    <!-- Ort wird <strong>benötigt</strong> -->
-    <!-- </mat-error> -->
   </mat-form-field>
 
   <mat-form-field
@@ -105,9 +189,6 @@
       </mat-option>
     </mat-select>
     <mat-hint> Geschlecht </mat-hint>
-    <!-- <mat-error *ngIf="gender.hasError('required')">
-      Bitte wähle ein Geschlecht aus
-    </mat-error> -->
   </mat-form-field>
 
   <mat-form-field
@@ -162,9 +243,6 @@
       </mat-option>
     </mat-select>
     <mat-hint> Beitragsgruppe </mat-hint>
-    <!-- <mat-error *ngIf="basicFee.hasError('required')">
-      Bitte wähle eine Gebühr aus
-    </mat-error> -->
   </mat-form-field>
 
   <mat-form-field
@@ -179,29 +257,16 @@
     "
   >
     <mat-label> {{ this.member.playerTeamName }} </mat-label>
-    <mat-select [disabled]="disableTeamSelect" [formControl]="teamFormControl">
+    <mat-select [formControl]="teamFormControl">
       <mat-option>--</mat-option>
       <mat-option *ngFor="let team of teams" [value]="team">
         {{ team.teamname }}
       </mat-option>
     </mat-select>
     <mat-hint> Team </mat-hint>
-    <!-- <mat-error *ngIf="basicFee.hasError('required')">
-      Bitte wähle ein Team aus
-      </mat-error> -->
   </mat-form-field>
-  <div>
-    <mat-slider
-      (change)="toggleSlider($event)"
-      min="1"
-      max="3"
-      step="1"
-      value="1"
-    ></mat-slider>
-    {{ sliderValue }}
-  </div>
 
   <button type="submit" class="add" mat-flat-button color="accent">
     Hinzufügen
   </button>
-</form>
+</form> -->

@@ -18,7 +18,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MemberDeleteDialogComponent } from '../member-delete-dialog/member-delete-dialog.component';
-import { MemberInputDialogComponent } from '../member-input-dialog/member-input-dialog.component';
+import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 import { IMember } from 'src/app/models/member';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -35,7 +35,7 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('325ms ease')),
+      transition('expanded <=> collapsed', animate('300ms ease')),
     ]),
   ],
 })
@@ -170,12 +170,13 @@ export class SportsClubTableComponent
     this.apiService.setHttpOptions();
     this.dataSharingService.loadMembers();
     this.dataSharingService.loadSportsData();
+    this.dataSharingService.loadBasicFeeData();
+    this.dataSharingService.loadTeamsData();
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
     this.dataSharingService.getMemberData().subscribe({
       next: (data) => {
         this.dataSource.data = data;
@@ -222,12 +223,8 @@ export class SportsClubTableComponent
     });
   }
 
-  openInputDialog(type: string, row?: string) {
-    const dialogRef = this.dialog.open(MemberInputDialogComponent, {
-      data: {
-        member: row,
-        type: type,
-      },
+  openAddDialog() {
+    const dialogRef = this.dialog.open(AddDialogComponent, {
       autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((result) => {

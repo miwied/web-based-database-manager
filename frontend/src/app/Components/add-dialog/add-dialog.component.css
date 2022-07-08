@@ -1,0 +1,59 @@
+mat-form-field {
+  padding-right: 3%;
+}
+
+.container {
+  width: 40vw;
+  height: 40vh;
+}
+
+.container-member {
+  padding-top: 4%;
+  display: grid;
+  grid-template-areas:
+    "top"
+    "mid"
+    "bot"
+    "submit";
+  grid-template-rows: 25% 25% 25% 25%;
+}
+
+.row-top {
+  grid-area: top;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row-mid {
+  grid-area: mid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row-bot {
+  grid-area: bot;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row-submit {
+  grid-area: submit;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn-submit {
+  height: 2.5rem;
+  width: 20%;
+  border-radius: 12px;
+  margin-right: 9%;
+  background-color: rgb(118, 118, 255);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

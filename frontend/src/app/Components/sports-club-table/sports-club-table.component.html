@@ -23,9 +23,9 @@
     class="addNewUser"
     mat-flat-button
     color="accent"
-    (click)="openInputDialog('add')"
+    (click)="openAddDialog()"
   >
-    Neuen Nutzer anlegen
+    Elemente hinzufügen
   </button>
 
   <mat-form-field class="filter" appearance="fill">
@@ -78,12 +78,11 @@
           <div
             class="member-edit"
             [@detailExpand]="
-              expandedElement === element ? 'expanded' : 'collapsed'
+              element == expandedElement ? 'expanded' : 'collapsed'
             "
           >
             <app-member-edit
               class="member-edit-component"
-              *ngIf="expandedElement === element"
               [member]="element"
               style="width: 100%"
             ></app-member-edit>

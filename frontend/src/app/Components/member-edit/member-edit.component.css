@@ -50,7 +50,7 @@ mat-form-field {
 .btn-submit {
   height: 2.5rem;
   width: 20%;
-  border-radius: 25px;
+  border-radius: 12px;
   margin-right: 4%;
   margin-bottom: 5%;
   background-color: rgb(118, 118, 255);
@@ -67,7 +67,7 @@ mat-form-field {
 .btn-delete {
   height: 2.5rem;
   width: 20%;
-  border-radius: 25px;
+  border-radius: 12px;
   margin-bottom: 5%;
   background-color: red;
   color: white;

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MemberInputDialogComponent } from './member-input-dialog.component';
+import { AddDialogComponent } from './add-dialog.component';
 
-describe('MemberInputDialogComponent', () => {
-  let component: MemberInputDialogComponent;
-  let fixture: ComponentFixture<MemberInputDialogComponent>;
+describe('AddDialogComponent', () => {
+  let component: AddDialogComponent;
+  let fixture: ComponentFixture<AddDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MemberInputDialogComponent],
+      declarations: [AddDialogComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MemberInputDialogComponent);
+    fixture = TestBed.createComponent(AddDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

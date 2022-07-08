@@ -6,15 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // components
 import { AppComponent } from './app.component';
-import { MemberInputDialogComponent } from './Components/member-input-dialog/member-input-dialog.component';
+import { AddDialogComponent } from './Components/add-dialog/add-dialog.component';
 import { MemberDeleteDialogComponent } from './Components/member-delete-dialog/member-delete-dialog.component';
 import { LoginComponent } from './Components/login/login.component';
-import { MemberEditDialogComponent } from './Components/member-edit-dialog/member-edit-dialog.component';
 import { SportsClubTableComponent } from './Components/sports-club-table/sports-club-table.component';
+import { MemberEditComponent } from './Components/member-edit/member-edit.component';
 
 // angular material
 import { MatButtonModule } from '@angular/material/button';
@@ -29,15 +28,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
-import { MemberEditComponent } from './Components/member-edit/member-edit.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SportsClubTableComponent,
-    MemberEditDialogComponent,
     MemberDeleteDialogComponent,
-    MemberInputDialogComponent,
+    AddDialogComponent,
     MemberEditComponent,
   ],
   imports: [
@@ -61,6 +60,7 @@ import { MemberEditComponent } from './Components/member-edit/member-edit.compon
     MatSnackBarModule,
     MatCheckboxModule,
     MatSliderModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

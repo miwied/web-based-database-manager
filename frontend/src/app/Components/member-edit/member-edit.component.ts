@@ -20,7 +20,7 @@ import { ISport } from 'src/app/models/sport';
   styleUrls: ['./member-edit.component.css'],
 })
 export class MemberEditComponent implements OnInit, OnDestroy {
-  @Input() member: IMember;
+  @Input() member: IMember = {} as IMember;
   roleArray: string[] = ['Trainer', 'Spieler'];
   gendersArray: string[] = ['Männlich', 'Weiblich', 'Divers'];
   memberSports: ISport[] = [];
@@ -69,8 +69,6 @@ export class MemberEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dataSharingService.loadBasicFeeData();
-    this.dataSharingService.loadTeamsData();
     this.sportsDataSubscription = this.dataSharingService.sportsData$.subscribe(
       {
         next: (sports) => {
@@ -102,13 +100,13 @@ export class MemberEditComponent implements OnInit, OnDestroy {
       if (sel) this.memberSports.push(sel);
     });
     this.editForm.get('sports')?.setValue(this.memberSports);
-    console.log(this.member);
   }
 
   ngOnDestroy(): void {
     this.sportsDataSubscription.unsubscribe();
     this.basicFeeDataSubscription.unsubscribe();
     this.teamsDataSubscription.unsubscribe();
+    this.member = {} as IMember;
   }
 
   formatSports(): string {
