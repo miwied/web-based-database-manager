@@ -4,6 +4,7 @@ import {
   Component,
   ViewChild,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
 import {
   animate,
@@ -13,6 +14,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -40,8 +42,10 @@ import { IMember } from 'src/app/models/member';
   ],
 })
 export class SportsClubTableComponent
-  implements AfterViewInit, AfterContentInit, OnInit
+  implements AfterViewInit, AfterContentInit, OnInit, OnDestroy
 {
+  filterHovered: boolean = false;
+  filterValue: string = '';
   test: boolean = false;
   expandedElement: IMember | null;
   displayedColumns: string[] = [
@@ -61,10 +65,12 @@ export class SportsClubTableComponent
   ];
   dataSource: MatTableDataSource<IMember> = new MatTableDataSource();
   tokenUserName: string;
-  value = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+  memberSubscription: Subscription;
+  filterSubscription: Subscription;
 
   constructor(
     private dialog: MatDialog,
@@ -73,6 +79,44 @@ export class SportsClubTableComponent
     private dataSharingService: DataSharingService,
     private snackBarService: SnackBarService
   ) {}
+
+  ngOnInit(): void {
+    this.apiService.setHttpOptions();
+    this.dataSharingService.loadMembers();
+    this.dataSharingService.loadSportsData();
+    this.dataSharingService.loadBasicFeeData();
+    this.dataSharingService.loadTeamsData();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.memberSubscription = this.dataSharingService
+      .getMemberData()
+      .subscribe({
+        next: (data) => {
+          this.dataSource.data = data;
+        },
+      });
+    this.filterSubscription = this.dataSharingService.getFilter().subscribe({
+      next: (filter) => {
+        if (filter === '') this.filterHovered = false;
+        this.filterValue = filter;
+      },
+    });
+  }
+
+  ngAfterContentInit() {
+    const helper = new JwtHelperService();
+    var decodedToken = helper.decodeToken<any>(
+      this.apiService.getToken()?.toString()
+    );
+    this.tokenUserName = decodedToken.userName;
+  }
+
+  ngOnDestroy(): void {
+    this.memberSubscription.unsubscribe();
+  }
 
   mapColumnName(input: string) {
     let res = '';
@@ -167,38 +211,10 @@ export class SportsClubTableComponent
     return res;
   }
 
-  ngOnInit(): void {
-    this.apiService.setHttpOptions();
-    this.dataSharingService.loadMembers();
-    this.dataSharingService.loadSportsData();
-    this.dataSharingService.loadBasicFeeData();
-    this.dataSharingService.loadTeamsData();
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.dataSharingService.getMemberData().subscribe({
-      next: (data) => {
-        this.dataSource.data = data;
-      },
-    });
-  }
-
-  ngAfterContentInit() {
-    const helper = new JwtHelperService();
-    var decodedToken = helper.decodeToken<any>(
-      this.apiService.getToken()?.toString()
-    );
-    this.tokenUserName = decodedToken.userName;
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  setExpandedElement(element: any) {
+    if (!this.filterHovered)
+      this.expandedElement = this.expandedElement === element ? null : element;
+    else this.filterHovered = false;
   }
 
   Logout() {
@@ -225,5 +241,16 @@ export class SportsClubTableComponent
     this.dialog.open(AddDialogComponent, {
       autoFocus: false,
     });
+  }
+
+  applyFilter(value: any, column: string) {
+    this.dataSharingService.applyFilter(
+      value,
+      column,
+      this.mapColumnName(column)
+    );
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

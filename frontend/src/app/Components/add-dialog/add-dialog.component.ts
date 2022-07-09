@@ -129,8 +129,8 @@ export class AddDialogComponent implements OnInit, OnDestroy {
   }
 
   display(member: IMember) {
-    return member && member.firstName && member.lastName
-      ? member.firstName + ' ' + member.lastName
+    return member && member['firstName'] && member['lastName']
+      ? member['firstName'] + ' ' + member['lastName']
       : '';
   }
 
@@ -138,7 +138,7 @@ export class AddDialogComponent implements OnInit, OnDestroy {
     const filterValue = value.toLowerCase();
 
     return this.members.filter((member) =>
-      (member.firstName + ' ' + member.lastName)
+      (member['firstName'] + ' ' + member['lastName'])
         .toLowerCase()
         .includes(filterValue)
     );
@@ -171,13 +171,14 @@ export class AddDialogComponent implements OnInit, OnDestroy {
         if (this.addSportForm.valid) {
           let member = this.members.find(
             (member) =>
-              member.firstName + ' ' + member.lastName === f.value['leader']
+              member['firstName'] + ' ' + member['lastName'] ===
+              f.value['leader']
           );
           if (member) {
             let tmp = {
               abteilung: f.value['sport'],
               fee: f.value['fee'],
-              leaderId: member.memberId,
+              leaderId: member['memberId'],
             } as ISport;
             this.apiService.createSport(tmp).subscribe({
               complete: () => {

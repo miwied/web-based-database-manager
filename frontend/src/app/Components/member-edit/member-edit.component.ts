@@ -120,7 +120,7 @@ export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
           },
         }
       );
-      this.member.sports.forEach((element: any) => {
+      this.member['sports'].forEach((element: any) => {
         let sel = this.sports.find(
           (sport) => sport.abteilung === element[0].abteilung
         );
@@ -142,7 +142,7 @@ export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
   formatSports(): string {
     let res = '';
     if (this.member) {
-      let sportsArray = this.member.sports;
+      let sportsArray = this.member['sports'];
       let counter = 0;
       sportsArray.forEach((sportArray: any) => {
         sportArray.forEach((sport: any) => {
@@ -167,9 +167,9 @@ export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
 
   submit(f: FormGroup) {
     if (this.member) {
-      let oldPlayerTeamId = this.member.playerTeamId;
-      let oldTrainerTeamId = this.member.trainerTeamId;
-      let oldSportIds = this.member.sportIds;
+      let oldPlayerTeamId = this.member['playerTeamId'];
+      let oldTrainerTeamId = this.member['trainerTeamId'];
+      let oldSportIds = this.member['sportIds'];
       this.mapFormValuesToMember(f, this.member);
       let memberEdit = this.mapToMemberEdit(
         this.member,
@@ -195,74 +195,77 @@ export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
         sports.push(tmp);
       });
     }
+    console.log(f.value);
 
-    member.firstName = f.value['firstName']
+    member['firstName'] = f.value['firstName']
       ? f.value['firstName']
-      : member.firstName;
-    member.lastName = f.value['lastName']
+      : member['firstName'];
+    member['lastName'] = f.value['lastName']
       ? f.value['lastName']
-      : member.lastName;
-    member.zipCode = f.value['zipCode'] ? f.value['zipCode'] : member.zipCode;
-    member.city = f.value['city'] ? f.value['city'] : member.city;
-    member.gender = f.value['gender']
+      : member['lastName'];
+    member['zipCode'] = f.value['zipCode']
+      ? f.value['zipCode']
+      : member['zipCode'];
+    member['city'] = f.value['city'] ? f.value['city'] : member['city'];
+    member['gender'] = f.value['gender']
       ? f.value['gender'] === 'Weiblich'
         ? 'w'
         : f.value['gender'] === 'Männlich'
         ? 'm'
         : 'd'
-      : member.gender;
-    member.feeId = f.value['feeGroup']
+      : member['gender'];
+    member['feeId'] = f.value['feeGroup']
       ? f.value['feeGroup']['gb_id']
-      : member.feeId;
-    member.feeGroup = f.value['feeGroup']
+      : member['feeId'];
+    member['feeGroup'] = f.value['feeGroup']
       ? f.value['feeGroup']['personengruppe']
-      : member.feeGroup;
-    member.sportIds = sportIds;
-    member.sports = sports;
+      : member['feeGroup'];
+    member['sportIds'] = sportIds;
+    member['sports'] = sports;
 
     if (f.value['role'] == 'Trainer') {
-      member.isPlayer = false;
-      member.isTrainer = true;
-      member.trainerTeamId = f.value['team']['ma_id'];
-      member.trainerTeamName = [
+      member['isPlayer'] = false;
+      member['isTrainer'] = true;
+      member['trainerTeamId'] = f.value['team']['ma_id'];
+      member['trainerTeamName'] = [
         {
           teamname: f.value['team']['teamname'],
         },
       ];
-      member.playerTeamId = 0;
-      member.playerTeamName = null;
+      member['playerTeamId'] = 0;
+      member['playerTeamName'] = null;
     } else if (f.value['role'] == 'Spieler') {
-      member.isTrainer = false;
-      member.isPlayer = true;
-      member.playerTeamId = f.value['team']['ma_id'];
-      member.playerTeamName = [
+      member['isTrainer'] = false;
+      member['isPlayer'] = true;
+      member['playerTeamId'] = f.value['team']['ma_id'];
+      member['playerTeamName'] = [
         {
           teamname: f.value['team']['teamname'],
         },
       ];
-      member.trainerTeamId = 0;
-      member.trainerTeamName = null;
+      member['trainerTeamId'] = 0;
+      member['trainerTeamName'] = null;
     } else if (f.value['role'] == 'Keine Rolle') {
-      member.isPlayer = false;
-      member.isTrainer = false;
-      member.playerTeamId = 0;
-      member.playerTeamName = null;
-      member.trainerTeamId = 0;
-      member.trainerTeamName = null;
+      member['isPlayer'] = false;
+      member['isTrainer'] = false;
+      member['playerTeamId'] = 0;
+      member['playerTeamName'] = null;
+      member['trainerTeamId'] = 0;
+      member['trainerTeamName'] = null;
     } else {
-      if (member.isPlayer) {
+      if (member['isPlayer']) {
         if (f.value['team']) {
-          member.playerTeamId = f.value['team']['ma_id'];
-          member.playerTeamName = [
+          member['playerTeamId'] = f.value['team']['ma_id'];
+          member['playerTeamName'] = [
             {
               teamname: f.value['team']['teamname'],
             },
           ];
         }
-      } else if (member.isTrainer)
+      } else if (member['isTrainer'])
         if (f.value['team']) {
-          member.trainerTeamId = f.value['team']['ma_id'];
-          member.trainerTeamName = [
+          member['trainerTeamId'] = f.value['team']['ma_id'];
+          member['trainerTeamName'] = [
             {
               teamname: f.value['team']['teamname'],
             },
@@ -279,21 +282,21 @@ export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
   ): IMemberEdit {
     let member = {} as IMemberEdit;
 
-    member.memberId = input.memberId;
-    member.firstName = input.firstName;
-    member.lastName = input.lastName;
-    member.zipCode = input.zipCode;
-    member.city = input.city;
-    member.gender = input.gender;
-    member.feeId = input.feeId;
-    member.oldSportIds = oldSportIds;
-    member.sportIds = input.sportIds;
-    member.isPlayer = input.isPlayer;
-    member.oldPlayerTeamId = oldPlayerTeamId;
-    member.newPlayerTeamId = input.playerTeamId;
-    member.isTrainer = input.isTrainer;
-    member.oldTrainerTeamId = oldTrainerTeamId;
-    member.newTrainerTeamId = input.trainerTeamId;
+    member['memberId'] = input['memberId'];
+    member['firstName'] = input['firstName'];
+    member['lastName'] = input['lastName'];
+    member['zipCode'] = input['zipCode'];
+    member['city'] = input['city'];
+    member['gender'] = input['gender'];
+    member['feeId'] = input['feeId'];
+    member['oldSportIds'] = oldSportIds;
+    member['sportIds'] = input['sportIds'];
+    member['isPlayer'] = input['isPlayer'];
+    member['oldPlayerTeamId'] = oldPlayerTeamId;
+    member['newPlayerTeamId'] = input['playerTeamId'];
+    member['isTrainer'] = input['isTrainer'];
+    member['oldTrainerTeamId'] = oldTrainerTeamId;
+    member['newTrainerTeamId'] = input['trainerTeamId'];
 
     return member;
   }

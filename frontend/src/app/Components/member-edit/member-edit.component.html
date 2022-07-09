@@ -3,7 +3,7 @@
     <div class="items-left">
       <div class="items-left-top">
         <mat-form-field appearance="outline" name="firstName">
-          <mat-label>{{ member?.firstName }}</mat-label>
+          <mat-label>{{ member!["firstName"] }}</mat-label>
           <input
             matInput
             placeholder="Neuer Vorname"
@@ -16,7 +16,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>{{ member?.lastName }}</mat-label>
+          <mat-label>{{ member!["lastName"] }}</mat-label>
           <input
             matInput
             placeholder="Neuer Nachname"
@@ -26,7 +26,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>{{ member?.zipCode }}</mat-label>
+          <mat-label>{{ member!["zipCode"] }}</mat-label>
           <input matInput placeholder="Neue PLZ" formControlName="zipCode" />
           <mat-hint>PLZ</mat-hint>
         </mat-form-field>
@@ -34,16 +34,16 @@
 
       <div class="items-left-bottom">
         <mat-form-field appearance="outline">
-          <mat-label>{{ member?.city }}</mat-label>
+          <mat-label>{{ member!["city"] }}</mat-label>
           <input matInput placeholder="Neuer Ort" formControlName="city" />
           <mat-hint>Ort</mat-hint>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>{{
-            member?.gender == "w"
+            member!["gender"] == "w"
               ? "Weiblich"
-              : member?.gender == "m"
+              : member!["gender"] == "m"
               ? "Männlich"
               : "Divers"
           }}</mat-label>
@@ -56,7 +56,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label> {{ member?.feeGroup }} </mat-label>
+          <mat-label> {{ member!["feeGroup"] }} </mat-label>
           <mat-select formControlName="feeGroup">
             <mat-option *ngFor="let basicFee of basicFees" [value]="basicFee">
               {{ basicFee.personengruppe }}
@@ -87,9 +87,9 @@
           <mat-label>
             <span>
               {{
-                member?.isPlayer
+                member!["isPlayer"]
                   ? "Spieler"
-                  : member?.isTrainer
+                  : member!["isTrainer"]
                   ? "Trainer"
                   : ""
               }}
@@ -106,13 +106,13 @@
 
         <mat-form-field appearance="outline">
           <mat-label>
-            <div *ngIf="member?.trainerTeamName; else elseBlock">
-              <span *ngFor="let team of member?.trainerTeamName">
+            <div *ngIf="member!['trainerTeamName']; else elseBlock">
+              <span *ngFor="let team of member!['trainerTeamName']">
                 {{ team.teamname }}
               </span>
             </div>
             <ng-template #elseBlock>
-              <span *ngFor="let team of member?.playerTeamName">
+              <span *ngFor="let team of member!['playerTeamName']">
                 {{ team.teamname }}
               </span>
             </ng-template>
@@ -123,7 +123,7 @@
               !(
                 editForm.get('role')?.value !== 'Keine Rolle' &&
                 editForm.get('role')?.value !== null
-              ) && !(member?.playerTeamId || member?.trainerTeamId)
+              ) && !(member!['playerTeamId'] || member!['trainerTeamId'])
             "
           >
             <mat-option *ngFor="let t of teams" [value]="t">

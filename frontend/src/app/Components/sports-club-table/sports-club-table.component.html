@@ -1,6 +1,6 @@
 <div class="header">
-  <div class="left">Mitgliederverwaltungsprogramm</div>
-  <div class="right">
+  <div class="header-left">Sportverein-Verwaltung</div>
+  <div class="header-right">
     Eingeloggt als:
     {{ tokenUserName | titlecase }}
     <img
@@ -11,43 +11,22 @@
   </div>
 </div>
 
-<div class="title-block">
+<div class="container-title">
   <div class="title">
     Mitgliederverwaltung
     <div class="line"></div>
   </div>
-</div>
-
-<div class="buttons">
-  <button
-    class="addNewUser"
-    mat-flat-button
-    color="accent"
-    (click)="openAddDialog()"
-  >
-    Elemente hinzufügen
-  </button>
-
-  <mat-form-field class="filter" appearance="fill">
-    <mat-label>Filter</mat-label>
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Filter"
-      #input
-      type="text"
-      [(ngModel)]="value"
-    />
+  <div class="container-filter-add">
+    <app-filter-bubble></app-filter-bubble>
     <button
-      *ngIf="value"
-      matSuffix
-      mat-icon-button
-      aria-label="Clear"
-      (click)="value = ''"
+      class="btn-add"
+      mat-flat-button
+      color="accent"
+      (click)="openAddDialog()"
     >
-      <mat-icon>close</mat-icon>
+      Elemente hinzufügen
     </button>
-  </mat-form-field>
+  </div>
 </div>
 
 <div class="mat-elevation-z8 container">
@@ -61,11 +40,18 @@
           {{ mapColumnName(column) }}
         </th>
         <td mat-cell *matCellDef="let element">
-          {{
-            column !== "fee"
-              ? mapInformation(element[column])
-              : element[column] + "€"
-          }}
+          <span
+            class="clickable"
+            (click)="applyFilter(element[column], column)"
+            (mouseenter)="filterHovered = !filterHovered"
+            (mouseleave)="filterHovered = !filterHovered"
+          >
+            {{
+              column !== "fee"
+                ? mapInformation(element[column])
+                : element[column] + "€"
+            }}
+          </span>
         </td>
       </ng-container>
 
@@ -101,8 +87,9 @@
         mat-row
         *matRowDef="let element; columns: displayedColumns"
         class="member-row"
+        [class.filterHovered]="this.filterHovered"
         [class.expanded-row]="expandedElement === element"
-        (click)="expandedElement = expandedElement === element ? null : element"
+        (click)="setExpandedElement(element)"
       >
         >
       </tr>
@@ -126,5 +113,5 @@
 </div>
 
 <div class="footer">
-  <div class="middle">Sportverein © 2022</div>
+  <div class="footer-text">Sportverein © 2022</div>
 </div>

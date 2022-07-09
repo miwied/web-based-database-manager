@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IBasicFee } from '../models/basicFee';
-import { IMember, IMemberCreate } from '../models/member';
+import { IMember } from '../models/member';
 import { ISport } from '../models/sport';
 import { ITeam } from '../models/team';
 import { SportsClubApiService } from './sportsClub-api.service';
@@ -26,30 +26,48 @@ export class DataSharingService {
     IBasicFee[]
   >(new Array());
 
+  filter: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
   constructor(private apiService: SportsClubApiService) {}
 
+  applyFilter(filter: any, column: string, filterText: string): void {
+    this.apiService.getMembers().subscribe({
+      next: (members) => {
+        this.memberData$.next(members);
+      },
+      complete: () => {
+        let test = this.memberData$.value.filter(
+          (member) => member[column] === filter
+        );
+        this.filter.next(filterText);
+        this.memberData$.next(test);
+      },
+    });
+  }
+
+  removeFilter(): void {
+    this.filter.next('');
+    this.loadMembers();
+  }
+
+  getFilter(): Observable<string> {
+    return this.filter.asObservable();
+  }
+
   getMemberData(): Observable<IMember[]> {
-    const observable = new Observable<IMember[]>();
-    (<any>observable).source = this.memberData$;
-    return observable;
+    return this.memberData$.asObservable();
   }
 
   getSportsData(): Observable<ISport[]> {
-    const observable = new Observable<ISport[]>();
-    (<any>observable).source = this.sportsData$;
-    return observable;
+    return this.sportsData$.asObservable();
   }
 
   getTeamsData(): Observable<ITeam[]> {
-    const observable = new Observable<ITeam[]>();
-    (<any>observable).source = this.teamsData$;
-    return observable;
+    return this.teamsData$.asObservable();
   }
 
   getBasicFeeData(): Observable<IBasicFee[]> {
-    const observable = new Observable<IBasicFee[]>();
-    (<any>observable).source = this.basicFeeData$;
-    return observable;
+    return this.basicFeeData$.asObservable();
   }
 
   loadMembers() {

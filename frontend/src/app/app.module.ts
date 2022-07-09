@@ -14,6 +14,7 @@ import { MemberDeleteDialogComponent } from './Components/member-delete-dialog/m
 import { LoginComponent } from './Components/login/login.component';
 import { SportsClubTableComponent } from './Components/sports-club-table/sports-club-table.component';
 import { MemberEditComponent } from './Components/member-edit/member-edit.component';
+import { FilterBubbleComponent } from './Components/filter-bubble/filter-bubble.component';
 
 // angular material
 import { MatButtonModule } from '@angular/material/button';
@@ -31,6 +32,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MemberDeleteDialogComponent,
     AddDialogComponent,
     MemberEditComponent,
+    FilterBubbleComponent,
   ],
   imports: [
     RouterModule.forRoot(APP_ROUTES),
@@ -64,6 +67,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatSliderModule,
     MatTabsModule,
     MatAutocompleteModule,
+    MatChipsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
