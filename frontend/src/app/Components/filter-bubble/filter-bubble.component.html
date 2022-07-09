@@ -1,8 +1,20 @@
-<mat-chip-list [ngStyle]="{ width: 'fit-content' }">
-  <mat-chip *ngIf="this.filter !== ''" (removed)="remove()">
-    {{ this.filter }}
-    <button matChipRemove>
-      <mat-icon>cancel</mat-icon>
-    </button>
-  </mat-chip>
+<mat-chip-list>
+  <div
+    class="container-bubble"
+    *ngIf="this.filter.filterName"
+    [formGroup]="filterForm"
+    (ngSubmit)="updateFilter($event)"
+  >
+    <span class="text-filter">
+      {{ filter.filterName + ": " }}
+    </span>
+    <mat-form-field appearance="standard" name="filterControl">
+      <input
+        matInput
+        (keyup)="updateFilter($event)"
+        formControlName="filterControl"
+      />
+    </mat-form-field>
+    <mat-icon class="icon" (click)="remove()">cancel</mat-icon>
+  </div>
 </mat-chip-list>

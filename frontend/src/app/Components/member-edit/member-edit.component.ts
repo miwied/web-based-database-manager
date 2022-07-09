@@ -195,7 +195,6 @@ export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
         sports.push(tmp);
       });
     }
-    console.log(f.value);
 
     member['firstName'] = f.value['firstName']
       ? f.value['firstName']

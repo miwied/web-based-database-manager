@@ -26,6 +26,7 @@ import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { IMember } from 'src/app/models/member';
+import { IFilter } from 'src/app/models/filter';
 /**
  * @title Data table with sorting, pagination, and filtering.
  */
@@ -45,7 +46,7 @@ export class SportsClubTableComponent
   implements AfterViewInit, AfterContentInit, OnInit, OnDestroy
 {
   filterHovered: boolean = false;
-  filterValue: string = '';
+  filterValue = {} as IFilter;
   test: boolean = false;
   expandedElement: IMember | null;
   displayedColumns: string[] = [
@@ -100,7 +101,7 @@ export class SportsClubTableComponent
       });
     this.filterSubscription = this.dataSharingService.getFilter().subscribe({
       next: (filter) => {
-        if (filter === '') this.filterHovered = false;
+        if (filter.filterName === '') this.filterHovered = false;
         this.filterValue = filter;
       },
     });
@@ -211,6 +212,17 @@ export class SportsClubTableComponent
     return res;
   }
 
+  applyFilter(value: any, column: string) {
+    this.dataSharingService.applyFilter(
+      value,
+      column,
+      this.mapColumnName(column)
+    );
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
   setExpandedElement(element: any) {
     if (!this.filterHovered)
       this.expandedElement = this.expandedElement === element ? null : element;
@@ -241,16 +253,5 @@ export class SportsClubTableComponent
     this.dialog.open(AddDialogComponent, {
       autoFocus: false,
     });
-  }
-
-  applyFilter(value: any, column: string) {
-    this.dataSharingService.applyFilter(
-      value,
-      column,
-      this.mapColumnName(column)
-    );
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 }

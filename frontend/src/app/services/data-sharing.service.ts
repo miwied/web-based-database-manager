@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { SportsClubApiService } from './sportsClub-api.service';
 import { IBasicFee } from '../models/basicFee';
+import { IFilter } from '../models/filter';
 import { IMember } from '../models/member';
 import { ISport } from '../models/sport';
 import { ITeam } from '../models/team';
-import { SportsClubApiService } from './sportsClub-api.service';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +28,9 @@ export class DataSharingService {
     IBasicFee[]
   >(new Array());
 
-  filter: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  filter: BehaviorSubject<IFilter> = new BehaviorSubject<IFilter>(
+    {} as IFilter
+  );
 
   constructor(private apiService: SportsClubApiService) {}
 
@@ -36,21 +40,49 @@ export class DataSharingService {
         this.memberData$.next(members);
       },
       complete: () => {
-        let test = this.memberData$.value.filter(
-          (member) => member[column] === filter
+        let filterVal = '';
+        if (!Array.isArray(filter)) {
+          filterVal = filter;
+        } else {
+          let cnt = 0;
+          filter.forEach((f) => {
+            if (!Array.isArray(f)) {
+              filterVal += f.teamname;
+            } else {
+              for (let index = 0; index < f.length; index++) {
+                if (cnt === filter.length - 1) {
+                  filterVal += f[index].abteilung;
+                } else {
+                  filterVal += f[index].abteilung + ', ';
+                  cnt++;
+                }
+              }
+            }
+          });
+        }
+        if (column === 'fee') {
+          filter = _.parseInt(filter);
+        }
+        let filtered = this.memberData$.value.filter((member) =>
+          _.isEqual(filter, member[column])
         );
-        this.filter.next(filterText);
-        this.memberData$.next(test);
+        let f = {
+          filterName: filterText,
+          filterValue: filterVal,
+          column: column,
+        } as IFilter;
+        this.filter.next(f);
+        this.memberData$.next(filtered);
       },
     });
   }
 
   removeFilter(): void {
-    this.filter.next('');
+    this.filter.next({} as IFilter);
     this.loadMembers();
   }
 
-  getFilter(): Observable<string> {
+  getFilter(): Observable<IFilter> {
     return this.filter.asObservable();
   }
 
