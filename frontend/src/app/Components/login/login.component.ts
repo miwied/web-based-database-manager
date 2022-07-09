@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
         break;
     }
   }
-  getEmail() {
+  getUserName() {
     return this.angForm.get('username');
   }
   getPassword() {

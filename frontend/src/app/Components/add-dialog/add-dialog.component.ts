@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,24 +7,25 @@ import {
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
+import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 import { IBasicFee } from 'src/app/models/basicFee';
 import { ISport } from 'src/app/models/sport';
 import { ITeam } from 'src/app/models/team';
 import { IMemberCreate } from 'src/app/models/member';
-import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 
 @Component({
   selector: 'add-dialog',
   templateUrl: './add-dialog.component.html',
   styleUrls: ['./add-dialog.component.css'],
 })
-export class AddDialogComponent implements OnInit, AfterContentInit, OnDestroy {
+export class AddDialogComponent implements OnInit, OnDestroy {
   roleArray: string[] = ['Trainer', 'Spieler'];
   gendersArray: string[] = ['Männlich', 'Weiblich', 'Divers'];
   sports: ISport[];
   teams: ITeam[];
   basicFees: IBasicFee[];
   addMemberForm: FormGroup;
+  addSportForm: FormGroup;
 
   sportsDataSubscription: Subscription;
   basicFeeDataSubscription: Subscription;
@@ -62,11 +63,14 @@ export class AddDialogComponent implements OnInit, AfterContentInit, OnDestroy {
       role: new FormControl(null),
       team: new FormControl(null),
     });
+    this.addSportForm = this.fb.group({
+      sport: new FormControl(null),
+      fee: new FormControl(null),
+      leaderId: new FormControl(null),
+    });
   }
 
-  ngOnInit(): void {}
-
-  ngAfterContentInit(): void {
+  ngOnInit(): void {
     this.sportsDataSubscription = this.dataSharingService
       .getSportsData()
       .subscribe({
@@ -96,7 +100,25 @@ export class AddDialogComponent implements OnInit, AfterContentInit, OnDestroy {
     this.teamsDataSubscription.unsubscribe();
   }
 
-  submit(f: FormGroup) {
+  submit(f: FormGroup, type: string) {
+    switch (type) {
+      case 'member':
+        let memberCreate = this.mapFormValuesToMemberCreate(f);
+        this.apiService.createMember(memberCreate).subscribe({
+          next: () => {},
+          complete: () => {
+            this.dataSharingService.loadMembers();
+          },
+        });
+        break;
+      case 'sport':
+        break;
+      case 'team':
+        break;
+    }
+  }
+
+  mapFormValuesToMemberCreate(f: FormGroup): IMemberCreate {
     let memberCreate = {} as IMemberCreate;
     memberCreate.firstName = f.value['firstName'];
     memberCreate.lastName = f.value['lastName'];
@@ -125,12 +147,6 @@ export class AddDialogComponent implements OnInit, AfterContentInit, OnDestroy {
     f.value['sports'].forEach((sport: any) => {
       memberCreate.sportIds.push({ sa_id: sport.sa_id });
     });
-
-    this.apiService.createMember(memberCreate).subscribe({
-      next: () => {},
-      complete: () => {
-        this.dataSharingService.loadMembers();
-      },
-    });
+    return memberCreate;
   }
 }

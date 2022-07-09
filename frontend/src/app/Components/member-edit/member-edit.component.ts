@@ -100,6 +100,7 @@ export class MemberEditComponent implements OnInit, OnDestroy {
       if (sel) this.memberSports.push(sel);
     });
     this.editForm.get('sports')?.setValue(this.memberSports);
+    console.log(this.member);
   }
 
   ngOnDestroy(): void {
@@ -138,6 +139,8 @@ export class MemberEditComponent implements OnInit, OnDestroy {
   submit(f: FormGroup) {
     let oldPlayerTeamId = this.member.playerTeamId;
     let oldTrainerTeamId = this.member.trainerTeamId;
+    console.log(oldPlayerTeamId);
+    console.log(oldTrainerTeamId);
     let oldSportIds = this.member.sportIds;
     this.mapFormValuesToMember(f);
     let memberEdit = this.mapToMemberEdit(
@@ -145,6 +148,7 @@ export class MemberEditComponent implements OnInit, OnDestroy {
       oldPlayerTeamId,
       oldTrainerTeamId
     );
+    console.log(memberEdit);
     this.apiService.putMember(memberEdit).subscribe({
       next: () => {},
     });
@@ -219,7 +223,27 @@ export class MemberEditComponent implements OnInit, OnDestroy {
       this.member.playerTeamName = null;
       this.member.trainerTeamId = 0;
       this.member.trainerTeamName = null;
+    } else {
+      if (this.member.isPlayer) {
+        if (f.value['team']) {
+          this.member.playerTeamId = f.value['team']['ma_id'];
+          this.member.playerTeamName = [
+            {
+              teamname: f.value['team']['teamname'],
+            },
+          ];
+        }
+      } else if (this.member.isTrainer)
+        if (f.value['team']) {
+          this.member.trainerTeamId = f.value['team']['ma_id'];
+          this.member.trainerTeamName = [
+            {
+              teamname: f.value['team']['teamname'],
+            },
+          ];
+        }
     }
+    console.log(this.member);
   }
 
   mapToMemberEdit(

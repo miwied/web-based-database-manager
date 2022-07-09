@@ -2,12 +2,13 @@ mat-form-field {
   padding-right: 3%;
 }
 
-.container {
+mat-tab-group {
   width: 40vw;
-  height: 40vh;
 }
 
-.container-member {
+.form-member {
+  width: 40vw;
+  height: 30vh;
   padding-top: 4%;
   display: grid;
   grid-template-areas:
@@ -16,6 +17,17 @@ mat-form-field {
     "bot"
     "submit";
   grid-template-rows: 25% 25% 25% 25%;
+}
+
+.form-sport {
+  width: 40vw;
+  height: 20vh;
+  padding-top: 4%;
+  display: grid;
+  grid-template-areas:
+    "top"
+    "submit";
+  grid-template-rows: 75% 25%;
 }
 
 .row-top {
@@ -50,7 +62,7 @@ mat-form-field {
   height: 2.5rem;
   width: 20%;
   border-radius: 12px;
-  margin-right: 9%;
+  margin-right: 8%;
   background-color: rgb(118, 118, 255);
   color: white;
   display: flex;

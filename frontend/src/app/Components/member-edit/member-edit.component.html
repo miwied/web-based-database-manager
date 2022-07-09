@@ -104,13 +104,7 @@
           <mat-hint>Rolle</mat-hint>
         </mat-form-field>
 
-        <mat-form-field
-          *ngIf="
-            editForm.get('role')?.value !== 'Keine Rolle' &&
-            editForm.get('role')?.value !== null
-          "
-          appearance="outline"
-        >
+        <mat-form-field appearance="outline">
           <mat-label>
             <div *ngIf="member.trainerTeamName; else elseBlock">
               <span *ngFor="let team of member.trainerTeamName">
@@ -123,7 +117,15 @@
               </span>
             </ng-template>
           </mat-label>
-          <mat-select formControlName="team">
+          <mat-select
+            formControlName="team"
+            [disabled]="
+              !(
+                editForm.get('role')?.value !== 'Keine Rolle' &&
+                editForm.get('role')?.value !== null
+              ) && !(this.member.playerTeamId || this.member.trainerTeamId)
+            "
+          >
             <mat-option *ngFor="let t of teams" [value]="t">
               {{ t.teamname }}
             </mat-option>

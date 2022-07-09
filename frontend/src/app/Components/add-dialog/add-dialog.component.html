@@ -1,19 +1,23 @@
 <div class="container">
-  <mat-tab-group>
+  <mat-tab-group mat-stretch-tabs dynamicHeight>
     <mat-tab label="Mitglied hinzufügen">
       <form
-        class="container-member"
+        class="form-member"
         [formGroup]="addMemberForm"
-        (ngSubmit)="submit(addMemberForm)"
+        (ngSubmit)="submit(addMemberForm, 'member')"
       >
         <div class="row-top">
           <mat-form-field appearance="outline" name="firstName">
             <mat-label>Vorname</mat-label>
-            <input matInput formControlName="firstName" />
+            <input matInput formControlName="firstName" placeholder="Max" />
           </mat-form-field>
           <mat-form-field appearance="outline" name="lastName">
             <mat-label>Nachname</mat-label>
-            <input matInput formControlName="lastName" />
+            <input
+              matInput
+              formControlName="lastName"
+              placeholder="Mustermann"
+            />
           </mat-form-field>
           <mat-form-field appearance="outline" name="gender">
             <mat-label>Geschlecht</mat-label>
@@ -28,11 +32,11 @@
         <div class="row-mid">
           <mat-form-field appearance="outline" name="zipCode">
             <mat-label>PLZ</mat-label>
-            <input matInput formControlName="zipCode" />
+            <input matInput formControlName="zipCode" placeholder="95448" />
           </mat-form-field>
           <mat-form-field appearance="outline" name="city">
             <mat-label>Ort</mat-label>
-            <input matInput formControlName="city" />
+            <input matInput formControlName="city" placeholder="Musterstadt" />
           </mat-form-field>
           <mat-form-field appearance="outline" name="feeGroup">
             <mat-label>Beitragsgruppe</mat-label>
@@ -89,7 +93,32 @@
         </div>
       </form>
     </mat-tab>
-    <mat-tab label="Sportart hinzufügen"></mat-tab>
+    <mat-tab label="Sportart hinzufügen">
+      <form
+        class="form-sport"
+        [formGroup]="addSportForm"
+        (ngSubmit)="submit(addMemberForm, 'sport')"
+      >
+        <div class="row-top">
+          <mat-form-field appearance="outline" name="sport">
+            <mat-label>Sportart</mat-label>
+            <input matInput formControlName="sport" placeholder="Fußball" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" name="fee">
+            <mat-label>Beitragsgebühr</mat-label>
+            <input matInput formControlName="fee" placeholder="30.00€" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" name="leaderId">
+            <mat-label>Leiter der Sportart</mat-label>
+            <mat-select formControlName="leaderId">
+              <mat-option [value]="">
+                {{ "Test" }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-tab>
     <mat-tab label="Mannschaft hinzufügen"></mat-tab>
   </mat-tab-group>
 </div>
