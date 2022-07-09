@@ -1,0 +1,8 @@
+<mat-chip-list [ngStyle]="{ width: 'fit-content' }">
+  <mat-chip *ngIf="this.filter !== ''" (removed)="remove()">
+    {{ this.filter }}
+    <button matChipRemove>
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </mat-chip>
+</mat-chip-list>
