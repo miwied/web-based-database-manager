@@ -90,23 +90,4 @@ export class DataSharingService {
     );
     this.memberData$.next(filtered);
   }
-
-  deleteSport(sportId: number) {
-    let filtered = this.sportsData$.value.filter(
-      (sport) => sport.sa_id != sportId
-    );
-    this.sportsData$.next(filtered);
-  }
-
-  deleteTeam(teamId: number) {
-    let filtered = this.teamsData$.value.filter((team) => team.id != teamId);
-    this.teamsData$.next(filtered);
-  }
-
-  deleteBasicFee(basicFeeId: number) {
-    let filtered = this.basicFeeData$.value.filter(
-      (basicFee) => basicFee.id != basicFeeId
-    );
-    this.basicFeeData$.next(filtered);
-  }
 }

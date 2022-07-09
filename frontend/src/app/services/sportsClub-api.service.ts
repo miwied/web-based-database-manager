@@ -36,9 +36,7 @@ export class SportsClubApiService {
     }
   }
 
-  //addMember noch hinzufügen
-
-  //CRUD
+  // #member
   getMembers(): Observable<IMember[]> {
     let url = `${this.indexUrl}/member/get`;
     return this.httpClient.get<IMember[]>(url, this.httpOptions);
@@ -59,6 +57,7 @@ export class SportsClubApiService {
     return this.httpClient.delete(url, this.httpOptions);
   }
 
+  // #sport
   getSports(): Observable<ISport[]> {
     let url = `${this.indexUrl}/sport/get`;
     return this.httpClient.get<ISport[]>(url, this.httpOptions);
@@ -73,15 +72,18 @@ export class SportsClubApiService {
     let url = `${this.indexUrl}/sport/edit`;
     this.httpClient.put<any>(url, sport, this.httpOptions);
   }
+
   deleteSport(sportId: number) {
     let url = `${this.indexUrl}/sport/delete/${sportId}`;
     this.httpClient.delete(url, this.httpOptions);
   }
 
+  // #team
   getTeams(): Observable<ITeam[]> {
     let url = `${this.indexUrl}/team/get`;
     return this.httpClient.get<ITeam[]>(url, this.httpOptions);
   }
+
   createTeam(team: ITeam): Observable<any> {
     let url = `${this.indexUrl}/team/create`;
     return this.httpClient.post(url, team, this.httpOptions);
@@ -91,7 +93,8 @@ export class SportsClubApiService {
     let url = `${this.indexUrl}/basicFee/get`;
     return this.httpClient.get<IBasicFee[]>(url, this.httpOptions);
   }
-  //userLogin
+
+  // #login / registration
   userLogin(username: string, password: string) {
     this.httpOptions.headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
@@ -122,12 +125,15 @@ export class SportsClubApiService {
   setToken(token: string) {
     localStorage.setItem('token', token);
   }
+
   getToken() {
     return localStorage.getItem('token');
   }
+
   deleteToken() {
     localStorage.removeItem('token');
   }
+
   isLoggedIn() {
     const usertoken = this.getToken();
     if (usertoken != null) {
