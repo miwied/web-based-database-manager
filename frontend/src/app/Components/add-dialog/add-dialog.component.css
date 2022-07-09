@@ -21,13 +21,21 @@ mat-tab-group {
 
 .form-sport {
   width: 40vw;
-  height: 20vh;
+  height: 15vh;
   padding-top: 4%;
   display: grid;
   grid-template-areas:
     "top"
     "submit";
-  grid-template-rows: 75% 25%;
+  grid-template-rows: 60% 40%;
+}
+
+.form-team {
+  width: 40vw;
+  height: 10vh;
+  padding-top: 4%;
+  display: flex;
+  justify-content: center;
 }
 
 .row-top {
@@ -68,4 +76,9 @@ mat-tab-group {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.form-team .btn-submit {
+  margin-top: 1.5%;
+  margin-left: 3%;
 }

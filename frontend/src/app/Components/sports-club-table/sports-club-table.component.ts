@@ -12,18 +12,18 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MemberDeleteDialogComponent } from '../member-delete-dialog/member-delete-dialog.component';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
-import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
-import { IMember } from 'src/app/models/member';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { IMember } from 'src/app/models/member';
 /**
  * @title Data table with sorting, pagination, and filtering.
  */
@@ -42,6 +42,7 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 export class SportsClubTableComponent
   implements AfterViewInit, AfterContentInit, OnInit
 {
+  test: boolean = false;
   expandedElement: IMember | null;
   displayedColumns: string[] = [
     'memberId',
@@ -114,7 +115,7 @@ export class SportsClubTableComponent
         res = 'Sportarten';
         break;
       case 'fee':
-        res = 'Gesamtgebühr';
+        res = 'Beitrag';
         break;
       case 'actions':
         res = '';
@@ -212,23 +213,17 @@ export class SportsClubTableComponent
   }
 
   openDeleteDialog(row: any) {
-    const dialogRef = this.dialog.open(MemberDeleteDialogComponent, {
+    this.dialog.open(MemberDeleteDialogComponent, {
       data: {
         member: row,
       },
       autoFocus: false,
     });
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
   openAddDialog() {
-    const dialogRef = this.dialog.open(AddDialogComponent, {
+    this.dialog.open(AddDialogComponent, {
       autoFocus: false,
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
     });
   }
 }

@@ -29,19 +29,19 @@ class DBRepository
         $memberId = $this->db->executeWithParamsAndGetLastInsertedId($sqlCreateMember, [$member["firstName"], $member["lastName"], $member["zipCode"], $member["city"], $member["gender"], 2, $member["feeId"]]);
 
         // create the member-trainer association inside table trainer if isTrainer == true
-        if ($member["isTrainer"]) {
+        if (isset($member["isTrainer"]) && isset($member["trainerTeamId"]) && $member["isTrainer"]) {
             $sqlCreateTrainer = "INSERT INTO trainer(ma_id, mi_id) VALUES (?,?)";
             $this->db->executeWithParams($sqlCreateTrainer, [$member["trainerTeamId"], $memberId]);
         }
 
         // create the member-player association inside table spieler if isPlayer == true
-        if ($member["isPlayer"]) {
+        if (isset($member["isPlayer"]) && isset($member["playerTeamId"]) && $member["isPlayer"]) {
             $sqlCreatePlayer = "INSERT INTO spieler(ma_id, mi_id) VALUES (?,?)";
             $this->db->executeWithParams($sqlCreatePlayer, [$member["playerTeamId"], $memberId]);
         }
 
         // create the member-sports association inside table mitglied_sportart if array is not empty
-        if (count($member["sportIds"]) > 0) {
+        if (isset($member["sportIds"]) && count($member["sportIds"]) > 0) {
             foreach ($member["sportIds"] as $key => $sportId) {
                 $sqlCreateMemberSport = "INSERT INTO mitglied_sportart(mi_id, sa_id) VALUES(?,?)";
                 $this->db->executeWithParams($sqlCreateMemberSport, [$memberId, $sportId["sa_id"]]);
@@ -137,7 +137,7 @@ class DBRepository
     public function createTeam($team)
     {
         $sql = "INSERT INTO mannschaft(sa_id, teamname) VALUES (?,?)";
-        $this->db->executeWithParams($sql, [$team["sportsId"], $team["name"]]);
+        $this->db->executeWithParams($sql, [$team["sportsId"], $team["teamname"]]);
     }
 
     public function getTeam()
@@ -168,7 +168,7 @@ class DBRepository
     public function createSport($sport)
     {
         $sql = "INSERT INTO sportart(abteilung, beitrag, mi_id) VALUES (?,?,?)";
-        $this->db->executeWithParams($sql, [$sport["name"], $sport["fee"], $sport["leaderId"]]);
+        $this->db->executeWithParams($sql, [$sport["abteilung"], $sport["fee"], $sport["leaderId"]]);
     }
 
     public function getSport()

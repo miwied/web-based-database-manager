@@ -43,7 +43,6 @@ mat-form-field {
 .items-right-bottom {
   grid-area: bottom;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
 }
 
@@ -66,9 +65,10 @@ mat-form-field {
 
 .btn-delete {
   height: 2.5rem;
-  width: 20%;
+  width: fit-content;
   border-radius: 12px;
   margin-bottom: 5%;
+  margin-left: 45%;
   background-color: red;
   color: white;
   display: flex;

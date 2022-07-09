@@ -64,9 +64,9 @@ export class SportsClubApiService {
     return this.httpClient.get<ISport[]>(url, this.httpOptions);
   }
 
-  createSport(sport: ISport): void {
+  createSport(sport: ISport): Observable<any> {
     let url = `${this.indexUrl}/sport/create`;
-    this.httpClient.post<ISport[]>(url, sport, this.httpOptions);
+    return this.httpClient.post<ISport>(url, sport, this.httpOptions);
   }
 
   updateSport(sport: ISport): void {
@@ -82,9 +82,9 @@ export class SportsClubApiService {
     let url = `${this.indexUrl}/team/get`;
     return this.httpClient.get<ITeam[]>(url, this.httpOptions);
   }
-  createTeams(team: ITeam): void {
+  createTeam(team: ITeam): Observable<any> {
     let url = `${this.indexUrl}/team/create`;
-    this.httpClient.post(url, team, this.httpOptions);
+    return this.httpClient.post(url, team, this.httpOptions);
   }
 
   getBasicFee(): Observable<IBasicFee[]> {

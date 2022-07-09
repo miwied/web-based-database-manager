@@ -83,7 +83,9 @@
           >
             <app-member-edit
               class="member-edit-component"
-              [member]="element"
+              (@detailExpand.done)="(test)"
+              *ngIf="expandedElement === element"
+              [member]="expandedElement === element ? expandedElement : null"
               style="width: 100%"
             ></app-member-edit>
           </div>

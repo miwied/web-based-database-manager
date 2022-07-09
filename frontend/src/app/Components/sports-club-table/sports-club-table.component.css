@@ -25,7 +25,7 @@
 
 .mat-column-zipCode {
   flex: none;
-  width: 7%;
+  width: 5%;
 }
 
 .mat-column-city {
@@ -50,7 +50,7 @@
 
 .mat-column-trainerTeamName {
   flex: none;
-  width: 10%;
+  width: 8%;
 }
 
 .mat-column-sports {
@@ -93,7 +93,7 @@
   width: 30vw;
   display: grid;
   grid-template-columns: 30vw;
-  grid-template-rows: 5vh;
+  grid-template-rows: 3vh;
   grid-template-areas:
     "top"
     "middle"
@@ -114,13 +114,13 @@
 }
 
 .buttons {
-  margin-top: 20px;
+  grid-area: bottom;
+  margin-top: 25px;
   height: 70px;
 }
 
 .addNewUser {
   margin-left: 10%;
-  grid-area: bottom;
   width: fit-content;
   height: 51.6167px;
   float: left;
@@ -141,7 +141,7 @@
 .container {
   margin-left: 10%;
   margin-right: 10%;
-  height: 70vh;
+  height: 73vh;
   width: 80%;
   border-radius: 10px;
 }

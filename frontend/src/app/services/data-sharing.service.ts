@@ -93,7 +93,7 @@ export class DataSharingService {
 
   deleteSport(sportId: number) {
     let filtered = this.sportsData$.value.filter(
-      (sport) => sport.id != sportId
+      (sport) => sport.sa_id != sportId
     );
     this.sportsData$.next(filtered);
   }

@@ -14,7 +14,7 @@ class SportController
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-        if (strtoupper($requestMethod) == 'PUT') {
+        if (strtoupper($requestMethod) == 'POST') {
             try {
                 $this->repo->createSport(json_decode(file_get_contents('php://input'), true));
                 $responseData = 'Sport erfolgreich angelegt';

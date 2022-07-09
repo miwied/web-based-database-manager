@@ -14,7 +14,7 @@ class TeamController
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-        if (strtoupper($requestMethod) == 'PUT') {
+        if (strtoupper($requestMethod) == 'POST') {
             try {
                 $this->repo->createTeam(json_decode(file_get_contents('php://input'), true));
                 $responseData = 'Team erfolgreich angelegt';

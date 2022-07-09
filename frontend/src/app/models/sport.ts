@@ -1,5 +1,5 @@
 export interface ISport {
-  id: number;
+  sa_id?: number;
   abteilung: string;
   fee: number;
   leaderId: number;

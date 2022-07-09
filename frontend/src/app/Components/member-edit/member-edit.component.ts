@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -19,8 +26,26 @@ import { ISport } from 'src/app/models/sport';
   templateUrl: './member-edit.component.html',
   styleUrls: ['./member-edit.component.css'],
 })
-export class MemberEditComponent implements OnInit, OnDestroy {
-  @Input() member: IMember = {} as IMember;
+export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() member: IMember | null = {
+    memberId: 0,
+    firstName: '',
+    lastName: '',
+    zipCode: 0,
+    city: '',
+    gender: '',
+    feeId: 0,
+    feeGroup: '',
+    fee: 0,
+    sportIds: {},
+    sports: {},
+    isPlayer: false,
+    playerTeamId: 0,
+    playerTeamName: {},
+    isTrainer: false,
+    trainerTeamId: 0,
+    trainerTeamName: {},
+  };
   roleArray: string[] = ['Trainer', 'Spieler'];
   gendersArray: string[] = ['Männlich', 'Weiblich', 'Divers'];
   memberSports: ISport[] = [];
@@ -68,40 +93,44 @@ export class MemberEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {
-    this.sportsDataSubscription = this.dataSharingService.sportsData$.subscribe(
-      {
-        next: (sports) => {
-          if (sports.length > 0) {
-            this.sports = sports;
-          }
-        },
-      }
-    );
-    this.basicFeeDataSubscription =
-      this.dataSharingService.basicFeeData$.subscribe({
-        next: (basicFees) => {
-          if (basicFees.length > 0) {
-            this.basicFees = basicFees;
-          }
-        },
-      });
-    this.teamsDataSubscription = this.dataSharingService.teamsData$.subscribe({
-      next: (teams) => {
-        if (teams.length > 0) {
-          this.teams = teams;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.member) {
+      this.sportsDataSubscription =
+        this.dataSharingService.sportsData$.subscribe({
+          next: (sports) => {
+            if (sports.length > 0) {
+              this.sports = sports;
+            }
+          },
+        });
+      this.basicFeeDataSubscription =
+        this.dataSharingService.basicFeeData$.subscribe({
+          next: (basicFees) => {
+            if (basicFees.length > 0) {
+              this.basicFees = basicFees;
+            }
+          },
+        });
+      this.teamsDataSubscription = this.dataSharingService.teamsData$.subscribe(
+        {
+          next: (teams) => {
+            if (teams.length > 0) {
+              this.teams = teams;
+            }
+          },
         }
-      },
-    });
-    this.member.sports.forEach((element: any) => {
-      let sel = this.sports.find(
-        (sport) => sport.abteilung === element[0].abteilung
       );
-      if (sel) this.memberSports.push(sel);
-    });
-    this.editForm.get('sports')?.setValue(this.memberSports);
-    console.log(this.member);
+      this.member.sports.forEach((element: any) => {
+        let sel = this.sports.find(
+          (sport) => sport.abteilung === element[0].abteilung
+        );
+        if (sel) this.memberSports.push(sel);
+      });
+      this.editForm.get('sports')?.setValue(this.memberSports);
+    }
   }
+
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.sportsDataSubscription.unsubscribe();
@@ -112,15 +141,17 @@ export class MemberEditComponent implements OnInit, OnDestroy {
 
   formatSports(): string {
     let res = '';
-    let sportsArray = this.member.sports;
-    let counter = 0;
-    sportsArray.forEach((sportArray: any) => {
-      sportArray.forEach((sport: any) => {
-        if (counter == sportsArray.length - 1) res += sport.abteilung;
-        else res += sport.abteilung + ', ';
-        counter++;
+    if (this.member) {
+      let sportsArray = this.member.sports;
+      let counter = 0;
+      sportsArray.forEach((sportArray: any) => {
+        sportArray.forEach((sport: any) => {
+          if (counter == sportsArray.length - 1) res += sport.abteilung;
+          else res += sport.abteilung + ', ';
+          counter++;
+        });
       });
-    });
+    }
     return res;
   }
 
@@ -131,31 +162,29 @@ export class MemberEditComponent implements OnInit, OnDestroy {
       },
       autoFocus: false,
     });
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   submit(f: FormGroup) {
-    let oldPlayerTeamId = this.member.playerTeamId;
-    let oldTrainerTeamId = this.member.trainerTeamId;
-    console.log(oldPlayerTeamId);
-    console.log(oldTrainerTeamId);
-    let oldSportIds = this.member.sportIds;
-    this.mapFormValuesToMember(f);
-    let memberEdit = this.mapToMemberEdit(
-      oldSportIds,
-      oldPlayerTeamId,
-      oldTrainerTeamId
-    );
-    console.log(memberEdit);
-    this.apiService.putMember(memberEdit).subscribe({
-      next: () => {},
-    });
+    if (this.member) {
+      let oldPlayerTeamId = this.member.playerTeamId;
+      let oldTrainerTeamId = this.member.trainerTeamId;
+      let oldSportIds = this.member.sportIds;
+      this.mapFormValuesToMember(f, this.member);
+      let memberEdit = this.mapToMemberEdit(
+        this.member,
+        oldSportIds,
+        oldPlayerTeamId,
+        oldTrainerTeamId
+      );
+      this.apiService.putMember(memberEdit).subscribe({
+        next: () => {},
+      });
+    }
     //this.editForm.controls['firstName'].setErrors(['test']);
   }
 
-  mapFormValuesToMember(f: FormGroup): void {
+  mapFormValuesToMember(f: FormGroup, member: IMember): void {
     let sportIds: {}[] = [];
     let sports: any = [];
     if (f.value['sports']) {
@@ -167,107 +196,104 @@ export class MemberEditComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.member.firstName = f.value['firstName']
+    member.firstName = f.value['firstName']
       ? f.value['firstName']
-      : this.member.firstName;
-    this.member.lastName = f.value['lastName']
+      : member.firstName;
+    member.lastName = f.value['lastName']
       ? f.value['lastName']
-      : this.member.lastName;
-    this.member.zipCode = f.value['zipCode']
-      ? f.value['zipCode']
-      : this.member.zipCode;
-    this.member.city = f.value['city'] ? f.value['city'] : this.member.city;
-    this.member.gender = f.value['gender']
+      : member.lastName;
+    member.zipCode = f.value['zipCode'] ? f.value['zipCode'] : member.zipCode;
+    member.city = f.value['city'] ? f.value['city'] : member.city;
+    member.gender = f.value['gender']
       ? f.value['gender'] === 'Weiblich'
         ? 'w'
         : f.value['gender'] === 'Männlich'
         ? 'm'
         : 'd'
-      : this.member.gender;
-    this.member.feeId = f.value['feeGroup']
+      : member.gender;
+    member.feeId = f.value['feeGroup']
       ? f.value['feeGroup']['gb_id']
-      : this.member.feeId;
-    this.member.feeGroup = f.value['feeGroup']
+      : member.feeId;
+    member.feeGroup = f.value['feeGroup']
       ? f.value['feeGroup']['personengruppe']
-      : this.member.feeGroup;
-    this.member.sportIds =
-      sportIds.length > 0 ? sportIds : this.member.sportIds;
-    this.member.sports = sports.length > 0 ? sports : this.member.sports;
+      : member.feeGroup;
+    member.sportIds = sportIds;
+    member.sports = sports;
 
     if (f.value['role'] == 'Trainer') {
-      this.member.isPlayer = false;
-      this.member.isTrainer = true;
-      this.member.trainerTeamId = f.value['team']['ma_id'];
-      this.member.trainerTeamName = [
+      member.isPlayer = false;
+      member.isTrainer = true;
+      member.trainerTeamId = f.value['team']['ma_id'];
+      member.trainerTeamName = [
         {
           teamname: f.value['team']['teamname'],
         },
       ];
-      this.member.playerTeamId = 0;
-      this.member.playerTeamName = null;
+      member.playerTeamId = 0;
+      member.playerTeamName = null;
     } else if (f.value['role'] == 'Spieler') {
-      this.member.isTrainer = false;
-      this.member.isPlayer = true;
-      this.member.playerTeamId = f.value['team']['ma_id'];
-      this.member.playerTeamName = [
+      member.isTrainer = false;
+      member.isPlayer = true;
+      member.playerTeamId = f.value['team']['ma_id'];
+      member.playerTeamName = [
         {
           teamname: f.value['team']['teamname'],
         },
       ];
-      this.member.trainerTeamId = 0;
-      this.member.trainerTeamName = null;
+      member.trainerTeamId = 0;
+      member.trainerTeamName = null;
     } else if (f.value['role'] == 'Keine Rolle') {
-      this.member.isPlayer = false;
-      this.member.isTrainer = false;
-      this.member.playerTeamId = 0;
-      this.member.playerTeamName = null;
-      this.member.trainerTeamId = 0;
-      this.member.trainerTeamName = null;
+      member.isPlayer = false;
+      member.isTrainer = false;
+      member.playerTeamId = 0;
+      member.playerTeamName = null;
+      member.trainerTeamId = 0;
+      member.trainerTeamName = null;
     } else {
-      if (this.member.isPlayer) {
+      if (member.isPlayer) {
         if (f.value['team']) {
-          this.member.playerTeamId = f.value['team']['ma_id'];
-          this.member.playerTeamName = [
+          member.playerTeamId = f.value['team']['ma_id'];
+          member.playerTeamName = [
             {
               teamname: f.value['team']['teamname'],
             },
           ];
         }
-      } else if (this.member.isTrainer)
+      } else if (member.isTrainer)
         if (f.value['team']) {
-          this.member.trainerTeamId = f.value['team']['ma_id'];
-          this.member.trainerTeamName = [
+          member.trainerTeamId = f.value['team']['ma_id'];
+          member.trainerTeamName = [
             {
               teamname: f.value['team']['teamname'],
             },
           ];
         }
     }
-    console.log(this.member);
   }
 
   mapToMemberEdit(
+    input: IMember,
     oldSportIds: any,
     oldPlayerTeamId: number,
     oldTrainerTeamId: number
   ): IMemberEdit {
     let member = {} as IMemberEdit;
 
-    member.memberId = this.member.memberId;
-    member.firstName = this.member.firstName;
-    member.lastName = this.member.lastName;
-    member.zipCode = this.member.zipCode;
-    member.city = this.member.city;
-    member.gender = this.member.gender;
-    member.feeId = this.member.feeId;
+    member.memberId = input.memberId;
+    member.firstName = input.firstName;
+    member.lastName = input.lastName;
+    member.zipCode = input.zipCode;
+    member.city = input.city;
+    member.gender = input.gender;
+    member.feeId = input.feeId;
     member.oldSportIds = oldSportIds;
-    member.sportIds = this.member.sportIds;
-    member.isPlayer = this.member.isPlayer;
+    member.sportIds = input.sportIds;
+    member.isPlayer = input.isPlayer;
     member.oldPlayerTeamId = oldPlayerTeamId;
-    member.newPlayerTeamId = this.member.playerTeamId;
-    member.isTrainer = this.member.isTrainer;
+    member.newPlayerTeamId = input.playerTeamId;
+    member.isTrainer = input.isTrainer;
     member.oldTrainerTeamId = oldTrainerTeamId;
-    member.newTrainerTeamId = this.member.trainerTeamId;
+    member.newTrainerTeamId = input.trainerTeamId;
 
     return member;
   }
