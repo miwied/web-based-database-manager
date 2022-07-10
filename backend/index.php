@@ -26,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
+// JWT checking
+// is 'Authorization' header present?
 $headers = getallheaders();
 if (!array_key_exists('Authorization', $headers)) {
     header('HTTP/1.0 400 Bad Request');
@@ -33,12 +35,15 @@ if (!array_key_exists('Authorization', $headers)) {
     exit;
 }
 
+// does the 'Authorization' header content match the expected format `Bearer ...`?
+// if it does containt `Bearer ...` it will fill the $matches array split by the whitespace
 if (!preg_match('/Bearer\s(\S+)/', $headers["Authorization"], $matches)) {
     header('HTTP/1.0 400 Bad Request');
     echo 'Token not found in request';
     exit;
 }
 
+// $matches[0] == 'Bearer' and $matches[1] == JWT which we need to continue
 $jwt = $matches[1];
 if (!$jwt) {
     // No token was able to be extracted from the authorization header
@@ -46,19 +51,19 @@ if (!$jwt) {
     exit;
 }
 
+// we decode the JWT by providing the hashed JWT, the secret key and the hashing algorithm
+// the function also checks the iat, nbf and exp dates with the current date
 $token = JWT::decode($jwt, new key(JWT_SECRET_KEY, 'HS512'));
-$now = new DateTimeImmutable();
-$serverName = JWT_DOMAIN_NAME;
 
-if (
-    $token->iss !== $serverName ||
-    $token->nbf > $now->getTimestamp() ||
-    $token->exp < $now->getTimestamp()
-) {
+// check if the token issuer matches the domain name we set before
+// if any checks match the user is unauthorized and can't continue
+if ($token->iss !== JWT_DOMAIN_NAME) {
     header('HTTP/1.1 401 Unauthorized');
     exit;
 }
 
+// the token has passed our checks so we split the complete uri with which the index.php
+// was accessed by the slash '/' symbols to handle routing of the request
 $uri = HttpExtensionMethods::getUriSegments();
 
 // function for throwing a http 404 error  

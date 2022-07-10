@@ -44,8 +44,8 @@ class LoginController
                     $request_data = [
                         'iat'  => $date->getTimestamp(),         // Issued at: time when the token was generated
                         'iss'  => $domainName,                   // Issuer
-                        'nbf'  => $date->getTimestamp(),         // Not before
-                        'exp'  => $expire_at,                    // Expire
+                        'nbf'  => $date->getTimestamp(),         // Not before date
+                        'exp'  => $expire_at,                    // Expiration date
                         'userName' => $username,                 // User name
                     ];
                     $token = JWT::encode(
