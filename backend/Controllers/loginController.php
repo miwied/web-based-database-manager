@@ -36,24 +36,20 @@ class LoginController
                 $isPasswordCorrect = password_verify($pwdPeppered, $existingHashFromDb[0]["password"]);
 
                 if ($isPasswordCorrect) {
-                    $secret_Key  = JWT_SECRET_KEY;
-                    $date   = new DateTimeImmutable();
-                    $expire_at     = $date->modify(JWT_MODIFIER)->getTimestamp();
-                    $domainName = JWT_DOMAIN_NAME;
-                    $username   = $this->username;
+                    $date = new DateTimeImmutable(); // get current dateTime
+                    $expire_at = $date->modify(JWT_MODIFIER)->getTimestamp();
                     $request_data = [
                         'iat'  => $date->getTimestamp(),         // Issued at: time when the token was generated
-                        'iss'  => $domainName,                   // Issuer
-                        'nbf'  => $date->getTimestamp(),         // Not before date
-                        'exp'  => $expire_at,                    // Expiration date
-                        'userName' => $username,                 // User name
+                        'iss'  => JWT_DOMAIN_NAME,               // Issuer
+                        'nbf'  => $date->getTimestamp(),         // Not before: time before which the token is invalid
+                        'exp'  => $expire_at,                    // Expiration: time after which the token is invalid
+                        'userName' => $this->username,           // Username
                     ];
                     $token = JWT::encode(
                         $request_data,
-                        $secret_Key,
+                        JWT_SECRET_KEY,
                         'HS512'
                     );
-                    apache_setenv('TOKEN', $token);
                     $responsedata = json_encode($token);
                 } else {
                     $strErrorDesc = 'Invalid credentials';

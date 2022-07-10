@@ -28,16 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 // JWT checking
 // is 'Authorization' header present?
-$headers = getallheaders();
-if (!array_key_exists('Authorization', $headers)) {
+if (!array_key_exists('Authorization', getallheaders())) {
     header('HTTP/1.0 400 Bad Request');
     echo 'No Authorization header found';
     exit;
 }
 
 // does the 'Authorization' header content match the expected format `Bearer ...`?
-// if it does containt `Bearer ...` it will fill the $matches array split by the whitespace
-if (!preg_match('/Bearer\s(\S+)/', $headers["Authorization"], $matches)) {
+// if it does contain `Bearer ...` it will fill the $matches array split by the whitespace
+if (!preg_match('/Bearer\s(\S+)/', getallheaders()["Authorization"], $matches)) {
     header('HTTP/1.0 400 Bad Request');
     echo 'Token not found in request';
     exit;
@@ -45,15 +44,16 @@ if (!preg_match('/Bearer\s(\S+)/', $headers["Authorization"], $matches)) {
 
 // $matches[0] == 'Bearer' and $matches[1] == JWT which we need to continue
 $jwt = $matches[1];
-if (!$jwt) {
-    // No token was able to be extracted from the authorization header
-    header('HTTP/1.0 400 Bad Request');
-    exit;
-}
 
 // we decode the JWT by providing the hashed JWT, the secret key and the hashing algorithm
 // the function also checks the iat, nbf and exp dates with the current date
-$token = JWT::decode($jwt, new key(JWT_SECRET_KEY, 'HS512'));
+try {
+    $token = JWT::decode($jwt, new key(JWT_SECRET_KEY, 'HS512'));
+} catch (Exception $e) {
+    header('http/1.0 400 Bad Request');
+    echo ('Token decoding failed - see exception for details: ' . $e->getMessage());
+    exit;
+}
 
 // check if the token issuer matches the domain name we set before
 // if any checks match the user is unauthorized and can't continue
