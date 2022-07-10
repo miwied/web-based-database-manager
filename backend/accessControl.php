@@ -61,7 +61,7 @@ class AccessControl
         }
 
         // check if the token issuer matches the domain name we set before
-        // if any checks match the user is unauthorized and can't continue
+        // if the check matches the user is unauthorized and can't continue
         if ($token->iss !== JWT_DOMAIN_NAME) {
             header('HTTP/1.1 401 Unauthorized');
             exit;
