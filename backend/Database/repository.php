@@ -109,16 +109,16 @@ class DBRepository
     }
 
     // #sports / member
-    public function getSportsInfoById($sa_id)
-    {
-        $sql = "SELECT abteilung, beitrag FROM sportart WHERE sa_id = ?";
-        return $this->db->queryWithParams($sql, [$sa_id]);
-    }
-
     private function createSportForMember($mi_id, $sa_id)
     {
         $sql = "INSERT INTO mitglied_sportart(mi_id, sa_id) VALUES (?,?)";
         $this->db->executeWithParams($sql, [$mi_id, $sa_id]);
+    }
+
+    public function getSportsInfoById($sa_id)
+    {
+        $sql = "SELECT abteilung, beitrag FROM sportart WHERE sa_id = ?";
+        return $this->db->queryWithParams($sql, [$sa_id]);
     }
 
     public function getSportsByMemberId($mi_id)
@@ -235,15 +235,15 @@ class DBRepository
         return $this->db->queryWithParams($sql, [$username]);
     }
 
-    public function putLoginData($username, $password)
-    {
-        $sql = "INSERT INTO login_data(username, password) VALUES (?,?)";
-        $this->db->executeWithParams($sql, [$username, $password]);
-    }
-
     public function getUsernameCount($username)
     {
         $sql = "SELECT COUNT(1) FROM login_data WHERE username = ?";
         return $this->db->queryWithParams($sql, [$username]);
+    }
+
+    public function putLoginData($username, $password)
+    {
+        $sql = "INSERT INTO login_data(username, password) VALUES (?,?)";
+        $this->db->executeWithParams($sql, [$username, $password]);
     }
 }

@@ -1,11 +1,11 @@
-### STEP 1: Dependecies ###
+# Step 1: Dependecies
 FROM node:16-alpine as dependencies
 RUN mkdir -p /dependencies
 WORKDIR /dependencies
 COPY package*.json ./
 RUN ["npm", "install"]
 
-### STEP 2: Run ###
+# Step 2: Run
 FROM dependencies as run
 RUN mkdir -p /app
 WORKDIR /app

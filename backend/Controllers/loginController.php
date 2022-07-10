@@ -25,6 +25,46 @@ class LoginController
         return $query;
     }
 
+    // create users in database
+    public function createAction()
+    {
+        if (strtoupper($this->requestMethod) == 'POST') {
+            $strErrorDesc = '';
+            try {
+                // check if user already exists
+                $usernameCount = $this->repo->getUsernameCount($this->username);
+                $userAlreadyExists = false;
+
+                if ($usernameCount[0]["COUNT(1)"] > 0) {
+                    $userAlreadyExists = true;
+                }
+
+                if (!$userAlreadyExists) {
+                    $pwdPeppered = hash_hmac("sha256", $this->password, PEPPER);
+                    $hashToStoreInDb = password_hash($pwdPeppered, PASSWORD_BCRYPT);
+                    $this->repo->putLoginData($this->username, $hashToStoreInDb);
+                } else {
+                    $strErrorDesc = 'User already exists :)';
+                    $strErrorHeader = 'HTTP/1.1 409 Conflict';
+                }
+            } catch (Error $e) {
+                $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+        } else {
+            $strErrorDesc = 'Method not supported';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+
+        // send output
+        if ($strErrorDesc) {
+            HttpExtensionMethods::sendOutput(
+                json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+        }
+    }
+
     // check if inserted password matches the password in database and response with token if so
     public function listAction()
     {
@@ -71,46 +111,6 @@ class LoginController
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
         } else {
-            HttpExtensionMethods::sendOutput(
-                json_encode(array('error' => $strErrorDesc)),
-                array('Content-Type: application/json', $strErrorHeader)
-            );
-        }
-    }
-
-    // create users in database
-    public function createAction()
-    {
-        if (strtoupper($this->requestMethod) == 'POST') {
-            $strErrorDesc = '';
-            try {
-                // check if user already exists
-                $usernameCount = $this->repo->getUsernameCount($this->username);
-                $userAlreadyExists = false;
-
-                if ($usernameCount[0]["COUNT(1)"] > 0) {
-                    $userAlreadyExists = true;
-                }
-
-                if (!$userAlreadyExists) {
-                    $pwdPeppered = hash_hmac("sha256", $this->password, PEPPER);
-                    $hashToStoreInDb = password_hash($pwdPeppered, PASSWORD_BCRYPT);
-                    $this->repo->putLoginData($this->username, $hashToStoreInDb);
-                } else {
-                    $strErrorDesc = 'User already exists :)';
-                    $strErrorHeader = 'HTTP/1.1 409 Conflict';
-                }
-            } catch (Error $e) {
-                $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
-                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
-            }
-        } else {
-            $strErrorDesc = 'Method not supported';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
-        }
-
-        // send output
-        if ($strErrorDesc) {
             HttpExtensionMethods::sendOutput(
                 json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
