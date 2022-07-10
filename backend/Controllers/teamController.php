@@ -11,131 +11,67 @@ class TeamController
     // create team
     public function createAction()
     {
-        $strErrorDesc = '';
-        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
 
         if (strtoupper($requestMethod) == 'POST') {
             try {
                 $this->repo->createTeam(json_decode(file_get_contents('php://input'), true));
-                $responseData = 'Team erfolgreich angelegt';
+                HttpExtensionMethods::sendOutput(200);
             } catch (Error $e) {
-                $strErrorDesc = $e->getMessage() . 'Something went wrong!';
-                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+                HttpExtensionMethods::sendOutput(500, 'Something went wrong: ' . $e->getMessage());
             }
         } else {
-            $strErrorDesc = 'Method not supported';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
-        }
-
-        // send output
-        if (!$strErrorDesc) {
-            HttpExtensionMethods::sendOutput(
-                $responseData,
-                array('Content-Type: application/json', 'HTTP/1.1 204 No Content')
-            );
-        } else {
-            HttpExtensionMethods::sendOutput(
-                json_encode(array('error' => $strErrorDesc)),
-                array('Content-Type: application/json', $strErrorHeader)
-            );
+            HttpExtensionMethods::sendOutput(422, 'Method not supported');
         }
     }
 
     // get teams
     public function getAction()
     {
-        $strErrorDesc = '';
-        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
 
         if (strtoupper($requestMethod) == 'GET') {
             try {
-                $responseData = json_encode($this->repo->getTeam());
+                HttpExtensionMethods::sendOutput(200, json_encode($this->repo->getTeam()));
             } catch (Error $e) {
-                $strErrorDesc = $e->getMessage() . 'Something went wrong!';
-                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+                HttpExtensionMethods::sendOutput(500, 'Something went wrong: ' . $e->getMessage());
             }
         } else {
-            $strErrorDesc = 'Method not supported';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
-        }
-
-        // send output
-        if (!$strErrorDesc) {
-            HttpExtensionMethods::sendOutput(
-                $responseData,
-                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
-            );
-        } else {
-            HttpExtensionMethods::sendOutput(
-                json_encode(array('error' => $strErrorDesc)),
-                array('Content-Type: application/json', $strErrorHeader)
-            );
+            HttpExtensionMethods::sendOutput(422, 'Method not supported');
         }
     }
 
     // edit teamname
     public function putAction()
     {
-        $strErrorDesc = '';
-        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
 
         if (strtoupper($requestMethod) == 'PUT') {
             try {
                 $this->repo->putTeamname(json_decode(file_get_contents('php://input'), true));
-                $responseData = 'Teamname erfolgreich bearbeitet';
+                HttpExtensionMethods::sendOutput(200);
             } catch (Error $e) {
-                $strErrorDesc = $e->getMessage() . 'Something went wrong!';
-                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+                HttpExtensionMethods::sendOutput(500, 'Something went wrong: ' . $e->getMessage());
             }
         } else {
-            $strErrorDesc = 'Method not supported';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
-        }
-
-        // send output
-        if (!$strErrorDesc) {
-            HttpExtensionMethods::sendOutput(
-                $responseData,
-                array('Content-Type: application/json', 'HTTP/1.1 204 No Content')
-            );
-        } else {
-            HttpExtensionMethods::sendOutput(
-                json_encode(array('error' => $strErrorDesc)),
-                array('Content-Type: application/json', $strErrorHeader)
-            );
+            HttpExtensionMethods::sendOutput(422, 'Method not supported');
         }
     }
 
     // delete team
     public function deleteAction($id)
     {
-        $strErrorDesc = '';
-        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
 
         if (strtoupper($requestMethod) == 'DELETE') {
             try {
                 $this->repo->deleteTeam($id);
-                $responseData = 'Mannschaft erfolgreich gelöscht';
+                HttpExtensionMethods::sendOutput(200);
             } catch (Error $e) {
-                $strErrorDesc = $e->getMessage() . 'Something went wrong!';
-                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+                HttpExtensionMethods::sendOutput(500, 'Something went wrong: ' . $e->getMessage());
             }
         } else {
-            $strErrorDesc = 'Method not supported';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
-        }
-
-        // send output
-        if (!$strErrorDesc) {
-            HttpExtensionMethods::sendOutput(
-                $responseData,
-                array('Content-Type: application/json', 'HTTP/1.1 204 No Content')
-            );
-        } else {
-            HttpExtensionMethods::sendOutput(
-                json_encode(array('error' => $strErrorDesc)),
-                array('Content-Type: application/json', $strErrorHeader)
-            );
+            HttpExtensionMethods::sendOutput(422, 'Method not supported');
         }
     }
 }

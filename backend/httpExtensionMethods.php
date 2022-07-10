@@ -14,30 +14,13 @@ class HttpExtensionMethods
         return $uri;
     }
 
-    /**
-     * Send API output.
-     *
-     * @param mixed  $data
-     * @param string $httpHeader
-     */
-    public static function sendOutput($data, $httpHeaders = array())
+    public static function sendOutput($code, $data = null)
     {
-        header_remove('Set-Cookie');
+        header_remove('Set-Cookie'); // make sure that no cookie is set
 
-        if (is_array($httpHeaders) && count($httpHeaders)) {
-            foreach ($httpHeaders as $httpHeader) {
-                header($httpHeader);
-            }
-        }
+        header('Content-Type: application/json', true, $code);
 
         echo $data;
         exit;
-    }
-
-    // function for throwing a http 404 error  
-    public static function throw404Error()
-    {
-        header("HTTP/1.1 404 Not Found");
-        exit();
     }
 }

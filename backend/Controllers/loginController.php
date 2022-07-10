@@ -2,21 +2,21 @@
 
 use Firebase\JWT\JWT;
 
-require_once PROJECT_ROOT_PATH . "/vendor/autoload.php";
+require_once PROJECT_ROOT_PATH . '/vendor/autoload.php';
 class LoginController
 {
     private $repo;
-    private $password = '';
-    private $username = '';
     private $requestMethod = '';
+    private $username = '';
+    private $password = '';
 
     public function __construct()
     {
-        $queryStringParams = $this->getQueryStringParams();
-        $this->username = $queryStringParams["username"];
-        $this->password = $queryStringParams["password"];
         $this->repo = new DBRepository();
-        $this->requestMethod = $_SERVER["REQUEST_METHOD"];
+        $this->requestMethod = $_SERVER['REQUEST_METHOD'];
+        $queryStringParams = $this->getQueryStringParams();
+        $this->username = $queryStringParams['username'];
+        $this->password = $queryStringParams['password'];
     }
 
     private function getQueryStringParams()
@@ -29,39 +29,28 @@ class LoginController
     public function createAction()
     {
         if (strtoupper($this->requestMethod) == 'POST') {
-            $strErrorDesc = '';
             try {
                 // check if user already exists
                 $usernameCount = $this->repo->getUsernameCount($this->username);
                 $userAlreadyExists = false;
 
-                if ($usernameCount[0]["COUNT(1)"] > 0) {
+                if ($usernameCount[0]['COUNT(1)'] > 0) {
                     $userAlreadyExists = true;
                 }
 
                 if (!$userAlreadyExists) {
-                    $pwdPeppered = hash_hmac("sha256", $this->password, PEPPER);
+                    $pwdPeppered = hash_hmac('sha256', $this->password, PEPPER);
                     $hashToStoreInDb = password_hash($pwdPeppered, PASSWORD_BCRYPT);
                     $this->repo->putLoginData($this->username, $hashToStoreInDb);
+                    HttpExtensionMethods::sendOutput(200);
                 } else {
-                    $strErrorDesc = 'User already exists :)';
-                    $strErrorHeader = 'HTTP/1.1 409 Conflict';
+                    HttpExtensionMethods::sendOutput(409, 'User already exists :)');
                 }
             } catch (Error $e) {
-                $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
-                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+                HttpExtensionMethods::sendOutput(500, 'Something went wrong: ' . $e->getMessage());
             }
         } else {
-            $strErrorDesc = 'Method not supported';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
-        }
-
-        // send output
-        if ($strErrorDesc) {
-            HttpExtensionMethods::sendOutput(
-                json_encode(array('error' => $strErrorDesc)),
-                array('Content-Type: application/json', $strErrorHeader)
-            );
+            HttpExtensionMethods::sendOutput(422, 'Method not supported');
         }
     }
 
@@ -69,11 +58,10 @@ class LoginController
     public function listAction()
     {
         if (strtoupper($this->requestMethod) == 'POST') {
-            $strErrorDesc = '';
             try {
                 $existingHashFromDb = $this->repo->getPwdByUsername($this->username);
-                $pwdPeppered = hash_hmac("sha256", $this->password, PEPPER);
-                $isPasswordCorrect = password_verify($pwdPeppered, $existingHashFromDb[0]["password"]);
+                $pwdPeppered = hash_hmac('sha256', $this->password, PEPPER);
+                $isPasswordCorrect = password_verify($pwdPeppered, $existingHashFromDb[0]['password']);
 
                 if ($isPasswordCorrect) {
                     $date = new DateTimeImmutable(); // get current dateTime
@@ -90,31 +78,15 @@ class LoginController
                         JWT_SECRET_KEY,
                         'HS512'
                     );
-                    $responsedata = json_encode($token);
+                    HttpExtensionMethods::sendOutput(200, json_encode($token));
                 } else {
-                    $strErrorDesc = 'Invalid credentials';
-                    $strErrorHeader = 'HTTP/1.1 400 Bad Request';
+                    HttpExtensionMethods::sendOutput(400, 'Invalid credentials');
                 }
             } catch (Error $e) {
-                $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
-                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+                HttpExtensionMethods::sendOutput(500, 'Something went wrong: ' . $e->getMessage());
             }
         } else {
-            $strErrorDesc = 'Method not supported';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
-        }
-
-        // send output
-        if (!$strErrorDesc) {
-            HttpExtensionMethods::sendOutput(
-                $responsedata,
-                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
-            );
-        } else {
-            HttpExtensionMethods::sendOutput(
-                json_encode(array('error' => $strErrorDesc)),
-                array('Content-Type: application/json', $strErrorHeader)
-            );
+            HttpExtensionMethods::sendOutput(422, 'Method not supported');
         }
     }
 }

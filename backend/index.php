@@ -13,7 +13,7 @@ $uri = HttpExtensionMethods::getUriSegments();
 
 // if uri[3] is not set we can't do anything
 if (!isset($uri[3])) {
-    HttpExtensionMethods::throw404Error();
+    HttpExtensionMethods::sendOutput(404);
 }
 
 // basicFee endpoint handling
@@ -26,7 +26,7 @@ if ($uri[2] == 'basicFee') {
             $basicFeeController->getAction();
             break;
         default:
-            HttpExtensionMethods::throw404Error();
+            HttpExtensionMethods::sendOutput(404);
     }
 }
 
@@ -47,10 +47,10 @@ if ($uri[2] == 'member') {
             break;
         case 'delete':
             if (isset($uri[4])) $memberController->deleteAction($uri[4]);
-            else HttpExtensionMethods::throw404Error();
+            HttpExtensionMethods::sendOutput(404);
             break;
         default:
-            HttpExtensionMethods::throw404Error();
+            HttpExtensionMethods::sendOutput(404);
     }
 }
 
@@ -71,10 +71,10 @@ if ($uri[2] == 'team') {
             break;
         case 'delete':
             if (isset($uri[4])) $teamController->deleteAction($uri[4]);
-            else HttpExtensionMethods::throw404Error();
+            HttpExtensionMethods::sendOutput(404);
             break;
         default:
-            HttpExtensionMethods::throw404Error();
+            HttpExtensionMethods::sendOutput(404);
     }
 }
 
@@ -95,12 +95,12 @@ if ($uri[2] == 'sport') {
             break;
         case 'delete':
             if (isset($uri[4])) $sportController->deleteAction($uri[4]);
-            else HttpExtensionMethods::throw404Error();
+            HttpExtensionMethods::sendOutput(404);
             break;
         default:
-            HttpExtensionMethods::throw404Error();
+            HttpExtensionMethods::sendOutput(404);
     }
 }
 
 // no uri was matching if you get here
-HttpExtensionMethods::throw404Error();
+HttpExtensionMethods::sendOutput(404);

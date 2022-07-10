@@ -20,7 +20,7 @@ class AccessControl
 
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
                 // may also be using PUT, PATCH, HEAD etc
-                header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+                header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
                 header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
             exit(0);
@@ -34,7 +34,7 @@ class AccessControl
         // JWT checking
         // is 'Authorization' header present?
         if (!array_key_exists('Authorization', getallheaders())) {
-            header('HTTP/1.0 400 Bad Request');
+            header('HTTP/1.1 400 Bad Request');
             echo 'No Authorization header found';
             exit;
         }
@@ -42,7 +42,7 @@ class AccessControl
         // does the 'Authorization' header content match the expected format `Bearer ...`?
         // if it does contain `Bearer ...` it will fill the $matches array split by the whitespace
         if (!preg_match('/Bearer\s(\S+)/', getallheaders()["Authorization"], $matches)) {
-            header('HTTP/1.0 400 Bad Request');
+            header('HTTP/1.1 400 Bad Request');
             echo 'Token not found in request';
             exit;
         }
@@ -55,7 +55,7 @@ class AccessControl
         try {
             $token = JWT::decode($jwt, new key(JWT_SECRET_KEY, 'HS512'));
         } catch (Exception $e) {
-            header('http/1.0 400 Bad Request');
+            header('HTTP/1.1 400 Bad Request');
             echo ('Token decoding failed - see exception for details: ' . $e->getMessage());
             exit;
         }

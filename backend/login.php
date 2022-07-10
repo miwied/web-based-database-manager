@@ -18,9 +18,9 @@ if (isset($uri[2])) {
             $loginController->listAction();
             break;
         default:
-            HttpExtensionMethods::throw404Error();
+            HttpExtensionMethods::sendOutput(404);
     }
 } else {
     // the uri doesn't match
-    HttpExtensionMethods::throw404Error();
+    HttpExtensionMethods::sendOutput(404);
 }
