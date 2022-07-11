@@ -3,7 +3,6 @@ version: "3.9"
 volumes:
   dbdata:
 
-
 services:
   php-apache-environment:
     container_name: php-apache
@@ -18,7 +17,7 @@ services:
     container_name: angular-app
     build: ../frontend
     ports:
-      - '4200:4200'
+      - "4200:4200"
 
   mysql:
     container_name: mariadb

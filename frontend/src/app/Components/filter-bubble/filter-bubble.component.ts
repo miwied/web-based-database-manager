@@ -32,6 +32,10 @@ export class FilterBubbleComponent implements OnInit {
             ? 'Weiblich'
             : filter.filterValue === 'd'
             ? 'Divers'
+            : filter.filterValue === false
+            ? 'Nein'
+            : filter.filterValue === true
+            ? 'Ja'
             : filter.filterValue;
         this.filterForm.get('filterControl')?.setValue(value);
       },
@@ -46,7 +50,7 @@ export class FilterBubbleComponent implements OnInit {
     if (e.key === 'Escape' || e.keyCode === 27) this.remove();
     else if (e.key === 'Enter' || e.keyCode === 13) {
       let formValue = this.filterForm.get('filterControl')?.value;
-      let filterValue = '';
+      let filterValue;
       switch (formValue) {
         case 'Männlich':
           filterValue = 'm';
@@ -56,6 +60,12 @@ export class FilterBubbleComponent implements OnInit {
           break;
         case 'Divers':
           filterValue = 'd';
+          break;
+        case 'Nein':
+          filterValue = false;
+          break;
+        case 'Ja':
+          filterValue = true;
           break;
         default:
           filterValue = formValue;

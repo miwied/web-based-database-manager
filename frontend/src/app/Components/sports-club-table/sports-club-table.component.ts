@@ -117,6 +117,7 @@ export class SportsClubTableComponent
 
   ngOnDestroy(): void {
     this.memberSubscription.unsubscribe();
+    this.filterSubscription.unsubscribe();
   }
 
   mapColumnName(input: string) {
