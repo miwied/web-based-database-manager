@@ -1,5 +1,6 @@
 mat-form-field {
   padding-right: 3%;
+  width: 10vw;
 }
 
 mat-tab-group {
@@ -70,7 +71,7 @@ mat-tab-group {
   height: 2.5rem;
   width: 20%;
   border-radius: 12px;
-  margin-right: 8%;
+  margin-right: 11%;
   background-color: rgb(118, 118, 255);
   color: white;
   display: flex;
