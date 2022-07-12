@@ -1,25 +1,52 @@
 <div class="login">
-    <div class="content">
-        <h1>FC FUSILLI</h1>
-        <div class="line"></div>
-        <form [formGroup]="angForm" (ngSubmit)="postdata(angForm)" autocomplete="off">
-            <mat-button-toggle-group class="option-container" name="option" [(value)]="selection" aria-label="option">
-                <mat-button-toggle class="option-login" value="Login">Login</mat-button-toggle>
-                <mat-button-toggle class="option-register" value="Register">Register</mat-button-toggle>
-            </mat-button-toggle-group>
-            <br />
-            <input class="input" type="text" name="username" formControlName="username" autocomplete="off" placeholder="Nutzername" />
+  <div class="content">
+    <h1>FC FUSILLI</h1>
+    <div class="line"></div>
+    <form
+      [formGroup]="angForm"
+      (ngSubmit)="postdata(angForm)"
+      autocomplete="off"
+    >
+      <mat-button-toggle-group
+        class="option-container"
+        name="option"
+        [(value)]="selection"
+        aria-label="option"
+      >
+        <mat-button-toggle class="option-login" value="Login"
+          >Login</mat-button-toggle
+        >
+        <mat-button-toggle class="option-register" value="Register"
+          >Register</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+      <br />
+      <input
+        class="input"
+        type="text"
+        name="username"
+        formControlName="username"
+        autocomplete="off"
+        placeholder="Nutzername"
+      />
 
-            <br />
+      <br />
 
-            <br />
-            <input class="input" type="password" name="Password" formControlName="password" autocomplete="off" placeholder="Password" />
+      <br />
+      <input
+        class="input"
+        type="password"
+        name="Password"
+        formControlName="password"
+        autocomplete="off"
+        placeholder="Password"
+      />
 
-            <br />
-            <button mat-button type="submit" class="submitLogin">Submit</button>
-        </form>
-    </div>
+      <br />
+      <button mat-button type="submit" class="submitLogin">Submit</button>
+    </form>
+  </div>
 </div>
 <div class="picture">
-    <img class="image" src="..\..\assets\Images\staffellauf.jpg" alt="image" />
+  <img class="image" src="..\..\assets\Images\staffellauf.jpg" alt="image" />
 </div>

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  UrlTree,
   CanActivate,
   Router,
 } from '@angular/router';
@@ -28,9 +27,8 @@ export class AuthguardGuard implements CanActivate {
     if (this.dataService.isLoggedIn()) {
       return true;
     }
-
     this.dataService.redirectUrl = routeurl;
-      this.router.navigate(['/login'], { queryParams: { returnUrl: routeurl } });
-      return false;
+    this.router.navigate(['/login'], { queryParams: { returnUrl: routeurl } });
+    return false;
   }
 }

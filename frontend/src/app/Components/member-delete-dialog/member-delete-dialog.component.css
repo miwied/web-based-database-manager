@@ -1,12 +1,12 @@
 .button-default {
-    width: 100px;
-    margin-left: 5%;
-    float: left;
-    background-color:#ababab;
+  width: 100px;
+  margin-left: 5%;
+  float: left;
+  background-color: #ababab;
 }
 
 .button-delete {
-    width: 100px;
-    margin-right: 5%;
-    float: right;
+  width: 100px;
+  margin-right: 5%;
+  float: right;
 }

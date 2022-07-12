@@ -8,9 +8,8 @@ describe('FilterBubbleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FilterBubbleComponent ]
-    })
-    .compileComponents();
+      declarations: [FilterBubbleComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
