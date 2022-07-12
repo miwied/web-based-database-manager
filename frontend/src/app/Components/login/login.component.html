@@ -1,14 +1,14 @@
-<div class="login">
+<div class="container-login">
   <div class="content">
     <h1>FC FUSILLI</h1>
     <div class="line"></div>
     <form
-      [formGroup]="angForm"
-      (ngSubmit)="postdata(angForm)"
+      [formGroup]="loginForm"
+      (ngSubmit)="postdata(loginForm)"
       autocomplete="off"
     >
       <mat-button-toggle-group
-        class="option-container"
+        class="container-toggle"
         name="option"
         [(value)]="selection"
         aria-label="option"
@@ -20,33 +20,38 @@
           >Register</mat-button-toggle
         >
       </mat-button-toggle-group>
-      <br />
-      <input
-        class="input"
-        type="text"
-        name="username"
-        formControlName="username"
-        autocomplete="off"
-        placeholder="Nutzername"
-      />
 
-      <br />
+      <mat-form-field appearance="outline" name="username">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          formControlName="username"
+          name="username"
+          placeholder="Nutzername"
+        />
+        <mat-error *ngIf="loginForm.get('username')?.errors">
+          Mind. <strong>3</strong> Zeichen
+        </mat-error>
+      </mat-form-field>
 
-      <br />
-      <input
-        class="input"
-        type="password"
-        name="Password"
-        formControlName="password"
-        autocomplete="off"
-        placeholder="Password"
-      />
+      <mat-form-field appearance="outline" name="password">
+        <mat-label>Passwort</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          name="password"
+        />
+        <mat-error *ngIf="loginForm.get('password')?.errors">
+          Mind. <strong>3</strong> Zeichen
+        </mat-error>
+      </mat-form-field>
 
-      <br />
-      <button mat-button type="submit" class="submitLogin">Submit</button>
+      <button mat-button type="submit" class="btn-submit">Submit</button>
     </form>
   </div>
 </div>
+
 <div class="picture">
   <img class="image" src="..\..\assets\Images\staffellauf.jpg" alt="image" />
 </div>

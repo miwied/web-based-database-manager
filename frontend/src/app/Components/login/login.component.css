@@ -1,55 +1,53 @@
-.login {
+mat-form-field {
+  width: 21.3vw;
+}
+
+.container-login {
   float: left;
   width: 50%;
   height: 100vh;
 }
+
 .picture {
   float: right;
   width: 50%;
 }
+
 .content {
   margin-top: 35%;
   margin-left: 30%;
 }
+
 h1 {
   margin-bottom: 10px;
   margin-top: 0px;
 }
+
 .line {
-  width: 112px;
+  width: 6.5vw;
   height: 1px;
   border-top: 2px solid #cc6969;
   margin-top: -10px;
 }
+
 .form {
   padding-top: 20px;
 }
-.input {
-  width: 381px;
-  height: 39px;
-  background: #ffffff;
-  border: 1px solid #000000;
-  border-radius: 5px;
-  padding-left: 10px;
-}
-::placeholder {
-  font-size: 1.2em;
-}
-.label {
-  padding-top: 6px;
-  padding-bottom: 6px;
+
+.container-toggle {
+  margin-top: 15px;
+  display: flex;
+  width: 21.1vw;
+  margin-bottom: 2%;
 }
 
-br {
-  margin-bottom: 20px;
-}
-.submitLogin {
-  width: 395px;
+.btn-submit {
+  width: 21.3vw;
   height: 39px;
   background: #cc6969;
   font-size: medium;
   color: #ffffff;
-  margin-top: 12px;
+  margin-top: 2%;
 }
 
 .image {
@@ -57,12 +55,6 @@ br {
   height: 100vh;
   object-fit: cover;
   margin-bottom: -7px;
-}
-
-.option-container {
-  margin-top: 15px;
-  display: flex;
-  width: 393px;
 }
 
 .option-login {
