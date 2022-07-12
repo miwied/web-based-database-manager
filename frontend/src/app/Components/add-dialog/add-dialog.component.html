@@ -10,6 +10,10 @@
           <mat-form-field appearance="outline" name="firstName">
             <mat-label>Vorname</mat-label>
             <input matInput formControlName="firstName" placeholder="Max" />
+            <mat-error *ngIf="addMemberForm.get('firstName')?.errors">
+              Mind. <strong>3</strong> Buchstaben und <br />
+              <strong>keine Zahlen</strong>
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" name="lastName">
             <mat-label>Nachname</mat-label>
@@ -18,6 +22,10 @@
               formControlName="lastName"
               placeholder="Mustermann"
             />
+            <mat-error *ngIf="addMemberForm.get('lastName')?.errors">
+              Mind. <strong>3</strong> Buchstaben und <br />
+              <strong>keine Zahlen</strong>
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" name="gender">
             <mat-label>Geschlecht</mat-label>
@@ -26,6 +34,9 @@
                 {{ gender }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="addMemberForm.get('gender')?.errors">
+              Geschlecht wird benötigt
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -33,10 +44,17 @@
           <mat-form-field appearance="outline" name="zipCode">
             <mat-label>PLZ</mat-label>
             <input matInput formControlName="zipCode" placeholder="95448" />
+            <mat-error *ngIf="addMemberForm.get('zipCode')?.errors">
+              Genau <strong>5 Zahlen</strong> benötigt
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" name="city">
             <mat-label>Ort</mat-label>
             <input matInput formControlName="city" placeholder="Musterstadt" />
+            <mat-error *ngIf="addMemberForm.get('city')?.errors">
+              Mind. <strong>3</strong> Buchstaben und <br />
+              <strong>keine Zahlen</strong>
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" name="feeGroup">
             <mat-label>Beitragsgruppe</mat-label>
@@ -45,6 +63,9 @@
                 {{ basicFee.personengruppe }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="addMemberForm.get('feeGroup')?.errors">
+              Beitragsgruppe benötigt
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -103,15 +124,21 @@
           <mat-form-field appearance="outline" name="sport">
             <mat-label>Sportart</mat-label>
             <input matInput formControlName="sport" placeholder="Fußball" />
+            <mat-error *ngIf="addSportForm.get('sport')?.errors">
+              Mind. <strong>3</strong> Zeichen
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" name="fee">
             <mat-label>Beitragsgebühr</mat-label>
             <input matInput formControlName="fee" placeholder="30.00€" />
+            <mat-error *ngIf="addSportForm.get('fee')?.errors">
+              Eingabe nicht erlaubt (z.B. 30.00)
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" name="leader">
-            <mat-label>Leiter der Sportart</mat-label>
+            <mat-label>LeiterIn der Sportart</mat-label>
             <input
               type="text"
               matInput
@@ -126,6 +153,9 @@
                 {{ display(member) }}
               </mat-option>
             </mat-autocomplete>
+            <mat-error *ngIf="addSportForm.get('leader')?.errors">
+              LeiterIn benötigt
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -145,6 +175,9 @@
         <mat-form-field appearance="outline" name="name">
           <mat-label>Name der Mannschaft</mat-label>
           <input matInput formControlName="name" placeholder="1. FC Köln" />
+          <mat-error *ngIf="addTeamForm.get('name')?.errors">
+            Mind. <strong>3</strong> Zeichen
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" name="sport">
@@ -154,6 +187,9 @@
               {{ sport.abteilung }}
             </mat-option>
           </mat-select>
+          <mat-error *ngIf="addTeamForm.get('sport')?.errors">
+            Sportart benötigt
+          </mat-error>
         </mat-form-field>
 
         <button class="btn-submit" type="submit" mat-button>Hinzufügen</button>

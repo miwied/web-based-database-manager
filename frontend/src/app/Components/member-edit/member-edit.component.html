@@ -10,9 +10,10 @@
             formControlName="firstName"
           />
           <mat-hint>Vorname</mat-hint>
-          <!-- <mat-error *ngIf="editForm.get('firstName')?.errors">
-            Vorname wird <strong>benötigt</strong>
-          </mat-error> -->
+          <mat-error *ngIf="editForm.get('firstName')?.errors">
+            Mind. <strong>3</strong> Buchstaben und <br />
+            <strong>keine Zahlen</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -23,12 +24,19 @@
             formControlName="lastName"
           />
           <mat-hint>Nachname</mat-hint>
+          <mat-error *ngIf="editForm.get('lastName')?.errors">
+            Mind. <strong>3</strong> Buchstaben und <br />
+            <strong>keine Zahlen</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>{{ member!["zipCode"] }}</mat-label>
           <input matInput placeholder="Neue PLZ" formControlName="zipCode" />
           <mat-hint>PLZ</mat-hint>
+          <mat-error *ngIf="editForm.get('zipCode')?.errors">
+            Genau <strong>5 Zahlen</strong> benötigt
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -37,6 +45,10 @@
           <mat-label>{{ member!["city"] }}</mat-label>
           <input matInput placeholder="Neuer Ort" formControlName="city" />
           <mat-hint>Ort</mat-hint>
+          <mat-error *ngIf="editForm.get('city')?.errors">
+            Mind. <strong>3</strong> Buchstaben und <br />
+            <strong>keine Zahlen</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">

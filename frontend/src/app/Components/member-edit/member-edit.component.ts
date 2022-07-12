@@ -67,22 +67,22 @@ export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
     this.editForm = this.fb.group({
       firstName: new FormControl(null, [
         Validators.pattern('^[a-zA-Z]+$'),
-        Validators.minLength(2),
+        Validators.minLength(3),
         Validators.maxLength(28),
       ]),
       lastName: new FormControl(null, [
         Validators.pattern('^[a-zA-Z]+$'),
-        Validators.minLength(2),
+        Validators.minLength(3),
         Validators.maxLength(28),
       ]),
       zipCode: new FormControl(null, [
         Validators.pattern('^[0-9]*$'),
-        Validators.minLength(4),
-        Validators.maxLength(6),
+        Validators.minLength(5),
+        Validators.maxLength(5),
       ]),
       city: new FormControl(null, [
         Validators.pattern('^[a-zA-Z]+$'),
-        Validators.minLength(2),
+        Validators.minLength(3),
         Validators.maxLength(30),
       ]),
       gender: new FormControl(null),
@@ -181,7 +181,7 @@ export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
         next: () => {},
       });
     }
-    //this.editForm.controls['firstName'].setErrors(['test']);
+    // this.editForm.controls['firstName'].setErrors(['test']);
   }
 
   mapFormValuesToMember(f: FormGroup, member: IMember): void {

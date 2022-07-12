@@ -48,27 +48,27 @@ export class AddDialogComponent implements OnInit, OnDestroy {
       firstName: new FormControl(null, [
         Validators.required,
         Validators.pattern('^[a-zA-Z]+$'),
-        Validators.minLength(2),
+        Validators.minLength(3),
         Validators.maxLength(28),
       ]),
       lastName: new FormControl(null, [
         Validators.required,
         Validators.pattern('^[a-zA-Z]+$'),
-        Validators.minLength(2),
+        Validators.minLength(3),
         Validators.maxLength(28),
       ]),
       gender: new FormControl(null, [Validators.required]),
       zipCode: new FormControl(null, [
         Validators.required,
         Validators.pattern('^[0-9]*$'),
-        Validators.minLength(4),
-        Validators.maxLength(6),
+        Validators.minLength(5),
+        Validators.maxLength(5),
       ]),
       city: new FormControl(null, [
         Validators.required,
         Validators.pattern('^[a-zA-Z]+$'),
-        Validators.minLength(2),
-        Validators.maxLength(30),
+        Validators.minLength(3),
+        Validators.maxLength(28),
       ]),
       feeGroup: new FormControl(null, [Validators.required]),
       sports: new FormControl(null),
@@ -76,12 +76,23 @@ export class AddDialogComponent implements OnInit, OnDestroy {
       team: new FormControl(null),
     });
     this.addSportForm = this.fb.group({
-      sport: new FormControl(null, [Validators.required]),
-      fee: new FormControl(null, [Validators.required]),
+      sport: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(28),
+      ]),
+      fee: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('[+-]?([0-9]*[.])?[0-9]+'),
+      ]),
       leader: new FormControl(null, [Validators.required]),
     });
     this.addTeamForm = this.fb.group({
-      name: new FormControl(null, [Validators.required]),
+      name: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(28),
+      ]),
       sport: new FormControl(null, [Validators.required]),
     });
   }
