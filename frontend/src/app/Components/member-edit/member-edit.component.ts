@@ -166,7 +166,7 @@ export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   submit(f: FormGroup) {
-    if (this.member) {
+    if (this.member && this.editForm.valid) {
       let oldPlayerTeamId = this.member['playerTeamId'];
       let oldTrainerTeamId = this.member['trainerTeamId'];
       let oldSportIds = this.member['sportIds'];
