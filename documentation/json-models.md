@@ -101,7 +101,7 @@ _edit-object:_
 _create-object:_
 
     {
-      "sportsId": "6",
+      "teamId": "6",
       "name": "ATS Hof West"
     }
 
