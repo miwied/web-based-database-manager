@@ -89,5 +89,28 @@
     
 
   - Datenstrukturen
-  - einfache Kontrollstrukturen
+	- string, int, usw.
+  
+  - Einfache Kontrollstrukturen
+  If Else switch case try catch loops 
+  Eine Kontrollstruktur ermöglicht es Ihnen, den Ablauf der Codeausführung in Ihrer Anwendung zu steuern. 
+  Im Allgemeinen wird ein Programm zeilenweise nacheinander ausgeführt, und eine Steuerungsstruktur ermöglicht es Ihnen, 
+  diesen Ablauf zu ändern, normalerweise abhängig von bestimmten Bedingungen.
   - Sessions <br/><br/>
+  
+ 
+  
+  SOAP
+  Simple Object Access Protocol
+  - Ist ein Netzwerkprotokoll, mit dessen Hilfe Daten zwischen Systemen ausgetauscht werden können
+  - Handelt sich um ein von Microsoft entwickeltes XML-basiertes Netzwerkprotokoll.
+  - SOAP ist Plattform- und sprachunabhängig
+  
+  REST oder auch Restful
+  -	Representational State Transfer
+  - Unterliegt den Beschränkungen der REST-Architektur 
+  - Ermöglich  Interaktionen mit RESTful Webservices
+  - Ist Zustandslos d. h. auf dem Server werden zwischen den Anforderungen keine Client-Inhalte gespeichert.
+  - Statt dessen werden Informationen zum Session-Status beim Client gespeichert.
+
+  
