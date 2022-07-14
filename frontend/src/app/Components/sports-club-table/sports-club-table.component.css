@@ -71,7 +71,6 @@
 .container-table {
   margin-left: auto;
   margin-right: auto;
-  height: 72vh;
   width: 80vw !important;
   border-radius: 0;
 }
@@ -177,6 +176,7 @@ tr.member-row:not(.expanded-row):not(.filterHovered):active {
 tr.member-row {
   min-height: 2rem;
   height: 2.6rem;
+  max-height: 2.6rem;
 }
 
 .member-row td {
