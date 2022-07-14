@@ -191,7 +191,6 @@ export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
         },
       });
     }
-    // this.editForm.controls['firstName'].setErrors(['test']);
   }
 
   mapFormValuesToMember(f: FormGroup, member: IMember): void {
