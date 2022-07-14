@@ -20,6 +20,7 @@ import { SportsClubApiService } from 'src/app/services/sportsClub-api.service';
 import { IBasicFee } from 'src/app/models/basicFee';
 import { IMember, IMemberEdit } from 'src/app/models/member';
 import { ISport } from 'src/app/models/sport';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-member-edit',
@@ -61,6 +62,7 @@ export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
   constructor(
     private dataSharingService: DataSharingService,
     private apiService: SportsClubApiService,
+    private snackBarService: SnackBarService,
     private dialog: MatDialog,
     private fb: FormBuilder
   ) {
@@ -179,6 +181,14 @@ export class MemberEditComponent implements OnInit, OnDestroy, OnChanges {
       );
       this.apiService.putMember(memberEdit).subscribe({
         next: () => {},
+        complete: () => {
+          this.snackBarService.showSnackBar(
+            'Mitglied erfolgreich bearbeitet',
+            'left',
+            'bottom',
+            'snackbar-success'
+          );
+        },
       });
     }
     // this.editForm.controls['firstName'].setErrors(['test']);
