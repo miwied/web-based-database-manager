@@ -1,4 +1,3 @@
-
 # web-based-database-manager
 
 The web based database manager is a project within my education. Our group consisted of 4 people. We received various [requirements](https://github.com/miwied/web-based-database-manager/blob/develop/documentation/project%20requirements/english/010-requirements-en.md) and were then able to develop our own solution for it. The idea was to create a website for a sports club where users can log in and manipulate the existing data conveniently with the help of a clearly arranged table. For this we have received a fake [database](https://github.com/miwied/web-based-database-manager/blob/develop/docker/db-init/2021sportverein.sql) with already 120 existing members.
@@ -41,6 +40,7 @@ Storage and validation of login data (including password salting, peppering and 
 ## application images
 
 ### login page
+
 <img src="documentation/images/login-page/login-page.png" alt="login page" width="1000"/></br>
 
 #### login / register + validation
@@ -51,24 +51,30 @@ Storage and validation of login data (including password salting, peppering and 
 </p>
 
 #### login data in database
+
 <img src="documentation/images/login-page/test-user-in-db.png" alt="login data in database" width="1000"/></br>
 
 ---
 
 ### table page
+
 <img src="documentation/images/table-page/table-page.png" alt="table page" width="1000"/></br>
 
 #### filter bubble
+
 <img src="documentation/images/table-page/filter-bubble-julia.png" alt="filter bubble julia" width="1000"/>
 <img src="documentation/images/table-page/filter-bubble-thomas.png" alt="filter bubble thomas" width="1000"/>
 
 #### add member
+
 <img src="documentation/images/table-page/add-element/add-member.png" alt="add member" width="700"/>
 
 #### edit member
+
 <img src="documentation/images/table-page/edit-and-delete-member/edit-dropdown.png" alt="edit member" width="1000"/>
 
 #### delete member
+
 <img src="documentation/images/table-page/edit-and-delete-member/delete-member-confirmation.png" alt="delete member" width="1000"/>
 
 ---
@@ -76,12 +82,14 @@ Storage and validation of login data (including password salting, peppering and 
 ### notifications
 
 #### member was deleted successfully / user created
+
 <p float="left">
   <img src="documentation/images/notifications/the-member-was-deleted-successfully.png" alt="the member was deleted successfully" width="500"/>
   <img src="documentation/images/notifications/user-created.png" alt="user created" width="500"/>
 </p>
 
 #### user is already created / username or password invalid
+
 <p float="left">
   <img src="documentation/images/notifications/user-is-already-created.png" alt="user is already created" width="500"/>
   <img src="documentation/images/notifications/username-or-password-invalid.png" alt="username or password invalid" width="500"/>
