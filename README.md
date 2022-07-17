@@ -32,7 +32,7 @@ Authentication, communication of components, creation and logic implementations 
 #### backend:
 
 [**Noodle693**](https://github.com/Noodle693)</br>
-Basic backend architecture according to MVC pattern, elaboration of database access with PDO, creation and elaboration of repository functions especially for the MemberController (+mapping), JWT generation and alignment, CORS implementation, implementation of base classes and methods (e.g. for http errors), database modification (ON CASCADE delete), troubleshooting Docker
+Basic backend architecture according to MVC pattern, elaboration of database access with PDO, creation and elaboration of repository functions especially for the MemberController (+mapping), JWT generation and alignment, CORS implementation, implementation of base classes and methods (e.g. for http errors), database modification (ON DELETE CASCADE), troubleshooting Docker
 
 [**miwied**](https://github.com/miwied)</br>
 Storage and validation of login data (including password salting, peppering and hashing), connection of login data with the database, implementation of base classes and methods (e.g. for http errors), creation of the Github repo, creation of documentation files (in .md file format), setup of Docker (docker-compose + dockerfiles)
